@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 745760acde3f57140b5ed7228f602828, type: 3}
+  m_Name: PumpkinHelmet
+  m_EditorClassIdentifier: 
+  itemName: Pumpkin Helmet
+  itemType: 2
+  itemIcon: {fileID: 266956252, guid: d390023bf0e736d44b9d928ab05573d0, type: 3}

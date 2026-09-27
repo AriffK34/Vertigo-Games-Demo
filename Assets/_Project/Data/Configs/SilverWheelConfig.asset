@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839c86e9faf0eed46957f242e77df39c, type: 3}
+  m_Name: SilverWheelConfig
+  m_EditorClassIdentifier: 
+  wheelTheme: {fileID: 11400000, guid: 75120c0bc2f5c984b8910525478f90e9, type: 2}
+  wheelSlices:
+  - itemData: {fileID: 11400000, guid: 3a3ec777a9d608d4f90cd968fa0e01ba, type: 2}
+    itemAmount: 1
+  - itemData: {fileID: 11400000, guid: dbf7adc29e2c5e34fb23558a43265bbf, type: 2}
+    itemAmount: 1
+  - itemData: {fileID: 11400000, guid: d00484db25138e6489f8359e1f21bf6e, type: 2}
+    itemAmount: 500
+  - itemData: {fileID: 11400000, guid: f16244c4138745841b1e0a831f62f91a, type: 2}
+    itemAmount: 10
+  - itemData: {fileID: 11400000, guid: 46c010b9536145d468388bf2bf8f0931, type: 2}
+    itemAmount: 2
+  - itemData: {fileID: 11400000, guid: 5d736ca772479da4189cb6c9b984c74b, type: 2}
+    itemAmount: 1
+  - itemData: {fileID: 11400000, guid: 99dd39d3a006b544cb3507d13c7a6729, type: 2}
+    itemAmount: 1
+  - itemData: {fileID: 11400000, guid: ee5bb28cf168a0243ac3bbdecd903ff5, type: 2}
+    itemAmount: 1

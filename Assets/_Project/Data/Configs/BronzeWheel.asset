@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839c86e9faf0eed46957f242e77df39c, type: 3}
+  m_Name: BronzeWheel
+  m_EditorClassIdentifier: 
+  wheelTheme: {fileID: 11400000, guid: 665dd50957307c64ab923ccef5ebd85e, type: 2}
+  wheelSlices:
+  - itemData: {fileID: 11400000, guid: dbf7adc29e2c5e34fb23558a43265bbf, type: 2}
+    itemAmount: 1
+  - itemData: {fileID: 11400000, guid: de41aef03f804b043b07657b2524b85e, type: 2}
+    itemAmount: 500
+  - itemData: {fileID: 11400000, guid: f16244c4138745841b1e0a831f62f91a, type: 2}
+    itemAmount: 10
+  - itemData: {fileID: 11400000, guid: 377bbbd4409b84f47bc4c7081a9ef674, type: 2}
+    itemAmount: 0
+  - itemData: {fileID: 11400000, guid: 3214dc41fb4beb44db2cca87581d5cd1, type: 2}
+    itemAmount: 2
+  - itemData: {fileID: 11400000, guid: 01952f4db5c2db94daa52a3ec8bc10dd, type: 2}
+    itemAmount: 1
+  - itemData: {fileID: 11400000, guid: 0a4431ea5bf28fd4699512fdfb0b8743, type: 2}
+    itemAmount: 1
+  - itemData: {fileID: 11400000, guid: aaa4868bf64b9804e913d110e8e84797, type: 2}
+    itemAmount: 1
