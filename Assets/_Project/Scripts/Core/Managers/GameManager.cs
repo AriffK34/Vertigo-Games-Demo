@@ -74,8 +74,15 @@ namespace VertigoDemo.Core
 
         public void RequestLeave()
         {
-            if (CurrentState != GameState.Idle) return;
-            if (!zoneManager.IsSafeZone && !zoneManager.IsSuperZone) return;
+            if (CurrentState != GameState.Idle)
+            {
+                return;
+            }
+
+            if (!zoneManager.CanLeave)
+            {
+                return;
+            }
             SetState(GameState.RewardsClaiming);
         }
 

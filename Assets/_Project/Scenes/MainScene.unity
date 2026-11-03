@@ -1182,14 +1182,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68c9f1f06e7ef2245a0298181bc84d39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bronzeWheel: {fileID: 11400000, guid: c0f2447c75f5a9e46b7e57573c5ebf86, type: 2}
-  silverWheel: {fileID: 11400000, guid: a9d5429f77f314a47b506b06a158a5c4, type: 2}
-  goldWheel: {fileID: 11400000, guid: 15d53a597a7292246bac0bf1dfebe057, type: 2}
-  silverInterval: 5
-  goldInterval: 30
-  growthMultiplier: 10
-  growthExponent: 0.08
-  linearSlope: 0.3334
+  _progressionConfig: {fileID: 11400000, guid: 7fe08c7f25ab4ee4e82996bf81f51b6b, type: 2}
+  _growthMultiplier: 10
+  _growthExponent: 0.08
+  _linearSlope: 0.3334
+  _growthEndZone: 30
 --- !u!4 &381220585
 Transform:
   m_ObjectHideFlags: 0
@@ -1261,12 +1258,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee126509a2343d4a886a0024af4c236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoneManager: {fileID: 381220584}
-  zoneBarView: {fileID: 1276537612}
-  currentZoneSprite: {fileID: 21300000, guid: 8fcf55be37702824aa4697840d639120, type: 3}
-  normalZoneSprite: {fileID: 21300000, guid: 2c0c263f4046b3648b8c5c52d811668d, type: 3}
-  safeZoneSprite: {fileID: 21300000, guid: c34a68a059ecb434d8bce2324071a438, type: 3}
-  superZoneSprite: {fileID: 21300000, guid: 868dabed37c3c6a4aabca4d1f60ef9b8, type: 3}
+  _zoneManager: {fileID: 381220584}
+  _zoneBarView: {fileID: 1276537612}
+  _currentZoneSprite: {fileID: 21300000, guid: 8fcf55be37702824aa4697840d639120, type: 3}
 --- !u!114 &381220590
 MonoBehaviour:
   m_ObjectHideFlags: 0
