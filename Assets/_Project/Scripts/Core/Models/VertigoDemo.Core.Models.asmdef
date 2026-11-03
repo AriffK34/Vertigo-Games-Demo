@@ -1,0 +1,16 @@
+{
+    "name": "VertigoDemo.Core.Models",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c58773300270b7b42bb2424efc7a0f89"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

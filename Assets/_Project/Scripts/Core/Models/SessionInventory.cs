@@ -6,26 +6,47 @@ namespace VertigoDemo.Core
 {
     public class SessionInventory
     {
+        #region Events
+
         public event Action<ItemData, int> OnItemAdded;
         public event Action OnInventoryCleared;
-        
-        private Dictionary<ItemData, int> _inventory = new();
-        public IReadOnlyDictionary<ItemData, int> Inventory => _inventory;
-        
+
+        #endregion
+
+        #region Fields
+
+        private readonly RewardStore _rewardStore = new RewardStore();
+
+        #endregion
+
+        #region Properties
+
+        public IReadOnlyDictionary<ItemData, int> Inventory
+        {
+            get
+            {
+                return _rewardStore.Amounts;
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
         public void AddItem(ItemData item, int amount)
         {
-            if (!_inventory.TryAdd(item, amount))
-            {
-                _inventory[item] += amount;
-            }
-            OnItemAdded?.Invoke(item, _inventory[item]);
+            _rewardStore.Add(item, amount);
+            int totalAmount = _rewardStore.GetAmount(item);
+            OnItemAdded?.Invoke(item, totalAmount);
         }
 
         public void Clear()
         {
-            _inventory.Clear();
+            _rewardStore.Clear();
             OnInventoryCleared?.Invoke();
         }
+
+        #endregion
     }
 
 }
