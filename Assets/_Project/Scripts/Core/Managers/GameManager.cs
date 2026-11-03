@@ -11,9 +11,10 @@ namespace VertigoDemo.Core
 
         [SerializeField] private ZoneManager zoneManager;
         [SerializeField] private WheelController wheelController;
+        [SerializeField] private EconomyConfig _economyConfig;
         
         public SessionInventory Inventory { get; private set; }
-        public PlayerWallet Wallet { get; private set; }
+        public EconomyService Economy { get; private set; }
         public GameState CurrentState { get; private set; }
         
         private void OnValidate()
@@ -25,7 +26,7 @@ namespace VertigoDemo.Core
         private void Awake()
         {
             Inventory = new SessionInventory();
-            Wallet = new PlayerWallet();
+            Economy = new EconomyService(_economyConfig);
             SetState(GameState.Idle);
         }
 
@@ -81,32 +82,27 @@ namespace VertigoDemo.Core
         public void ClaimRewards()
         {
             if (CurrentState != GameState.RewardsClaiming) return;
-            foreach (var (item, itemAmount) in Inventory.Inventory)
-            {
-                if (item.ItemType == ItemType.Gold) Wallet.AddGold(itemAmount);
-                else if (item.ItemType == ItemType.Cash) Wallet.AddCash(itemAmount);
-            }
+            Economy.ClaimRewards(Inventory);
             RestartGame();
         }
 
         public void GiveUp()
         {
             if (CurrentState != GameState.BombExploded) return;
+            Inventory.Clear();
             RestartGame();
         }
 
-        public bool TryRevive(int goldCost)
+        public bool TryRevive()
         {
             if (CurrentState != GameState.BombExploded) return false;
-            if (!Wallet.TrySpendGold(goldCost)) return false;
-
+            if (!Economy.TryRevive()) return false;
             SetState(GameState.Idle);
             return true;
         }
 
         private void RestartGame()
         {
-            Inventory.Clear();
             zoneManager.ResetZone();
             SetState(GameState.Idle);
         }

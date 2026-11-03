@@ -5,40 +5,44 @@ namespace VertigoDemo.Core
 {
     public class CurrencyBarController : MonoBehaviour
     {
-        [SerializeField] private GameManager gameManager;
-        [SerializeField] private CurrencyBarView currencyBarView;
+        #region Fields
+
+        [SerializeField] private GameManager _gameManager;
+        [SerializeField] private CurrencyBarView _currencyBarView;
+
+        private EconomyService _economy;
+
+        #endregion
+
+        #region Unity Callbacks
 
         private void OnValidate()
         {
-            if (gameManager == null) gameManager = GetComponent<GameManager>();
+            if (!_gameManager) _gameManager = GetComponent<GameManager>();
         }
 
         private void Start()
         {
-            PlayerWallet wallet = gameManager.Wallet;
-            wallet.OnGoldChanged += HandleGoldChanged;
-            wallet.OnCashChanged += HandleCashChanged;
-            currencyBarView.UpdateGold(wallet.Gold);
-            currencyBarView.UpdateCash(wallet.Cash);
+            _economy = _gameManager.Economy;
+            _economy.OnBalancesChanged += RefreshBalances;
+            _currencyBarView.Refresh(_economy.Balances, false);
         }
 
         private void OnDestroy()
         {
-            if (gameManager != null && gameManager.Wallet != null)
-            {
-                gameManager.Wallet.OnGoldChanged -= HandleGoldChanged;
-                gameManager.Wallet.OnCashChanged -= HandleCashChanged;
-            }
+            if (_economy != null) _economy.OnBalancesChanged -= RefreshBalances;
         }
 
-        private void HandleGoldChanged(int amount)
+        #endregion
+
+        #region Methods
+
+        private void RefreshBalances()
         {
-            currencyBarView.UpdateGold(amount);
+            _currencyBarView.Refresh(_economy.Balances, true);
+
         }
-        
-        private void HandleCashChanged(int amount)
-        {
-            currencyBarView.UpdateCash(amount);
-        }
+
+        #endregion
     } 
 }

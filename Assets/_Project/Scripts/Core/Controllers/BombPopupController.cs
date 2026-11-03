@@ -5,7 +5,6 @@ namespace VertigoDemo.Core
 {
     public class BombPopupController : MonoBehaviour
     {
-        private const int ReviveCost = 25;
         [SerializeField] private GameManager gameManager;
         [SerializeField] private BombPopupView bombPopupView;
         
@@ -34,8 +33,7 @@ namespace VertigoDemo.Core
         {
             if (gameManager.CurrentState == GameState.BombExploded)
             {
-                bool canAfford = gameManager.Wallet.Gold >= ReviveCost;
-                bombPopupView.Show(canAfford);
+                bombPopupView.Show(gameManager.Economy.HasReviveFunds);
             }
         }
         
@@ -46,10 +44,7 @@ namespace VertigoDemo.Core
         }
         private void HandleReviveClicked()
         {
-            if (gameManager.TryRevive(ReviveCost))
-            {
-                bombPopupView.Hide();
-            }
+            if (gameManager.TryRevive()) bombPopupView.Hide();
         }
     }
 }

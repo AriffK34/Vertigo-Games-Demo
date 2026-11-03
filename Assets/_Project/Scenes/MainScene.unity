@@ -1219,6 +1219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneManager: {fileID: 381220584}
   wheelController: {fileID: 381220583}
+  _economyConfig: {fileID: 11400000, guid: c8341240dd660fe46b77643767c10dea, type: 2}
 --- !u!114 &381220587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1278,8 +1279,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9ddb3213362344cba77c40ac68e042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 381220586}
-  currencyBarView: {fileID: 526183320}
+  _gameManager: {fileID: 381220586}
+  _currencyBarView: {fileID: 526183320}
 --- !u!114 &381220591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1866,8 +1867,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e511fcd659d57347be593925eb6be5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goldText: {fileID: 1104896554}
-  cashText: {fileID: 994764147}
+  _bindings:
+  - _currency: {fileID: 11400000, guid: f16244c4138745841b1e0a831f62f91a, type: 2}
+    _amountText: {fileID: 1104896554}
+  - _currency: {fileID: 11400000, guid: de41aef03f804b043b07657b2524b85e, type: 2}
+    _amountText: {fileID: 994764147}
+  _punchDuration: 0.3
+  _punchStrength: 0.35
+  _punchVibrato: 2
+  _punchElasticity: 0.5
 --- !u!1 &555358738
 GameObject:
   m_ObjectHideFlags: 0
@@ -2279,7 +2287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3750779734579957566, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -2.5
+      value: -2.5000038
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
@@ -3229,7 +3237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3750779734579957566, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -2.5
+      value: -2.5000038
       objectReference: {fileID: 0}
     - target: {fileID: 6705980502891555209, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
       propertyPath: m_Maskable
@@ -3601,7 +3609,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3750779734579957566, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -2.5
+      value: -2.5000038
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
@@ -4782,7 +4790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3750779734579957566, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -2.5
+      value: -2.5000038
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
@@ -4899,7 +4907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3750779734579957566, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -2.5
+      value: -2.5000038
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
@@ -5016,7 +5024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3750779734579957566, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -2.5
+      value: -2.5000038
       objectReference: {fileID: 0}
     - target: {fileID: 6705980502891555209, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
       propertyPath: m_Maskable
@@ -6159,7 +6167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3750779734579957566, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -2.5
+      value: -2.5000038
       objectReference: {fileID: 0}
     - target: {fileID: 6705980502891555209, guid: 41671cec39887a04ca4d4be4fceae3d6, type: 3}
       propertyPath: m_Maskable
