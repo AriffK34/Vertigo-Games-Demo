@@ -8,14 +8,24 @@ namespace VertigoDemo.Core
     public class GameManager : MonoBehaviour
     {
         public event Action OnGameStateChanged;
-
+        
         [SerializeField] private ZoneManager zoneManager;
         [SerializeField] private WheelController wheelController;
         [SerializeField] private EconomyConfig _economyConfig;
+
+        private readonly GameStateMachine _stateMachine = new GameStateMachine();
+        private Tween _rewardDelayTween;
         
         public SessionInventory Inventory { get; private set; }
         public EconomyService Economy { get; private set; }
-        public GameState CurrentState { get; private set; }
+
+        public GameState CurrentState
+        {
+            get
+            {
+                return _stateMachine.CurrentState;
+            }
+        }
         
         private void OnValidate()
         {
@@ -27,7 +37,6 @@ namespace VertigoDemo.Core
         {
             Inventory = new SessionInventory();
             Economy = new EconomyService(_economyConfig);
-            SetState(GameState.Idle);
         }
 
         private void Start()
@@ -38,8 +47,12 @@ namespace VertigoDemo.Core
 
         private void OnDestroy()
         {
-            wheelController.OnSpinStarted -= HandleSpinStarted;
-            wheelController.OnSpinLanded -= HandleSpinLanded;
+            _rewardDelayTween?.Kill();
+            if (wheelController)
+            {
+                wheelController.OnSpinStarted -= HandleSpinStarted;
+                wheelController.OnSpinLanded -= HandleSpinLanded;
+            }
         }
 
         private void HandleSpinStarted()
@@ -49,26 +62,42 @@ namespace VertigoDemo.Core
 
         private void HandleSpinLanded(WheelSliceData sliceData)
         {
+            if (CurrentState != GameState.Spinning)
+            {
+                return;
+            }
+
             if (sliceData.IsBomb)
             {
                 SetState(GameState.BombExploded);
+                return;
             }
-            else
+            
+            SetState(GameState.RewardGiving);
+            int rewardAmount = zoneManager.CalculateRewardAmount(sliceData.ItemData, sliceData.ItemAmount);
+            Inventory.AddItem(sliceData.ItemData, rewardAmount);
+            _rewardDelayTween?.Kill();
+            _rewardDelayTween = DOVirtual.DelayedCall(
+                    0.8f,
+                    AdvanceAfterReward)
+                .SetLink(gameObject);
+        }
+
+        private void AdvanceAfterReward()
+        {
+            _rewardDelayTween = null;
+            if (CurrentState != GameState.RewardGiving)
             {
-                SetState(GameState.RewardGiving);
-                int rewardAmount = zoneManager.CalculateRewardAmount(sliceData.ItemData, sliceData.ItemAmount);
-                Inventory.AddItem(sliceData.ItemData, rewardAmount);
-                DOVirtual.DelayedCall(0.8f, () =>
-                {
-                    SetState(GameState.ZoneTransition);
-                    zoneManager.AdvanceZone();
-                });
+                return;
             }
+            SetState(GameState.ZoneTransition);
+            zoneManager.AdvanceZone();
         }
         
         public void CompleteZoneTransition()
         {
-            if (CurrentState != GameState.ZoneTransition) return;
+            if (CurrentState != GameState.ZoneTransition &&
+                CurrentState != GameState.Resetting) return;
             SetState(GameState.Idle);
         }
 
@@ -110,13 +139,19 @@ namespace VertigoDemo.Core
 
         private void RestartGame()
         {
+            _rewardDelayTween?.Kill();
+            _rewardDelayTween = null;
+            SetState(GameState.Resetting);
             zoneManager.ResetZone();
-            SetState(GameState.Idle);
         }
 
-        private void SetState(GameState newState)
+        private void SetState(GameState nextState)
         {
-            CurrentState = newState;
+            if (!_stateMachine.TryTransition(nextState))
+            {
+                throw new InvalidOperationException(
+                    $"Invalid game state transition: {CurrentState} -> {nextState}");
+            }
             OnGameStateChanged?.Invoke();
         }
     }   

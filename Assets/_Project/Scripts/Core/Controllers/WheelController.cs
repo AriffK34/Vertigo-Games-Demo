@@ -16,8 +16,8 @@ namespace VertigoDemo.Core
         [SerializeField] private WheelView wheelView;
 
         private readonly SliceDisplayData[] _sliceDisplayCache = new SliceDisplayData[8];
-        private bool _isSpinning;
-
+        private WheelSliceData _spinResult;
+        
         private void OnValidate()
         {
             if (gameManager == null) gameManager = GetComponent<GameManager>();
@@ -29,6 +29,7 @@ namespace VertigoDemo.Core
             gameManager.OnGameStateChanged += HandleGameStateChanged;
             zoneManager.OnZoneChanged += UpdateWheel;
             wheelView.OnSpinClicked += HandleSpinClicked;
+            HandleGameStateChanged();
             UpdateWheel();
         }
 
@@ -41,22 +42,24 @@ namespace VertigoDemo.Core
 
         private void HandleSpinClicked()
         {
-            if (_isSpinning) return;
-            _isSpinning = true;
-            wheelView.SetSpinInteractable(false);
+            if (gameManager.CurrentState != GameState.Idle)
+            {
+                return;
+            }
+
+            WheelConfig currentConfig = zoneManager.GetCurrentWheel();
+            int targetIndex = Random.Range(0, currentConfig.WheelSlices.Length);
+            _spinResult = currentConfig.WheelSlices[targetIndex];
             OnSpinStarted?.Invoke();
-            int targetIndex = Random.Range(0, 8);
-            wheelView.RotateWheel(targetIndex, () => OnSpinFinished(targetIndex));
+            wheelView.RotateWheel(targetIndex, HandleSpinFinished);
         }
         
 
-        private void OnSpinFinished(int landedIndex)
+        private void HandleSpinFinished()
         {
-            WheelConfig currentConfig = zoneManager.GetCurrentWheel();
-            WheelSliceData sliceData = currentConfig.WheelSlices[landedIndex];
-            
-            _isSpinning = false;
-            OnSpinLanded?.Invoke(sliceData);
+            WheelSliceData result = _spinResult;
+            _spinResult = null;
+            OnSpinLanded?.Invoke(result);
         }
         
         private void UpdateWheel()
@@ -69,10 +72,7 @@ namespace VertigoDemo.Core
                 _sliceDisplayCache[i] = new SliceDisplayData(slice.ItemData.ItemIcon, text);
             }
             wheelView.UpdateWheel(currentConfig.WheelTheme, _sliceDisplayCache);
-            wheelView.ResetRotation(0.6f, () =>
-            {
-                gameManager.CompleteZoneTransition();
-            });
+            wheelView.ResetRotation(0.6f, gameManager.CompleteZoneTransition);
         }
         
         

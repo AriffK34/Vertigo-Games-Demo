@@ -8,5 +8,6 @@ namespace VertigoDemo.Core
         ZoneTransition,
         BombExploded,
         RewardsClaiming,
+        Resetting,
     }
 }

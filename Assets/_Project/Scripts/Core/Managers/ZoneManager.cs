@@ -102,6 +102,7 @@ namespace VertigoDemo.Core
         public void ResetZone()
         {
             CurrentZone = FIRST_ZONE;
+            OnZoneChanged?.Invoke();
         }
 
         #endregion
