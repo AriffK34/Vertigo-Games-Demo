@@ -16,6 +16,7 @@ namespace VertigoDemo.UI
         
         private readonly Dictionary<ItemData, InventorySlotView> _slotViews = new();
         private SessionInventory _inventory;
+        private Tween _scrollTween;
 
         private void OnValidate()
         {
@@ -37,6 +38,7 @@ namespace VertigoDemo.UI
 
         private void OnDestroy()
         {
+            _scrollTween?.Kill();
             if (_inventory != null)
             {
                 _inventory.OnItemAdded -= HandleItemAdded;
@@ -56,18 +58,31 @@ namespace VertigoDemo.UI
                 newSlot.Setup(item, amount);
                 _slotViews.Add(item, newSlot);
                 
-                Canvas.ForceUpdateCanvases(); // Grid boyutunu anında hesaplat
-                scrollRect.DOHorizontalNormalizedPos(1f, 0.4f).SetEase(Ease.OutQuad);
+                Canvas.ForceUpdateCanvases();
+                _scrollTween?.Kill();
+                scrollRect.StopMovement();
+                _scrollTween = scrollRect
+                    .DOVerticalNormalizedPos(0f, 0.4f)
+                    .SetEase(Ease.OutQuad)
+                    .SetRecyclable(false)
+                    .SetLink(gameObject);
             }
         }
         
         private void HandleInventoryCleared()
         {
+            _scrollTween?.Kill();
+            _scrollTween = null;
+            scrollRect.StopMovement();
             foreach (var slotView in _slotViews.Values)
             {
-                if (slotView != null) Destroy(slotView.gameObject);
+                if (slotView != null)
+                {
+                    Destroy(slotView.gameObject);
+                }
             }
             _slotViews.Clear();
+            scrollRect.verticalNormalizedPosition = 1f;
         }
     }
 }
