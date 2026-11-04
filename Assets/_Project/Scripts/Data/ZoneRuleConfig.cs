@@ -71,6 +71,16 @@ namespace VertigoDemo.Data
             return _interval > 0 && zone % _interval == 0;
         }
 
+        [ContextMenu("Validate Wheel")]
+        public void ValidateWheel()
+        {
+            if (!_wheel)
+            {
+                throw new System.InvalidOperationException($"{name}: A wheel config must be assigned.");
+            }
+            _wheel.ValidateConfiguration(_hasBomb);
+        }
+
         #endregion
 
         #region Validation
@@ -84,6 +94,11 @@ namespace VertigoDemo.Data
             if (_lastZone > 0 && _lastZone < _firstZone)
             {
                 _lastZone = _firstZone;
+            }
+
+            if (_wheel)
+            {
+                ValidateWheel();
             }
         }
 

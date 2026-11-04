@@ -72,8 +72,12 @@ namespace VertigoDemo.Core
             {
                 throw new InvalidOperationException("Zone progression config must be assigned.");
             }
-
             _ruleResolver = new ZoneRuleResolver(_progressionConfig.Rules);
+            foreach (ZoneRuleConfig rule in _progressionConfig.Rules)
+            {
+                rule.ValidateWheel();
+            }
+            
         }
 
         #endregion
