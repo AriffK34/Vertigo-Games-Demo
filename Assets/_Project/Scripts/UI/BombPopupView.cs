@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using VertigoDemo.Data;
 
 namespace VertigoDemo.UI
 {
@@ -14,6 +15,9 @@ namespace VertigoDemo.UI
         [SerializeField] private Button reviveButton;
         [SerializeField] private Transform cardTransform;
 
+        [SerializeField] private UIAnimationConfig _animationConfig;
+        private Tween _popupTween;
+        
         private void OnValidate()
         {
             var buttons = GetComponentsInChildren<Button>(true);
@@ -34,26 +38,39 @@ namespace VertigoDemo.UI
         
         private void OnDestroy()
         {
+            _popupTween?.Kill();
+            _popupTween = null;
             if (giveUpButton != null) giveUpButton.onClick.RemoveListener(HandleGiveUpClicked);
             if (reviveButton != null) reviveButton.onClick.RemoveListener(HandleReviveClicked);
         }
         
         public void Show(bool canAffordRevive)
         {
+            _popupTween?.Kill();
             reviveButton.interactable = canAffordRevive;
             gameObject.SetActive(true);
-            cardTransform.DOKill();
-            cardTransform.localScale = Vector3.zero;
-            cardTransform.DOScale(Vector3.one, 0.35f).SetEase(Ease.OutBack);
+            _popupTween = PopupAnimation.Show(cardTransform, _animationConfig);
         }
         
         public void Hide()
         {
-            cardTransform.DOKill();
-            cardTransform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
+            _popupTween?.Kill();
+
+            if (!gameObject.activeInHierarchy)
             {
-                gameObject.SetActive(false);
-            });
+                _popupTween = null;
+                return;
+            }
+
+            _popupTween = PopupAnimation
+                .Hide(cardTransform, _animationConfig)
+                .OnComplete(HandleHideComplete);
+        }
+
+        private void HandleHideComplete()
+        {
+            _popupTween = null;
+            gameObject.SetActive(false);
         }
         
         private void HandleGiveUpClicked()

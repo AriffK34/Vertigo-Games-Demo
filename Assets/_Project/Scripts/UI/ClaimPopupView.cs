@@ -15,6 +15,9 @@ namespace VertigoDemo.UI
         [SerializeField] private InventorySlotView slotPrefab;
         [SerializeField] private Button claimButton;
         [SerializeField] private Transform cardTransform;
+
+        [SerializeField] private UIAnimationConfig _animationConfig;
+        private Tween _popupTween;
         
         private readonly List<InventorySlotView> _spawnedSlots = new();
 
@@ -30,11 +33,14 @@ namespace VertigoDemo.UI
         
         private void OnDestroy()
         {
+            _popupTween?.Kill();
+            _popupTween = null;
             if (claimButton != null) claimButton.onClick.RemoveListener(HandleClaimButtonClicked);
         }
 
         public void Show(IReadOnlyDictionary<ItemData, int> rewards)
         {
+            _popupTween?.Kill();
             ClearSlots();
             foreach (var (itemData, amount) in rewards)
             {
@@ -43,21 +49,22 @@ namespace VertigoDemo.UI
                 _spawnedSlots.Add(slot);
             }
             gameObject.SetActive(true);
-            
-            cardTransform.DOKill();
-            cardTransform.localScale = Vector3.zero;
-            cardTransform.DOScale(Vector3.one, 0.35f).SetEase(Ease.OutBack);
+            _popupTween = PopupAnimation.Show(cardTransform, _animationConfig);
         }
 
         public void Hide()
         {
-            ClearSlots();
-            cardTransform.DOKill();
-            cardTransform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
+            _popupTween?.Kill();
+            if (!gameObject.activeInHierarchy)
             {
+                _popupTween = null;
                 ClearSlots();
-                gameObject.SetActive(false);
-            });
+                return;
+            }
+
+            _popupTween = PopupAnimation
+                .Hide(cardTransform, _animationConfig)
+                .OnComplete(HandleHideComplete);
         }
 
         private void ClearSlots()
@@ -67,6 +74,13 @@ namespace VertigoDemo.UI
                 if (slot != null) Destroy(slot.gameObject);
             }
             _spawnedSlots.Clear();
+        }
+
+        private void HandleHideComplete()
+        {
+            _popupTween = null;
+            ClearSlots();
+            gameObject.SetActive(false);
         }
         
         private void HandleClaimButtonClicked()
