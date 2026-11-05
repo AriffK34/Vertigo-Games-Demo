@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using VertigoDemo.Core;
@@ -10,13 +9,14 @@ namespace VertigoDemo.UI
 {
     public class InventoryView : MonoBehaviour
     {
+        public event Action<InventorySlotView> OnRewardSlotReady;
+        
         [SerializeField] private InventorySlotView slotPrefab;
         [SerializeField] private Transform slotsParent;
         [SerializeField] private ScrollRect scrollRect;
         
         private readonly Dictionary<ItemData, InventorySlotView> _slotViews = new();
         private SessionInventory _inventory;
-        private Tween _scrollTween;
 
         private void OnValidate()
         {
@@ -38,7 +38,6 @@ namespace VertigoDemo.UI
 
         private void OnDestroy()
         {
-            _scrollTween?.Kill();
             if (_inventory != null)
             {
                 _inventory.OnItemAdded -= HandleItemAdded;
@@ -48,31 +47,24 @@ namespace VertigoDemo.UI
 
         private void HandleItemAdded(ItemData item, int amount)
         {
-            if (_slotViews.TryGetValue(item, out var slotView))
+            if (_slotViews.TryGetValue(item, out InventorySlotView slotView))
             {
                 slotView.UpdateAmount(amount);
             }
             else
             {
-                var newSlot = Instantiate(slotPrefab, slotsParent);
-                newSlot.Setup(item, amount);
-                _slotViews.Add(item, newSlot);
-                
-                Canvas.ForceUpdateCanvases();
-                _scrollTween?.Kill();
-                scrollRect.StopMovement();
-                _scrollTween = scrollRect
-                    .DOVerticalNormalizedPos(0f, 0.4f)
-                    .SetEase(Ease.OutQuad)
-                    .SetRecyclable(false)
-                    .SetLink(gameObject);
+                slotView = Instantiate(slotPrefab, slotsParent);
+                slotView.Setup(item, amount);
+                _slotViews.Add(item, slotView);
             }
+
+            RevealSlot(slotView);
+            OnRewardSlotReady?.Invoke(slotView);
         }
         
         private void HandleInventoryCleared()
         {
-            _scrollTween?.Kill();
-            _scrollTween = null;
+            scrollRect.enabled = true;
             scrollRect.StopMovement();
             foreach (var slotView in _slotViews.Values)
             {
@@ -83,6 +75,38 @@ namespace VertigoDemo.UI
             }
             _slotViews.Clear();
             scrollRect.verticalNormalizedPosition = 1f;
+        }
+
+        private void RevealSlot(InventorySlotView slotView)
+        {
+            scrollRect.StopMovement();
+            Canvas.ForceUpdateCanvases();
+
+            RectTransform content = scrollRect.content;
+            RectTransform viewport = scrollRect.viewport;
+            RectTransform slotTransform = (RectTransform)slotView.transform;
+
+            float hiddenHeight = content.rect.height - viewport.rect.height;
+            if (hiddenHeight > 0f)
+            {
+                Vector3 slotCenter = content.InverseTransformPoint(
+                    slotTransform.TransformPoint(slotTransform.rect.center));
+
+                float distanceFromTop = content.rect.yMax - slotCenter.y;
+                float scrollOffset = distanceFromTop - viewport.rect.height * 0.5f;
+                scrollRect.verticalNormalizedPosition = Mathf.Clamp01(1f - scrollOffset / hiddenHeight);
+            }
+            else
+            {
+                scrollRect.verticalNormalizedPosition = 1f;
+            }
+            Canvas.ForceUpdateCanvases();
+            scrollRect.enabled = false;
+        }
+
+        public void CompleteRewardPresentation()
+        {
+            scrollRect.enabled = true;
         }
     }
 }

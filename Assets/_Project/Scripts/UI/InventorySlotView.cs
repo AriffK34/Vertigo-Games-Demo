@@ -13,6 +13,14 @@ namespace VertigoDemo.UI
         [SerializeField] private TextMeshProUGUI itemAmountText;
 
         public ItemData Item { get; private set; }
+
+        public Vector3 IconPosition
+        {
+            get
+            {
+                return itemIconImage.rectTransform.position;
+            }
+        }
         
         private void OnDestroy()
         {

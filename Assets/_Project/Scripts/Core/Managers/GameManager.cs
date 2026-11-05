@@ -1,5 +1,4 @@
 using System;
-using DG.Tweening;
 using UnityEngine;
 using VertigoDemo.Data;
 
@@ -14,7 +13,10 @@ namespace VertigoDemo.Core
         [SerializeField] private EconomyConfig _economyConfig;
 
         private readonly GameStateMachine _stateMachine = new GameStateMachine();
-        private Tween _rewardDelayTween;
+
+        private bool _isWheelTransitionComplete;
+        private bool _isZoneBarTransitionComplete;
+        
         
         public SessionInventory Inventory { get; private set; }
         public EconomyService Economy { get; private set; }
@@ -47,7 +49,6 @@ namespace VertigoDemo.Core
 
         private void OnDestroy()
         {
-            _rewardDelayTween?.Kill();
             if (wheelController)
             {
                 wheelController.OnSpinStarted -= HandleSpinStarted;
@@ -76,16 +77,10 @@ namespace VertigoDemo.Core
             SetState(GameState.RewardGiving);
             int rewardAmount = zoneManager.CalculateRewardAmount(sliceData.ItemData, sliceData.ItemAmount);
             Inventory.AddItem(sliceData.ItemData, rewardAmount);
-            _rewardDelayTween?.Kill();
-            _rewardDelayTween = DOVirtual.DelayedCall(
-                    0.8f,
-                    AdvanceAfterReward)
-                .SetLink(gameObject);
         }
 
-        private void AdvanceAfterReward()
+        public void CompleteRewardPresentation()
         {
-            _rewardDelayTween = null;
             if (CurrentState != GameState.RewardGiving)
             {
                 return;
@@ -96,8 +91,26 @@ namespace VertigoDemo.Core
         
         public void CompleteZoneTransition()
         {
-            if (CurrentState != GameState.ZoneTransition &&
-                CurrentState != GameState.Resetting) return;
+            _isWheelTransitionComplete = true;
+            TryCompleteZoneTransition();
+        }
+
+        public void CompleteZoneBarTransition()
+        {
+            _isZoneBarTransitionComplete = true;
+            TryCompleteZoneTransition();
+        }
+
+        private void TryCompleteZoneTransition()
+        {
+            if (CurrentState != GameState.ZoneTransition && CurrentState != GameState.Resetting)
+            {
+                return;
+            }
+            if (!_isWheelTransitionComplete || !_isZoneBarTransitionComplete)
+            {
+                return;
+            }
             SetState(GameState.Idle);
         }
 
@@ -139,8 +152,6 @@ namespace VertigoDemo.Core
 
         private void RestartGame()
         {
-            _rewardDelayTween?.Kill();
-            _rewardDelayTween = null;
             SetState(GameState.Resetting);
             zoneManager.ResetZone();
         }
@@ -152,6 +163,13 @@ namespace VertigoDemo.Core
                 throw new InvalidOperationException(
                     $"Invalid game state transition: {CurrentState} -> {nextState}");
             }
+
+            if (nextState == GameState.ZoneTransition || nextState == GameState.Resetting)
+            {
+                _isWheelTransitionComplete = false;
+                _isZoneBarTransitionComplete = false;
+            }
+            
             OnGameStateChanged?.Invoke();
         }
     }   

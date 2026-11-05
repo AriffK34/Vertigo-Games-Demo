@@ -28,6 +28,14 @@ namespace VertigoDemo.UI
         private Action _onRotationComplete;
         private int _targetSliceIndex;
         private int _lastTickSlice;
+
+        public Vector3 WinningIconPosition
+        {
+            get
+            {
+                return sliceViews[_targetSliceIndex].IconPosition;
+            }
+        }
         
         protected void OnValidate()
         {
