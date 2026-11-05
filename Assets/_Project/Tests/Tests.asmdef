@@ -5,7 +5,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "VertigoDemo.Core.Models",
-        "VertigoDemo.Data"
+        "VertigoDemo.Data",
+        "VertigoDemo.Messaging"
     ],
     "includePlatforms": [
         "Editor"
