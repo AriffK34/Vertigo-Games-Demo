@@ -1,8 +1,9 @@
 {
-    "name": "VertigoDemo.Core.Models",
+    "name": "VertigoDemo.Core",
     "rootNamespace": "",
     "references": [
-        "GUID:c58773300270b7b42bb2424efc7a0f89"
+        "GUID:c58773300270b7b42bb2424efc7a0f89",
+        "GUID:b753c0d3ef6ef384c955215b48e4255b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
