@@ -15,3 +15,4 @@ MonoBehaviour:
   itemName: Melee Tier 2
   itemType: 2
   itemIcon: {fileID: 21300000, guid: f5a4c70a662eaf543898c2431a5d1ee8, type: 3}
+  _growthProfile: {fileID: 11400000, guid: 4d70af4da7fe3bc4691f85da1b78c8d5, type: 2}

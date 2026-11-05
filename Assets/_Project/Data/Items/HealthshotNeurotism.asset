@@ -15,3 +15,4 @@ MonoBehaviour:
   itemName: Neurotism Healthshot
   itemType: 2
   itemIcon: {fileID: 1741763805, guid: 9e147aa5dbbc97d4bb17c151b6717e6d, type: 3}
+  _growthProfile: {fileID: 11400000, guid: 4d70af4da7fe3bc4691f85da1b78c8d5, type: 2}

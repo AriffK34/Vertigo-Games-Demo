@@ -15,3 +15,4 @@ MonoBehaviour:
   itemName: Molotov
   itemType: 2
   itemIcon: {fileID: 1204804370, guid: 8fc92b51bd79b6448997b884c5a4dc31, type: 3}
+  _growthProfile: {fileID: 11400000, guid: 4d70af4da7fe3bc4691f85da1b78c8d5, type: 2}

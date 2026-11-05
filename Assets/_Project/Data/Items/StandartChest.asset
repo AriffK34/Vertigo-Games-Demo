@@ -15,3 +15,4 @@ MonoBehaviour:
   itemName: Standart Chest
   itemType: 2
   itemIcon: {fileID: 21300000, guid: cc1fc06df8f013340a5bb9309e042ba8, type: 3}
+  _growthProfile: {fileID: 11400000, guid: 4d70af4da7fe3bc4691f85da1b78c8d5, type: 2}

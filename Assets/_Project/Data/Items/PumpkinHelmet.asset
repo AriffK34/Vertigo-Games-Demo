@@ -15,3 +15,4 @@ MonoBehaviour:
   itemName: Pumpkin Helmet
   itemType: 2
   itemIcon: {fileID: 266956252, guid: d390023bf0e736d44b9d928ab05573d0, type: 3}
+  _growthProfile: {fileID: 11400000, guid: 4d70af4da7fe3bc4691f85da1b78c8d5, type: 2}

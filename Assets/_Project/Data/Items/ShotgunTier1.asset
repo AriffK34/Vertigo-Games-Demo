@@ -15,3 +15,4 @@ MonoBehaviour:
   itemName: Shotgun Tier 1
   itemType: 2
   itemIcon: {fileID: 962453049, guid: d98fe52b17ed52247b8512211315b466, type: 3}
+  _growthProfile: {fileID: 11400000, guid: 4d70af4da7fe3bc4691f85da1b78c8d5, type: 2}

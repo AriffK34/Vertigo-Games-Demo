@@ -15,3 +15,4 @@ MonoBehaviour:
   itemName: Gold
   itemType: 0
   itemIcon: {fileID: -868911362, guid: fca5f36909fbed744a339b69e982b8dd, type: 3}
+  _growthProfile: {fileID: 11400000, guid: fa53fbb846d553c44902f7a2f55da705, type: 2}

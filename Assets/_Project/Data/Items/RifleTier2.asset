@@ -15,3 +15,4 @@ MonoBehaviour:
   itemName: Rifle Tier 2
   itemType: 2
   itemIcon: {fileID: 1651922615, guid: 186ce280ff95b57419709918a58026b2, type: 3}
+  _growthProfile: {fileID: 11400000, guid: 4d70af4da7fe3bc4691f85da1b78c8d5, type: 2}
