@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
+using VertigoDemo.Core.Contracts;
 using VertigoDemo.Data;
 
 namespace VertigoDemo.Core
 {
-    public class ZoneManager : MonoBehaviour
+    public class ZoneManager : MonoBehaviour, IZoneReader
     {
         #region Events
 
@@ -14,16 +15,13 @@ namespace VertigoDemo.Core
 
         #region Fields
 
-        private const int FIRST_ZONE = 1;
-        
         [SerializeField] private ZoneProgressionConfig _progressionConfig;
         [SerializeField, Min(0f)] private float _growthMultiplier = 10f;
         [SerializeField, Min(0f)] private float _growthExponent = 0.08f;
         [SerializeField, Min(0f)] private float _linearSlope = 0.3334f;
         [SerializeField, Min(1)] private int _growthEndZone = 30;
 
-        private ZoneRuleResolver _ruleResolver;
-        private int _currentZone = FIRST_ZONE;
+        private ZoneProgression _zoneProgression;
         
         #endregion
 
@@ -33,16 +31,7 @@ namespace VertigoDemo.Core
         {
             get
             {
-                return _currentZone;
-            }
-            private set
-            {
-                if (_currentZone == value)
-                {
-                    return;
-                }
-                _currentZone = value;
-                OnZoneChanged?.Invoke();
+                return _zoneProgression.CurrentZone;
             }
         }
 
@@ -50,7 +39,7 @@ namespace VertigoDemo.Core
         {
             get
             {
-                return GetRule(CurrentZone);
+                return _zoneProgression.CurrentRule;
             }
         }
 
@@ -58,13 +47,13 @@ namespace VertigoDemo.Core
         {
             get
             {
-                return CurrentRule.IsLeaveAllowed;
+                return _zoneProgression.CanLeave;
             }
         }
 
         #endregion
 
-        #region Unity CallBacks
+        #region Lifecycle
 
         private void Awake()
         {
@@ -72,21 +61,23 @@ namespace VertigoDemo.Core
             {
                 throw new InvalidOperationException("Zone progression config must be assigned.");
             }
-            _ruleResolver = new ZoneRuleResolver(_progressionConfig.Rules);
+            ZoneRuleResolver ruleResolver = new ZoneRuleResolver(_progressionConfig.Rules);
             foreach (ZoneRuleConfig rule in _progressionConfig.Rules)
             {
                 rule.ValidateWheel();
             }
-            
+
+            _zoneProgression = new ZoneProgression(ruleResolver);
+
         }
 
         #endregion
 
-        #region Zone Methods
+        #region Public Methods
 
         public ZoneRuleConfig GetRule(int zone)
         {
-            return _ruleResolver.GetRule(zone);
+            return _zoneProgression.GetRule(zone);
         }
 
         public WheelConfig GetCurrentWheel()
@@ -96,12 +87,13 @@ namespace VertigoDemo.Core
 
         public void AdvanceZone()
         {
-            CurrentZone++;
+            _zoneProgression.AdvanceZone();
+            OnZoneChanged?.Invoke();
         }
         
         public void ResetZone()
         {
-            CurrentZone = FIRST_ZONE;
+            _zoneProgression.ResetZone();
             OnZoneChanged?.Invoke();
         }
 

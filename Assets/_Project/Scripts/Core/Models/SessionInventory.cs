@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using VertigoDemo.Core.Contracts;
 using VertigoDemo.Data;
 
 namespace VertigoDemo.Core
 {
-    public class SessionInventory
+    public class SessionInventory : IRunRewardsReader
     {
         #region Events
 

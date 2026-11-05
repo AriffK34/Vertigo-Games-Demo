@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using VertigoDemo.Core.Contracts;
 using VertigoDemo.Data;
 
 namespace VertigoDemo.Core
 {
-    public sealed class EconomyService
+    public sealed class EconomyService : IEconomyReader
     {
         #region Events
 
@@ -34,6 +35,22 @@ namespace VertigoDemo.Core
             get
             {
                 return GetBalance(_config.ReviveCurrency) >= _config.ReviveCost;
+            }
+        }
+
+        public ItemData ReviveCurrency
+        {
+            get
+            {
+                return _config.ReviveCurrency;
+            }
+        }
+
+        public int ReviveCost
+        {
+            get
+            {
+                return _config.ReviveCost;
             }
         }
 

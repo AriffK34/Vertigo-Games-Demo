@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
+using VertigoDemo.Core.Contracts;
 using VertigoDemo.Data;
 
 namespace VertigoDemo.Core
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoBehaviour, IGameStateReader
     {
         public event Action OnGameStateChanged;
         
