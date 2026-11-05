@@ -19,3 +19,5 @@ MonoBehaviour:
   _hasBomb: 0
   _isLeaveAllowed: 1
   _zoneSprite: {fileID: 21300000, guid: 3db1f38521e405e40b06fae21921e924, type: 3}
+  _hasEntryEffect: 1
+  _entryEffectColor: {r: 0.7411765, g: 0.92156863, b: 1, a: 1}

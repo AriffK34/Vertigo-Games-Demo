@@ -16,6 +16,9 @@ namespace VertigoDemo.Data
         [SerializeField] private bool _isLeaveAllowed;
         [SerializeField] private Sprite _zoneSprite;
 
+        [SerializeField] private bool _hasEntryEffect;
+        [SerializeField] private Color _entryEffectColor = Color.white;
+
         #endregion
 
         #region Properties
@@ -49,6 +52,22 @@ namespace VertigoDemo.Data
             get
             {
                 return _zoneSprite;
+            }
+        }
+        
+        public bool HasEntryEffect
+        {
+            get
+            {
+                return _hasEntryEffect;
+            }
+        }
+
+        public Color EntryEffectColor
+        {
+            get
+            {
+                return _entryEffectColor;
             }
         }
 

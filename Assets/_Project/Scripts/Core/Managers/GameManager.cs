@@ -16,6 +16,7 @@ namespace VertigoDemo.Core
 
         private bool _isWheelTransitionComplete;
         private bool _isZoneBarTransitionComplete;
+        private bool _isZoneEntryEffectComplete;
         
         
         public SessionInventory Inventory { get; private set; }
@@ -107,11 +108,19 @@ namespace VertigoDemo.Core
             {
                 return;
             }
-            if (!_isWheelTransitionComplete || !_isZoneBarTransitionComplete)
+            if (!_isWheelTransitionComplete || 
+                !_isZoneBarTransitionComplete ||
+                !_isZoneEntryEffectComplete)
             {
                 return;
             }
             SetState(GameState.Idle);
+        }
+
+        public void CompleteZoneEntryEffect()
+        {
+            _isZoneEntryEffectComplete = true;
+            TryCompleteZoneTransition();
         }
 
         public void RequestLeave()
@@ -168,6 +177,7 @@ namespace VertigoDemo.Core
             {
                 _isWheelTransitionComplete = false;
                 _isZoneBarTransitionComplete = false;
+                _isZoneEntryEffectComplete = false;
             }
             
             OnGameStateChanged?.Invoke();

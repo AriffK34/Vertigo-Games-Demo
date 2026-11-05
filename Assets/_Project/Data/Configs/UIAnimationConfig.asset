@@ -23,5 +23,5 @@ MonoBehaviour:
   _rewardFlightEase: 7
   _burstDuration: 0.8
   _burstPeakScale: 1.4
-  _burstBrightness: 0.65
+  _burstBrightness: 0.4
   _burstEase: 6
