@@ -17,7 +17,10 @@ namespace VertigoDemo.Data
         [SerializeField, Min(0.01f)] private float _rewardFlightDuration = 0.5f;
         [SerializeField, Min(1f)] private float _rewardFlightPeakScale = 1.4f;
         [SerializeField] private Ease _rewardFlightEase = Ease.InOutQuad;
-
+        [SerializeField, Min(0.01f)] private float _burstDuration = 0.5f;
+        [SerializeField, Min(1f)] private float _burstPeakScale = 1.15f;
+        [SerializeField, Range(0f, 1f)] private float _burstBrightness = 0.3f;
+        [SerializeField] private Ease _burstEase = Ease.OutQuad;
         #endregion
 
         #region Properties
@@ -93,6 +96,38 @@ namespace VertigoDemo.Data
                 return _rewardFlightEase;
             }
         }
+        
+        public float BurstDuration
+        {
+            get
+            {
+                return _burstDuration;
+            }
+        }
+
+        public float BurstPeakScale
+        {
+            get
+            {
+                return _burstPeakScale;
+            }
+        }
+
+        public float BurstBrightness
+        {
+            get
+            {
+                return _burstBrightness;
+            }
+        }
+
+        public Ease BurstEase
+        {
+            get
+            {
+                return _burstEase;
+            }
+        }
 
         #endregion
         
@@ -105,6 +140,9 @@ namespace VertigoDemo.Data
             _popupHideDuration = Mathf.Max(0.01f, _popupHideDuration);
             _rewardFlightPeakScale = Mathf.Max(1f, _rewardFlightPeakScale);
             _rewardFlightDuration = Mathf.Max(0.01f, _rewardFlightDuration);
+            _burstDuration = Mathf.Max(0.01f, _burstDuration);
+            _burstPeakScale = Mathf.Max(1f, _burstPeakScale);
+            _burstBrightness = Mathf.Clamp01(_burstBrightness);
         }
 
         #endregion

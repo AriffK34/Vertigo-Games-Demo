@@ -18,5 +18,10 @@ MonoBehaviour:
   _popupShowEase: 27
   _popupHideDuration: 0.2
   _popupHideEase: 26
-  _rewardFlightDuration: 0.5
+  _rewardFlightDuration: 0.75
+  _rewardFlightPeakScale: 1.5
   _rewardFlightEase: 7
+  _burstDuration: 0.8
+  _burstPeakScale: 1.4
+  _burstBrightness: 0.65
+  _burstEase: 6

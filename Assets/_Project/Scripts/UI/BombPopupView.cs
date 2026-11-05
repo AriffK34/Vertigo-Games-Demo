@@ -17,6 +17,8 @@ namespace VertigoDemo.UI
 
         [SerializeField] private UIAnimationConfig _animationConfig;
         private Tween _popupTween;
+
+        [SerializeField] private UIBurstView _burstView;
         
         private void OnValidate()
         {
@@ -50,10 +52,12 @@ namespace VertigoDemo.UI
             reviveButton.interactable = canAffordRevive;
             gameObject.SetActive(true);
             _popupTween = PopupAnimation.Show(cardTransform, _animationConfig);
+            _burstView.Play();
         }
         
         public void Hide()
         {
+            _burstView.Stop();
             _popupTween?.Kill();
 
             if (!gameObject.activeInHierarchy)
