@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VertigoDemo.Data;
@@ -14,6 +15,7 @@ namespace VertigoDemo.UI
         [SerializeField] private Button giveUpButton;
         [SerializeField] private Button reviveButton;
         [SerializeField] private Transform cardTransform;
+        [SerializeField] private TMP_Text _reviveText;
 
         [SerializeField] private UIAnimationConfig _animationConfig;
         private Tween _popupTween;
@@ -46,8 +48,9 @@ namespace VertigoDemo.UI
             if (reviveButton != null) reviveButton.onClick.RemoveListener(HandleReviveClicked);
         }
         
-        public void Show(bool canAffordRevive)
+        public void Show(bool canAffordRevive, int reviveCost)
         {
+            _reviveText.text = $"REVIVE ({reviveCost})";
             _popupTween?.Kill();
             reviveButton.interactable = canAffordRevive;
             gameObject.SetActive(true);

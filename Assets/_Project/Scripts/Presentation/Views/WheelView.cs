@@ -66,7 +66,7 @@ namespace VertigoDemo.UI
         protected void OnDestroy()
         {
             if (spinButton) spinButton.onClick.RemoveListener(HandleSpinClicked);
-            StopRotation();
+            CancelRotation();
             
             _indicatorTween?.Kill();
             _indicatorTween = null;
@@ -88,7 +88,7 @@ namespace VertigoDemo.UI
         
         public void RotateWheel(int targetIndex, Action onComplete)
         {
-            StopRotation();
+            CancelRotation();
 
             _targetSliceIndex = targetIndex;
             _lastTickSlice = -1;
@@ -115,9 +115,9 @@ namespace VertigoDemo.UI
                 .OnComplete(HandleSpinComplete);
         }
         
-        public void ResetRotation(float duration, Action onComplete)
+        public Tween ResetRotation(float duration, Action onComplete)
         {
-            StopRotation();
+            CancelRotation();
             _onRotationComplete = onComplete;
             _indicatorTween.Rewind();
             _rotationTween = wheelBaseImage.rectTransform
@@ -126,6 +126,7 @@ namespace VertigoDemo.UI
                 .SetRecyclable(false)
                 .SetLink(gameObject)
                 .OnComplete(CompleteRotation);
+            return _rotationTween;
         }
 
 
@@ -158,7 +159,7 @@ namespace VertigoDemo.UI
             callback?.Invoke();
         }
 
-        private void StopRotation()
+        public void CancelRotation()
         {
             Tween previousTween = _rotationTween;
             _rotationTween = null;

@@ -1,53 +1,95 @@
+using System;
 using UnityEngine;
+using VertigoDemo.Core;
+using VertigoDemo.Core.Contracts;
+using VertigoDemo.Core.Events;
+using VertigoDemo.Messaging;
 using VertigoDemo.UI;
 
-namespace VertigoDemo.Core
+namespace VertigoDemo.Presentation
 {
     public class LeaveController : MonoBehaviour
     {
-        [SerializeField] private GameManager gameManager;
-        [SerializeField] private ZoneManager zoneManager;
+        #region Fields
+
         [SerializeField] private LeaveButtonView leaveButtonView;
-        
-        private void OnValidate()
-        {
-            if (gameManager == null) gameManager = GetComponent<GameManager>();
-            if (zoneManager == null) zoneManager = GetComponent<ZoneManager>();
-        }
-        
-        private void Start()
-        {
-            leaveButtonView.OnLeaveClicked += HandleLeaveClicked;
-            gameManager.OnGameStateChanged += HandleGameStateChanged;
-            zoneManager.OnZoneChanged += HandleZoneChanged;
-        }
+
+        private IGameCommands _commands;
+        private IGameStateReader _state;
+        private IZoneReader _zones;
+        private IEventBus _events;
+
+        #endregion
+
+        #region Lifecycle
 
         private void OnDestroy()
         {
-            if (leaveButtonView != null) leaveButtonView.OnLeaveClicked -= HandleLeaveClicked;
-            if (gameManager != null) gameManager.OnGameStateChanged -= HandleGameStateChanged;
-            if (zoneManager != null) zoneManager.OnZoneChanged -= HandleZoneChanged;
+            if (_events != null)
+            {
+                _events.Unsubscribe<GameStateChanged>(HandleStateChanged);
+            }
+
+            if (leaveButtonView)
+            {
+                leaveButtonView.OnLeaveClicked -= HandleLeaveClicked;
+            }
         }
-        
+
+        #endregion
+
+        #region Public Methods
+
+        public void Initialize(
+            IGameCommands commands,
+            IGameStateReader state,
+            IZoneReader zones,
+            IEventBus events)
+        {
+            if (_events != null)
+            {
+                throw new InvalidOperationException("Leave controller is already initialized.");
+            }
+
+            if (!leaveButtonView)
+            {
+                throw new InvalidOperationException($"{name}: Leave button view must be assigned.");
+            }
+
+            _commands = commands ?? throw new ArgumentNullException(nameof(commands));
+            _state = state ?? throw new ArgumentNullException(nameof(state));
+            _zones = zones ?? throw new ArgumentNullException(nameof(zones));
+            _events = events ?? throw new ArgumentNullException(nameof(events));
+
+            leaveButtonView.OnLeaveClicked += HandleLeaveClicked;
+            _events.Subscribe<GameStateChanged>(HandleStateChanged);
+
+            Refresh();
+        }
+
+        #endregion
+
+        #region Private Methods
+
         private void HandleLeaveClicked()
         {
-            gameManager.RequestLeave();
+            _commands.RequestLeave();
         }
-        
-        private void HandleGameStateChanged()
+
+        private void HandleStateChanged(GameStateChanged message)
         {
-            UpdateButtonState();
+            Refresh();
         }
-        
-        private void HandleZoneChanged()
+
+        private void Refresh()
         {
-            UpdateButtonState();
+            bool isVisible =
+                _state.CurrentState == GameState.Idle &&
+                _zones.CanLeave;
+
+            leaveButtonView.SetVisible(isVisible);
         }
-        
-        private void UpdateButtonState()
-        {
-            bool canLeave = zoneManager.CanLeave && gameManager.CurrentState == GameState.Idle;
-            leaveButtonView.SetVisible(canLeave);
-        }
+
+        #endregion
     }
 }

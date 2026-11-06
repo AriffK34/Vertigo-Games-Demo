@@ -1174,15 +1174,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 381220585}
-  - component: {fileID: 381220586}
-  - component: {fileID: 381220584}
   - component: {fileID: 381220583}
   - component: {fileID: 381220587}
   - component: {fileID: 381220588}
-  - component: {fileID: 381220589}
   - component: {fileID: 381220590}
   - component: {fileID: 381220591}
   - component: {fileID: 381220592}
+  - component: {fileID: 381220594}
   - component: {fileID: 381220593}
   m_Layer: 0
   m_Name: GameManager
@@ -1203,26 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a339d86373bab408c063e77b75f5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 381220586}
-  zoneManager: {fileID: 381220584}
   wheelView: {fileID: 145458317}
---- !u!114 &381220584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381220582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68c9f1f06e7ef2245a0298181bc84d39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _progressionConfig: {fileID: 11400000, guid: 7fe08c7f25ab4ee4e82996bf81f51b6b, type: 2}
-  _growthMultiplier: 10
-  _growthExponent: 0.08
-  _linearSlope: 0.3334
-  _growthEndZone: 30
 --- !u!4 &381220585
 Transform:
   m_ObjectHideFlags: 0
@@ -1238,21 +1217,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &381220586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381220582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ff1223326b82914f9b8e61c4d705fd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zoneManager: {fileID: 381220584}
-  wheelController: {fileID: 381220583}
-  _economyConfig: {fileID: 11400000, guid: c8341240dd660fe46b77643767c10dea, type: 2}
 --- !u!114 &381220587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1265,8 +1229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2710599b5cd2b9c4dbfb7b00d3ba4cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 381220586}
-  zoneManager: {fileID: 381220584}
   leaveButtonView: {fileID: 920295645}
 --- !u!114 &381220588
 MonoBehaviour:
@@ -1281,25 +1243,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryView: {fileID: 385056055}
-  _gameManager: {fileID: 381220586}
   _wheelView: {fileID: 145458317}
   _rewardFlightView: {fileID: 1325022024}
---- !u!114 &381220589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381220582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bee126509a2343d4a886a0024af4c236, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameManager: {fileID: 381220586}
-  _zoneManager: {fileID: 381220584}
-  _zoneBarView: {fileID: 1276537612}
-  _currentZoneSprite: {fileID: 21300000, guid: 8fcf55be37702824aa4697840d639120, type: 3}
 --- !u!114 &381220590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1312,7 +1257,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9ddb3213362344cba77c40ac68e042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 381220586}
   _currencyBarView: {fileID: 526183320}
 --- !u!114 &381220591
 MonoBehaviour:
@@ -1326,7 +1270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5705f0c243e328a42a32db9813e04ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 381220586}
   claimPopupView: {fileID: 1177431056}
 --- !u!114 &381220592
 MonoBehaviour:
@@ -1340,7 +1283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c223e2942cf18c54290ee9b72e59d76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 381220586}
   bombPopupView: {fileID: 1197975044}
 --- !u!114 &381220593
 MonoBehaviour:
@@ -1351,12 +1293,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 381220582}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76909511838cc3045934eeaa99dfdd01, type: 3}
+  m_Script: {fileID: 11500000, guid: 3fa3e54c6d509824e9550845725525bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 381220586}
-  _zoneManager: {fileID: 381220584}
-  _effectView: {fileID: 1315264905}
+  _progressionConfig: {fileID: 11400000, guid: 7fe08c7f25ab4ee4e82996bf81f51b6b, type: 2}
+  _economyConfig: {fileID: 11400000, guid: c8341240dd660fe46b77643767c10dea, type: 2}
+  _wheelController: {fileID: 381220583}
+  _inventoryController: {fileID: 381220588}
+  _zoneTransitionController: {fileID: 381220594}
+  _currencyBarController: {fileID: 381220590}
+  _leaveController: {fileID: 381220587}
+  _claimPopupController: {fileID: 381220591}
+  _bombPopupController: {fileID: 381220592}
+--- !u!114 &381220594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381220582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ab9957b3e997843a2c636b31eba1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wheelView: {fileID: 145458317}
+  _zoneBarView: {fileID: 1276537612}
+  _entryEffectView: {fileID: 1315264905}
+  _wheelAnimationConfig: {fileID: 11400000, guid: be6bbe0814bfd5240b0b6408fd13793c, type: 2}
+  _currentZoneSprite: {fileID: 21300000, guid: 8fcf55be37702824aa4697840d639120, type: 3}
 --- !u!1 &385056053
 GameObject:
   m_ObjectHideFlags: 0
@@ -3937,6 +3902,7 @@ MonoBehaviour:
   giveUpButton: {fileID: 913007901}
   reviveButton: {fileID: 1879000267}
   cardTransform: {fileID: 753281351}
+  _reviveText: {fileID: 904812803}
   _animationConfig: {fileID: 11400000, guid: 8da6380025c2e774fbd64a577cca5393, type: 2}
   _burstView: {fileID: 913759060}
 --- !u!1 &1240321090

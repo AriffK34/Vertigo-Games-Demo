@@ -21,6 +21,18 @@ namespace VertigoDemo.UI
 
         #endregion
 
+        #region Properties
+
+        public int SlotCount
+        {
+            get
+            {
+                return _zoneSlots.Length;
+            }
+        }
+        
+        #endregion
+        
         #region Lifecycle
 
         private void OnValidate()
@@ -40,7 +52,7 @@ namespace VertigoDemo.UI
         
         #region Public Methods
 
-        public void UpdateSlots(ZoneSlotDisplayData[] slotsData, bool hasAnimation, Action onComplete)
+        public Tween UpdateSlots(ZoneSlotDisplayData[] slotsData, bool hasAnimation, Action onComplete)
         {
             StopSlide();
             _content.anchoredPosition = Vector2.zero;
@@ -56,7 +68,7 @@ namespace VertigoDemo.UI
                 ApplySlots(slotsData);
                 onComplete?.Invoke();
 
-                return;
+                return null;
             }
 
             _pendingSlotsData = slotsData;
@@ -70,10 +82,21 @@ namespace VertigoDemo.UI
                 .SetRecyclable(false)
                 .SetLink(gameObject)
                 .OnComplete(HandleSlideComplete);
+            return _slideTween;
         }
         
         #endregion
 
+        #region Public Methods
+
+        public void CancelTransition()
+        {
+            StopSlide();
+            _content.anchoredPosition = Vector2.zero;
+        }
+
+        #endregion
+        
         #region Private Methods
 
         private void ApplySlots(ZoneSlotDisplayData[] slotsData)

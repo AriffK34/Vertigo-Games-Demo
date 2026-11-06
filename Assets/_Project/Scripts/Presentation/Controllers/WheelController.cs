@@ -1,85 +1,96 @@
 using System;
 using UnityEngine;
-using VertigoDemo.Data;
+using VertigoDemo.Core;
+using VertigoDemo.Core.Contracts;
+using VertigoDemo.Core.Events;
+using VertigoDemo.Messaging;
 using VertigoDemo.UI;
-using Random = UnityEngine.Random;
 
-namespace VertigoDemo.Core
+namespace VertigoDemo.Presentation
 {
     public class WheelController : MonoBehaviour
     {
-        public event Action OnSpinStarted;
-        public event Action<WheelSliceData> OnSpinLanded;
+        #region Fields
 
-        [SerializeField] private GameManager gameManager;
-        [SerializeField] private ZoneManager zoneManager;
         [SerializeField] private WheelView wheelView;
 
-        private readonly SliceDisplayData[] _sliceDisplayCache = new SliceDisplayData[8];
-        private WheelSliceData _spinResult;
-        
-        private void OnValidate()
-        {
-            if (gameManager == null) gameManager = GetComponent<GameManager>();
-            if (zoneManager == null) zoneManager = GetComponent<ZoneManager>();
-        }
-        
-        private void Start()
-        {
-            gameManager.OnGameStateChanged += HandleGameStateChanged;
-            zoneManager.OnZoneChanged += UpdateWheel;
-            wheelView.OnSpinClicked += HandleSpinClicked;
-            HandleGameStateChanged();
-            UpdateWheel();
-        }
+        private IGameCommands _commands;
+        private IGameFlowCallbacks _callbacks;
+        private IEventBus _events;
+
+        #endregion
+
+        #region Lifecycle
 
         private void OnDestroy()
         {
-            if (gameManager != null) gameManager.OnGameStateChanged -= HandleGameStateChanged;
-            if (zoneManager != null) zoneManager.OnZoneChanged -= UpdateWheel;
-            if (wheelView != null) wheelView.OnSpinClicked -= HandleSpinClicked;
+            if (_events != null)
+            {
+                _events.Unsubscribe<SpinStarted>(HandleSpinStarted);
+                _events.Unsubscribe<GameStateChanged>(HandleStateChanged);
+            }
+
+            if (wheelView)
+            {
+                wheelView.OnSpinClicked -= HandleSpinClicked;
+                wheelView.CancelRotation();
+            }
         }
+
+        #endregion
+
+        #region Public Methods
+
+        public void Initialize(
+            IGameCommands commands,
+            IGameStateReader state,
+            IGameFlowCallbacks callbacks,
+            IEventBus events)
+        {
+            if (!wheelView)
+            {
+                throw new InvalidOperationException($"{name}: Wheel view must be assigned.");
+            }
+
+            if (state == null)
+            {
+                throw new ArgumentNullException(nameof(state));
+            }
+
+            _commands = commands ?? throw new ArgumentNullException(nameof(commands));
+            _callbacks = callbacks ?? throw new ArgumentNullException(nameof(callbacks));
+            _events = events ?? throw new ArgumentNullException(nameof(events));
+
+            wheelView.OnSpinClicked += HandleSpinClicked;
+            _events.Subscribe<SpinStarted>(HandleSpinStarted);
+            _events.Subscribe<GameStateChanged>(HandleStateChanged);
+
+            wheelView.SetSpinInteractable(
+                state.CurrentState == GameState.Idle);
+        }
+
+        #endregion
+
+        #region Private Methods
 
         private void HandleSpinClicked()
         {
-            if (gameManager.CurrentState != GameState.Idle)
-            {
-                return;
-            }
+            _commands.TrySpin();
+        }
 
-            WheelConfig currentConfig = zoneManager.GetCurrentWheel();
-            int targetIndex = Random.Range(0, currentConfig.WheelSlices.Length);
-            _spinResult = currentConfig.WheelSlices[targetIndex];
-            OnSpinStarted?.Invoke();
-            wheelView.RotateWheel(targetIndex, HandleSpinFinished);
+        private void HandleSpinStarted(SpinStarted message)
+        {
+            wheelView.RotateWheel(
+                message.Result.SliceIndex,
+                _callbacks.CompleteSpin);
         }
-        
 
-        private void HandleSpinFinished()
+        private void HandleStateChanged(GameStateChanged message)
         {
-            WheelSliceData result = _spinResult;
-            _spinResult = null;
-            OnSpinLanded?.Invoke(result);
+            wheelView.SetSpinInteractable(
+                message.State == GameState.Idle);
         }
-        
-        private void UpdateWheel()
-        {
-            WheelConfig currentConfig = zoneManager.GetCurrentWheel();
-            for (int i = 0; i < 8; i++)
-            {
-                WheelSliceData slice = currentConfig.WheelSlices[i];
-                string text = slice.IsBomb ? "" : $"x{zoneManager.CalculateRewardAmount(slice.ItemData, slice.ItemAmount)}";
-                _sliceDisplayCache[i] = new SliceDisplayData(slice.ItemData.ItemIcon, text);
-            }
-            wheelView.UpdateWheel(currentConfig.WheelTheme, _sliceDisplayCache);
-            wheelView.ResetRotation(0.6f, gameManager.CompleteZoneTransition);
-        }
-        
-        
 
-        private void HandleGameStateChanged()
-        {
-            wheelView.SetSpinInteractable(gameManager.CurrentState == GameState.Idle);
-        }
-    }    
+        #endregion
+    }
 }

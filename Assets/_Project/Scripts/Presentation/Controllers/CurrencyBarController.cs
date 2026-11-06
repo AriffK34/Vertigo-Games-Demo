@@ -1,46 +1,63 @@
+using System;
 using UnityEngine;
+using VertigoDemo.Core.Contracts;
+using VertigoDemo.Core.Events;
+using VertigoDemo.Messaging;
 using VertigoDemo.UI;
 
-namespace VertigoDemo.Core
+namespace VertigoDemo.Presentation
 {
     public class CurrencyBarController : MonoBehaviour
     {
         #region Fields
 
-        [SerializeField] private GameManager _gameManager;
         [SerializeField] private CurrencyBarView _currencyBarView;
 
-        private EconomyService _economy;
+        private IEconomyReader _economy;
+        private IEventBus _events;
 
         #endregion
 
-        #region Unity Callbacks
-
-        private void OnValidate()
-        {
-            if (!_gameManager) _gameManager = GetComponent<GameManager>();
-        }
-
-        private void Start()
-        {
-            _economy = _gameManager.Economy;
-            _economy.OnBalancesChanged += RefreshBalances;
-            _currencyBarView.Refresh(_economy.Balances, false);
-        }
+        #region LifeCycle
 
         private void OnDestroy()
         {
-            if (_economy != null) _economy.OnBalancesChanged -= RefreshBalances;
+            if (_events != null)
+            {
+                _events.Unsubscribe<BalancesChanged>(HandleBalancesChanged);
+            }
         }
 
         #endregion
 
-        #region Methods
+        #region Public Methods
 
-        private void RefreshBalances()
+        public void Initialize(IEconomyReader economy, IEventBus events)
+        {
+            if (_events != null)
+            {
+                throw new InvalidOperationException("Currency bar controller is already initialized.");
+            }
+
+            if (!_currencyBarView)
+            {
+                throw new InvalidOperationException($"{name}: Currency bar view must be assigned.");
+            }
+
+            _economy = economy ?? throw new ArgumentNullException(nameof(economy));
+            _events = events ?? throw new ArgumentNullException(nameof(events));
+
+            _events.Subscribe<BalancesChanged>(HandleBalancesChanged);
+            _currencyBarView.Refresh(_economy.Balances, false);
+        }
+        
+        #endregion
+
+        #region Private Methods
+
+        private void HandleBalancesChanged(BalancesChanged message)
         {
             _currencyBarView.Refresh(_economy.Balances, true);
-
         }
 
         #endregion

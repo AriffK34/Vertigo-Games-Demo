@@ -1,51 +1,48 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using VertigoDemo.Core;
 using VertigoDemo.Data;
 
 namespace VertigoDemo.UI
 {
     public class InventoryView : MonoBehaviour
     {
-        public event Action<InventorySlotView> OnRewardSlotReady;
-        
+        #region Fields
+
         [SerializeField] private InventorySlotView slotPrefab;
         [SerializeField] private Transform slotsParent;
         [SerializeField] private ScrollRect scrollRect;
-        
-        private readonly Dictionary<ItemData, InventorySlotView> _slotViews = new();
-        private SessionInventory _inventory;
+
+        private readonly Dictionary<ItemData, InventorySlotView> _slotViews =
+            new Dictionary<ItemData, InventorySlotView>();
+
+        #endregion
+
+        #region Lifecycle
 
         private void OnValidate()
         {
-            if (scrollRect == null) scrollRect = GetComponent<ScrollRect>();
-        }
-
-        public void Initialize(SessionInventory inventory)
-        {
-            if (_inventory != null)
+            if (!scrollRect)
             {
-                _inventory.OnItemAdded -= HandleItemAdded;
-                _inventory.OnInventoryCleared -= HandleInventoryCleared;
-            }
-
-            _inventory = inventory;
-            _inventory.OnItemAdded += HandleItemAdded;
-            _inventory.OnInventoryCleared += HandleInventoryCleared;
-        }
-
-        private void OnDestroy()
-        {
-            if (_inventory != null)
-            {
-                _inventory.OnItemAdded -= HandleItemAdded;
-                _inventory.OnInventoryCleared -= HandleInventoryCleared;
+                scrollRect = GetComponent<ScrollRect>();
             }
         }
 
-        private void HandleItemAdded(ItemData item, int amount)
+        #endregion
+
+        #region Public Methods
+
+        public void Refresh(IReadOnlyDictionary<ItemData, int> rewards)
+        {
+            Clear();
+
+            foreach (var reward in rewards)
+            {
+                SetItem(reward.Key, reward.Value);
+            }
+        }
+
+        public InventorySlotView SetItem(ItemData item, int amount)
         {
             if (_slotViews.TryGetValue(item, out InventorySlotView slotView))
             {
@@ -58,26 +55,10 @@ namespace VertigoDemo.UI
                 _slotViews.Add(item, slotView);
             }
 
-            RevealSlot(slotView);
-            OnRewardSlotReady?.Invoke(slotView);
-        }
-        
-        private void HandleInventoryCleared()
-        {
-            scrollRect.enabled = true;
-            scrollRect.StopMovement();
-            foreach (var slotView in _slotViews.Values)
-            {
-                if (slotView != null)
-                {
-                    Destroy(slotView.gameObject);
-                }
-            }
-            _slotViews.Clear();
-            scrollRect.verticalNormalizedPosition = 1f;
+            return slotView;
         }
 
-        private void RevealSlot(InventorySlotView slotView)
+        public void RevealSlot(InventorySlotView slotView)
         {
             scrollRect.StopMovement();
             Canvas.ForceUpdateCanvases();
@@ -87,6 +68,7 @@ namespace VertigoDemo.UI
             RectTransform slotTransform = (RectTransform)slotView.transform;
 
             float hiddenHeight = content.rect.height - viewport.rect.height;
+
             if (hiddenHeight > 0f)
             {
                 Vector3 slotCenter = content.InverseTransformPoint(
@@ -94,19 +76,42 @@ namespace VertigoDemo.UI
 
                 float distanceFromTop = content.rect.yMax - slotCenter.y;
                 float scrollOffset = distanceFromTop - viewport.rect.height * 0.5f;
-                scrollRect.verticalNormalizedPosition = Mathf.Clamp01(1f - scrollOffset / hiddenHeight);
+
+                scrollRect.verticalNormalizedPosition =
+                    Mathf.Clamp01(1f - scrollOffset / hiddenHeight);
             }
             else
             {
                 scrollRect.verticalNormalizedPosition = 1f;
             }
+
             Canvas.ForceUpdateCanvases();
             scrollRect.enabled = false;
+        }
+
+        public void Clear()
+        {
+            scrollRect.enabled = true;
+            scrollRect.StopMovement();
+
+            foreach (InventorySlotView slotView in _slotViews.Values)
+            {
+                if (slotView)
+                {
+                    slotView.gameObject.SetActive(false);
+                    Destroy(slotView.gameObject);
+                }
+            }
+
+            _slotViews.Clear();
+            scrollRect.verticalNormalizedPosition = 1f;
         }
 
         public void CompleteRewardPresentation()
         {
             scrollRect.enabled = true;
         }
+
+        #endregion
     }
 }

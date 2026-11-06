@@ -7,12 +7,6 @@ namespace VertigoDemo.Core
 {
     public sealed class EconomyService : IEconomyReader
     {
-        #region Events
-
-        public event Action OnBalancesChanged;
-
-        #endregion
-
         #region Fields
 
         private readonly RewardStore _balances = new RewardStore();
@@ -89,14 +83,12 @@ namespace VertigoDemo.Core
                 _balances.Add(reward.Key, reward.Value);
             
             runInventory.Clear();
-            OnBalancesChanged?.Invoke();
         }
 
         public bool TryRevive()
         {
             bool isSuccessful = _balances.TrySpend(_config.ReviveCurrency, _config.ReviveCost);
             if (!isSuccessful) return false;
-            OnBalancesChanged?.Invoke();
             return true;
         }
 

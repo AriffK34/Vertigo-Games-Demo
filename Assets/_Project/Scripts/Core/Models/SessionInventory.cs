@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using VertigoDemo.Core.Contracts;
 using VertigoDemo.Data;
@@ -7,13 +6,6 @@ namespace VertigoDemo.Core
 {
     public class SessionInventory : IRunRewardsReader
     {
-        #region Events
-
-        public event Action<ItemData, int> OnItemAdded;
-        public event Action OnInventoryCleared;
-
-        #endregion
-
         #region Fields
 
         private readonly RewardStore _rewardStore = new RewardStore();
@@ -37,14 +29,11 @@ namespace VertigoDemo.Core
         public void AddItem(ItemData item, int amount)
         {
             _rewardStore.Add(item, amount);
-            int totalAmount = _rewardStore.GetAmount(item);
-            OnItemAdded?.Invoke(item, totalAmount);
         }
 
         public void Clear()
         {
             _rewardStore.Clear();
-            OnInventoryCleared?.Invoke();
         }
 
         #endregion

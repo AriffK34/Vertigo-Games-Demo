@@ -42,7 +42,7 @@ namespace VertigoDemo.UI
 
         #region Public Methods
 
-        public void Play(Color color, Action onComplete)
+        public Tween Play(Color color, Action onComplete)
         {
             Cancel();
 
@@ -69,6 +69,8 @@ namespace VertigoDemo.UI
                 .SetRecyclable(false)
                 .SetLink(gameObject)
                 .OnComplete(HandleEffectComplete);
+
+            return _effectTween;
         }
 
         public void Cancel()
