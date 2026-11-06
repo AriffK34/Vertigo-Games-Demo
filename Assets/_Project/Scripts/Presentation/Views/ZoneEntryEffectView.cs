@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +12,6 @@ namespace VertigoDemo.UI
         [SerializeField] private Image _image;
         [SerializeField] private UIAnimationConfig _animationConfig;
         private Tween _effectTween;
-        private Action _onComplete;
 
         #endregion
 
@@ -41,14 +39,13 @@ namespace VertigoDemo.UI
 
         #region Public Methods
 
-        public Tween Play(Color color, Action onComplete)
+        public Tween Play(Color color)
         {
             Cancel();
 
             _image.color = color;
             _image.rectTransform.localScale = Vector3.one;
             _image.enabled = true;
-            _onComplete = onComplete;
 
             Sequence sequence = DOTween.Sequence();
 
@@ -76,7 +73,6 @@ namespace VertigoDemo.UI
         {
             _effectTween?.Kill();
             _effectTween = null;
-            _onComplete = null;
 
             if (_image)
             {
@@ -94,9 +90,6 @@ namespace VertigoDemo.UI
             _effectTween = null;
             _image.enabled = false;
 
-            Action onComplete = _onComplete;
-            _onComplete = null;
-            onComplete?.Invoke();
         }
 
         #endregion

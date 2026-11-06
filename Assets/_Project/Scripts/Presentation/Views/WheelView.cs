@@ -226,10 +226,9 @@ namespace VertigoDemo.UI
                 .OnComplete(HandleSpinComplete);
         }
 
-        public Tween ResetRotation(float duration, Action onComplete)
+        public Tween ResetRotation(float duration)
         {
             CancelRotation();
-            _onRotationComplete = onComplete;
             _indicatorTween.Rewind();
 
             _rotationTween = _wheelBaseImage.rectTransform

@@ -29,14 +29,6 @@ namespace VertigoDemo.Data
             }
         }
 
-        public bool HasBomb
-        {
-            get
-            {
-                return _hasBomb;
-            }
-        }
-
         public bool IsLeaveAllowed
         {
             get

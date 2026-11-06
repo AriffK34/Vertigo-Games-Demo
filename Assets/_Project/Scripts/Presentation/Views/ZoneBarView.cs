@@ -16,7 +16,6 @@ namespace VertigoDemo.UI
         [SerializeField] private UIAnimationConfig _animationConfig;
         private Tween _slideTween;
         private ZoneSlotDisplayData[] _pendingSlotsData;
-        private Action _onTransitionComplete;
 
         #endregion
 
@@ -51,7 +50,7 @@ namespace VertigoDemo.UI
 
         #region Public Methods
 
-        public Tween UpdateSlots(ZoneSlotDisplayData[] slotsData, bool hasAnimation, Action onComplete)
+        public Tween UpdateSlots(ZoneSlotDisplayData[] slotsData, bool hasAnimation)
         {
             StopSlide();
             _content.anchoredPosition = Vector2.zero;
@@ -65,13 +64,11 @@ namespace VertigoDemo.UI
             if (!hasAnimation)
             {
                 ApplySlots(slotsData);
-                onComplete?.Invoke();
 
                 return null;
             }
 
             _pendingSlotsData = slotsData;
-            _onTransitionComplete = onComplete;
 
             float slideDistance = _layout.cellSize.x + _layout.spacing.x;
 
@@ -109,9 +106,6 @@ namespace VertigoDemo.UI
             _content.anchoredPosition = Vector2.zero;
             _pendingSlotsData = null;
 
-            Action onComplete = _onTransitionComplete;
-            _onTransitionComplete = null;
-            onComplete?.Invoke();
         }
 
         private void StopSlide()
@@ -119,7 +113,6 @@ namespace VertigoDemo.UI
             _slideTween?.Kill();
             _slideTween = null;
             _pendingSlotsData = null;
-            _onTransitionComplete = null;
         }
 
         #endregion

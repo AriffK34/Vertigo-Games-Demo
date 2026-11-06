@@ -101,9 +101,9 @@ namespace VertigoDemo.Presentation
             _transitionTween = sequence;
 
             sequence.Join(
-                _wheelView.ResetRotation(_wheelAnimationConfig.ResetDuration, null));
+                _wheelView.ResetRotation(_wheelAnimationConfig.ResetDuration));
 
-            Tween zoneBarTween = _zoneBarView.UpdateSlots(_zoneData, !message.IsReset, null);
+            Tween zoneBarTween = _zoneBarView.UpdateSlots(_zoneData, !message.IsReset);
 
             if (zoneBarTween != null)
             {
@@ -113,7 +113,7 @@ namespace VertigoDemo.Presentation
             if (!message.IsReset && rule.HasEntryEffect)
             {
                 sequence.Join(
-                    _entryEffectView.Play(rule.EntryEffectColor, null));
+                    _entryEffectView.Play(rule.EntryEffectColor));
             }
 
             sequence
