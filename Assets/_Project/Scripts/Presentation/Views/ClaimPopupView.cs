@@ -25,7 +25,7 @@ namespace VertigoDemo.UI
         
         private void OnValidate()
         {
-            if (claimButton == null) claimButton = GetComponentInChildren<Button>();
+            if (!claimButton) claimButton = GetComponentInChildren<Button>(true);
         }
 
         private void Awake()

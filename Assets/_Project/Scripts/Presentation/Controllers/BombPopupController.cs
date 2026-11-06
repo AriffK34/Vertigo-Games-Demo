@@ -49,27 +49,20 @@ namespace VertigoDemo.Presentation
         {
             if (_events != null)
             {
-                throw new InvalidOperationException(
-                    "Bomb popup controller is already initialized.");
+                throw new InvalidOperationException("Bomb popup controller is already initialized.");
             }
 
             if (!bombPopupView)
             {
-                throw new InvalidOperationException(
-                    $"{name}: Bomb popup view must be assigned.");
+                throw new InvalidOperationException($"{name}: Bomb popup view must be assigned.");
             }
-
-            _commands = commands
-                ?? throw new ArgumentNullException(nameof(commands));
-
-            _state = state
-                ?? throw new ArgumentNullException(nameof(state));
-
-            _economy = economy
-                ?? throw new ArgumentNullException(nameof(economy));
-
-            _events = events
-                ?? throw new ArgumentNullException(nameof(events));
+            
+            bombPopupView.ValidateReferences();
+            
+            _commands = commands ?? throw new ArgumentNullException(nameof(commands));
+            _state = state ?? throw new ArgumentNullException(nameof(state));
+            _economy = economy ?? throw new ArgumentNullException(nameof(economy));
+            _events = events ?? throw new ArgumentNullException(nameof(events));
 
             bombPopupView.OnGiveUpClicked += HandleGiveUpClicked;
             bombPopupView.OnReviveClicked += HandleReviveClicked;

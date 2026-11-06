@@ -23,15 +23,47 @@ namespace VertigoDemo.UI
 
         [SerializeField] private UIBurstView _burstView;
         
+        [ContextMenu("Refresh Button References")]
         private void OnValidate()
         {
-            var buttons = GetComponentsInChildren<Button>(true);
-            foreach (var btn in buttons)
+            giveUpButton = null;
+            reviveButton = null;
+
+            PopupActionButton[] bindings =
+                GetComponentsInChildren<PopupActionButton>(true);
+
+            foreach (PopupActionButton binding in bindings)
             {
-                string btnName = btn.gameObject.name.ToLower();
+                switch (binding.Action)
+                {
+                    case PopupAction.GiveUp:
+                        giveUpButton = binding.Button;
+                        break;
+
+                    case PopupAction.Revive:
+                        reviveButton = binding.Button;
+                        break;
+                }
+            }
+
+            if (reviveButton)
+            {
+                _reviveText = reviveButton.GetComponentInChildren<TMP_Text>(true);
+            }
+        }
         
-                if (btnName.Contains("give_up")) giveUpButton = btn;
-                else if (btnName.Contains("revive")) reviveButton = btn;
+        public void ValidateReferences()
+        {
+            if (!giveUpButton ||
+                !reviveButton ||
+                giveUpButton == reviveButton ||
+                !cardTransform ||
+                !_reviveText ||
+                !_animationConfig ||
+                !_burstView)
+            {
+                throw new InvalidOperationException(
+                    $"{name}: Bomb popup references are incomplete. Refresh button references.");
             }
         }
         
