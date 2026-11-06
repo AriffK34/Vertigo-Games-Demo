@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VertigoDemo.Data;
+using VertigoDemo.Presentation.Animations;
 using VertigoDemo.Presentation.Formatting;
 
 namespace VertigoDemo.UI
@@ -14,6 +15,7 @@ namespace VertigoDemo.UI
         [SerializeField] private RectTransform slotContent;
         [SerializeField] private Image itemIconImage;
         [SerializeField] private TextMeshProUGUI itemAmountText;
+        [SerializeField] private UIAnimationConfig _animationConfig;
 
         #endregion
 
@@ -76,12 +78,10 @@ namespace VertigoDemo.UI
 
         private void PunchAnimation()
         {
-            StopAnimation();
-
-            slotContent
-                .DOPunchScale(Vector3.one * 0.2f, 0.25f, 1, 0.5f)
-                .SetRecyclable(false)
-                .SetLink(gameObject);
+            UIPunchAnimation.Play(
+                slotContent,
+                _animationConfig.InventoryPunch,
+                gameObject);
         }
 
         private void StopAnimation()

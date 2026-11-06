@@ -4,6 +4,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using VertigoDemo.Data;
+using VertigoDemo.Presentation.Animations;
 using VertigoDemo.Presentation.Formatting;
 
 namespace VertigoDemo.UI
@@ -13,10 +14,7 @@ namespace VertigoDemo.UI
         #region Fields
 
         [SerializeField] private CurrencyBinding[] _bindings = Array.Empty<CurrencyBinding>();
-        [SerializeField, Min(0.01f)] private float _punchDuration = 0.3f;
-        [SerializeField, Min(0f)] private float _punchStrength = 0.35f;
-        [SerializeField, Min(1)] private int _punchVibrato = 2;
-        [SerializeField, Range(0f, 1f)] private float _punchElasticity = 0.5f;
+        [SerializeField] private UIAnimationConfig _animationConfig;
         
         #endregion
 
@@ -60,12 +58,10 @@ namespace VertigoDemo.UI
                 
                 if (hasAnimation)
                 {
-                    amountTransform.DOPunchScale(
-                            Vector3.one * _punchStrength,
-                            _punchDuration,
-                            _punchVibrato,
-                            _punchElasticity)
-                        .SetLink(gameObject);
+                    UIPunchAnimation.Play(
+                        amountTransform,
+                        _animationConfig.CurrencyPunch,
+                        gameObject);
                 }
             }
         }

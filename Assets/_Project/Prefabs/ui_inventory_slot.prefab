@@ -477,3 +477,4 @@ MonoBehaviour:
   slotContent: {fileID: 3990767611840383169}
   itemIconImage: {fileID: 1311411276653745582}
   itemAmountText: {fileID: 2509036107543756855}
+  _animationConfig: {fileID: 11400000, guid: 8da6380025c2e774fbd64a577cca5393, type: 2}

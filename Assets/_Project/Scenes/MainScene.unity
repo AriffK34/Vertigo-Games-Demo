@@ -1886,10 +1886,7 @@ MonoBehaviour:
     _amountText: {fileID: 1104896554}
   - _currency: {fileID: 11400000, guid: de41aef03f804b043b07657b2524b85e, type: 2}
     _amountText: {fileID: 994764147}
-  _punchDuration: 0.3
-  _punchStrength: 0.35
-  _punchVibrato: 2
-  _punchElasticity: 0.5
+  _animationConfig: {fileID: 11400000, guid: 8da6380025c2e774fbd64a577cca5393, type: 2}
 --- !u!1 &555358738
 GameObject:
   m_ObjectHideFlags: 0
