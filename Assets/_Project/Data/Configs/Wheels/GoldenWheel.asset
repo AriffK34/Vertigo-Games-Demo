@@ -14,19 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _wheelTheme: {fileID: 11400000, guid: dcb7b1d6f19ffda4298cf0abd4a10cc4, type: 2}
   _wheelSlices:
-  - itemData: {fileID: 11400000, guid: d00484db25138e6489f8359e1f21bf6e, type: 2}
-    itemAmount: 1
-  - itemData: {fileID: 11400000, guid: 647e80d3be9db1f4e8ddc4bbffdbb569, type: 2}
+  - itemData: {fileID: 11400000, guid: de41aef03f804b043b07657b2524b85e, type: 2}
+    itemAmount: 1000
+  - itemData: {fileID: 11400000, guid: f16244c4138745841b1e0a831f62f91a, type: 2}
+    itemAmount: 60
+  - itemData: {fileID: 11400000, guid: 6b698f4ce3f635c41acb6e87f1c97d19, type: 2}
+    itemAmount: 5
+  - itemData: {fileID: 11400000, guid: 0f257c801a05dc543b293c45029344e4, type: 2}
+    itemAmount: 5
+  - itemData: {fileID: 11400000, guid: a758ec7bc3dd9db40ad44dae2291bdcc, type: 2}
+    itemAmount: 2
+  - itemData: {fileID: 11400000, guid: 03d05ba14b40dca4896a85b54c6ed49f, type: 2}
     itemAmount: 1
   - itemData: {fileID: 11400000, guid: c8d2dde69a7928548b2bb2dd7b2f9fb2, type: 2}
-    itemAmount: 1
-  - itemData: {fileID: 11400000, guid: a300fdfe49ade2148b9cc8436663f3c2, type: 2}
-    itemAmount: 1
-  - itemData: {fileID: 11400000, guid: 0a4431ea5bf28fd4699512fdfb0b8743, type: 2}
-    itemAmount: 1
-  - itemData: {fileID: 11400000, guid: de41aef03f804b043b07657b2524b85e, type: 2}
-    itemAmount: 300
-  - itemData: {fileID: 11400000, guid: f16244c4138745841b1e0a831f62f91a, type: 2}
-    itemAmount: 25
-  - itemData: {fileID: 11400000, guid: dbf7adc29e2c5e34fb23558a43265bbf, type: 2}
-    itemAmount: 1
+    itemAmount: 3
+  - itemData: {fileID: 11400000, guid: 647e80d3be9db1f4e8ddc4bbffdbb569, type: 2}
+    itemAmount: 3
