@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using VertigoDemo.Data;
+using VertigoDemo.Presentation.Pooling;
 
 namespace VertigoDemo.UI
 {
@@ -15,7 +16,9 @@ namespace VertigoDemo.UI
 
         private readonly Dictionary<ItemData, InventorySlotView> _slotViews =
             new Dictionary<ItemData, InventorySlotView>();
-
+        
+        private InventorySlotPool _slotPool;
+        
         #endregion
 
         #region Lifecycle
@@ -50,13 +53,18 @@ namespace VertigoDemo.UI
             }
             else
             {
-                slotView = Instantiate(slotPrefab, slotsParent);
-                slotView.Setup(item, amount);
+                if (_slotPool == null)
+                {
+                    _slotPool = new InventorySlotPool(slotPrefab, slotsParent);
+                }
+
+                slotView = _slotPool.Rent(item, amount);
                 _slotViews.Add(item, slotView);
             }
 
             return slotView;
         }
+        
 
         public void RevealSlot(InventorySlotView slotView)
         {
@@ -96,11 +104,7 @@ namespace VertigoDemo.UI
 
             foreach (InventorySlotView slotView in _slotViews.Values)
             {
-                if (slotView)
-                {
-                    slotView.gameObject.SetActive(false);
-                    Destroy(slotView.gameObject);
-                }
+                _slotPool.Return(slotView);
             }
 
             _slotViews.Clear();

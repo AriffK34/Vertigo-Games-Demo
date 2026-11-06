@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using VertigoDemo.Data;
+using VertigoDemo.Presentation.Pooling;
 
 namespace VertigoDemo.UI
 {
@@ -20,7 +21,8 @@ namespace VertigoDemo.UI
         private Tween _popupTween;
         
         private readonly List<InventorySlotView> _spawnedSlots = new();
-
+        private InventorySlotPool _slotPool;
+        
         private void OnValidate()
         {
             if (claimButton == null) claimButton = GetComponentInChildren<Button>();
@@ -41,13 +43,20 @@ namespace VertigoDemo.UI
         public void Show(IReadOnlyDictionary<ItemData, int> rewards)
         {
             _popupTween?.Kill();
-            ClearSlots();
-            foreach (var (itemData, amount) in rewards)
+
+            if (_slotPool == null)
             {
-                InventorySlotView slot = Instantiate(slotPrefab, contentParent);
-                slot.Setup(itemData, amount);
+                _slotPool = new InventorySlotPool(slotPrefab, contentParent);
+            }
+
+            ClearSlots();
+
+            foreach (var reward in rewards)
+            {
+                InventorySlotView slot = _slotPool.Rent(reward.Key, reward.Value);
                 _spawnedSlots.Add(slot);
             }
+
             gameObject.SetActive(true);
             _popupTween = PopupAnimation.Show(cardTransform, _animationConfig);
         }
@@ -69,10 +78,11 @@ namespace VertigoDemo.UI
 
         private void ClearSlots()
         {
-            foreach (var slot in _spawnedSlots)
+            foreach (InventorySlotView slot in _spawnedSlots)
             {
-                if (slot != null) Destroy(slot.gameObject);
+                _slotPool.Return(slot);
             }
+
             _spawnedSlots.Clear();
         }
 
