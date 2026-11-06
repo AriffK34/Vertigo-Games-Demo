@@ -1,3 +1,5 @@
+using VertigoDemo.Data;
+
 namespace VertigoDemo.Core.Contracts
 {
     public interface IEconomyReader
@@ -10,6 +12,11 @@ namespace VertigoDemo.Core.Contracts
         }
 
         int ReviveCost
+        {
+            get;
+        }
+
+        ItemData ReviveCurrency
         {
             get;
         }

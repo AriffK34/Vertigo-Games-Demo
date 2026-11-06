@@ -17,6 +17,7 @@ namespace VertigoDemo.UI
         [SerializeField] private Button _reviveButton;
         [SerializeField] private Transform _cardTransform;
         [SerializeField] private TMP_Text _reviveText;
+        [SerializeField] private Image _reviveCurrencyIcon;
         [SerializeField] private UIAnimationConfig _animationConfig;
         private Tween _popupTween;
         private Action _onHideComplete;
@@ -94,6 +95,7 @@ namespace VertigoDemo.UI
                 _giveUpButton == _reviveButton ||
                 !_cardTransform ||
                 !_reviveText ||
+                !_reviveCurrencyIcon ||
                 !_animationConfig ||
                 !_burstView)
             {
@@ -102,9 +104,11 @@ namespace VertigoDemo.UI
             }
         }
 
-        public void Show(bool canAffordRevive, int reviveCost)
+        public void Show(bool canAffordRevive, int reviveCost, Sprite reviveCurrencyIcon)
         {
             _reviveText.text = $"REVIVE ({NumberFormatter.Format(reviveCost)})";
+            _reviveCurrencyIcon.sprite = reviveCurrencyIcon;
+            _reviveCurrencyIcon.enabled = reviveCurrencyIcon != null;
             _popupTween?.Kill();
             _onHideComplete = null;
             _giveUpButton.interactable = true;

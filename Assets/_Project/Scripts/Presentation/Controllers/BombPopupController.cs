@@ -83,7 +83,8 @@ namespace VertigoDemo.Presentation
             {
                 _bombPopupView.Show(
                     _economy.HasReviveFunds,
-                    _economy.ReviveCost);
+                    _economy.ReviveCost,
+                    _economy.ReviveCurrency.ItemIcon);
             }
             else if (message.State == GameState.Reviving)
             {
