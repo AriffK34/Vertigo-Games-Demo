@@ -16,17 +16,25 @@ MonoBehaviour:
   _wheelSlices:
   - itemData: {fileID: 11400000, guid: de41aef03f804b043b07657b2524b85e, type: 2}
     itemAmount: 350
+    _isBomb: 0
   - itemData: {fileID: 11400000, guid: f16244c4138745841b1e0a831f62f91a, type: 2}
     itemAmount: 20
+    _isBomb: 0
   - itemData: {fileID: 11400000, guid: 7cbab3c3cff947846b04109f6d6ddf51, type: 2}
     itemAmount: 8
+    _isBomb: 0
   - itemData: {fileID: 11400000, guid: 01952f4db5c2db94daa52a3ec8bc10dd, type: 2}
     itemAmount: 3
+    _isBomb: 0
   - itemData: {fileID: 11400000, guid: 86d05a856fe7ae9459564ab12701c980, type: 2}
     itemAmount: 2
+    _isBomb: 0
   - itemData: {fileID: 11400000, guid: a300fdfe49ade2148b9cc8436663f3c2, type: 2}
     itemAmount: 1
+    _isBomb: 0
   - itemData: {fileID: 11400000, guid: a758ec7bc3dd9db40ad44dae2291bdcc, type: 2}
     itemAmount: 1
+    _isBomb: 0
   - itemData: {fileID: 11400000, guid: 377bbbd4409b84f47bc4c7081a9ef674, type: 2}
     itemAmount: 0
+    _isBomb: 1

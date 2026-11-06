@@ -1,19 +1,22 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace VertigoDemo.Data
 {
     [CreateAssetMenu(fileName = "NewWheelTheme", menuName = "Wheel/Wheel Theme")]
     public class WheelTheme : ScriptableObject
     {
-        [SerializeField] private string themeName;
-        [SerializeField] private WheelType wheelType;
+        #region Fields
+
         [SerializeField] private Sprite wheelSprite;
         [SerializeField] private Sprite indicatorSprite;
-        
-        public string ThemeName => themeName;
-        public WheelType WheelType => wheelType;
-        public Sprite WheelSprite => wheelSprite;
-        public Sprite IndicatorSprite => indicatorSprite;
+
+        #endregion
+
+        #region Properties
+
+        public Sprite WheelSprite { get { return wheelSprite; } }
+        public Sprite IndicatorSprite { get { return indicatorSprite; } }
+
+        #endregion
     }
 }

@@ -50,7 +50,6 @@ namespace VertigoDemo.Tests
             serializedGrowth.ApplyModifiedPropertiesWithoutUndo();
 
             SetReference(_reward, "_growthProfile", growth);
-            SetInt(bomb, "itemType", (int)ItemType.Bomb);
 
             WheelConfig wheel = CreateAsset<WheelConfig>();
             SerializedObject serializedWheel = new SerializedObject(wheel);
@@ -63,6 +62,7 @@ namespace VertigoDemo.Tests
                 SerializedProperty slice = slices.GetArrayElementAtIndex(i);
                 slice.FindPropertyRelative("itemData").objectReferenceValue = isBomb ? bomb : _reward;
                 slice.FindPropertyRelative("itemAmount").intValue = isBomb ? 0 : 10;
+                slice.FindPropertyRelative("_isBomb").boolValue = isBomb;
             }
 
             serializedWheel.ApplyModifiedPropertiesWithoutUndo();

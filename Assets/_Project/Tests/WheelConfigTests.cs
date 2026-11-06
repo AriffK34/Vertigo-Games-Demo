@@ -25,10 +25,6 @@ namespace VertigoDemo.Tests
             _reward = ScriptableObject.CreateInstance<ItemData>();
             _bomb = ScriptableObject.CreateInstance<ItemData>();
             _wheel = ScriptableObject.CreateInstance<WheelConfig>();
-
-            SerializedObject serializedBomb = new SerializedObject(_bomb);
-            serializedBomb.FindProperty("itemType").enumValueIndex = (int)ItemType.Bomb;
-            serializedBomb.ApplyModifiedPropertiesWithoutUndo();
         }
 
         [TearDown]
@@ -77,6 +73,7 @@ namespace VertigoDemo.Tests
                 bool isBomb = i < bombCount;
                 slice.FindPropertyRelative("itemData").objectReferenceValue = isBomb ? _bomb : _reward;
                 slice.FindPropertyRelative("itemAmount").intValue = isBomb ? 0 : 1;
+                slice.FindPropertyRelative("_isBomb").boolValue = isBomb;
             }
 
             serializedWheel.ApplyModifiedPropertiesWithoutUndo();
