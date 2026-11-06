@@ -15,24 +15,24 @@ MonoBehaviour:
   _wheelTheme: {fileID: 11400000, guid: 665dd50957307c64ab923ccef5ebd85e, type: 2}
   _wheelSlices:
   - _itemData: {fileID: 11400000, guid: de41aef03f804b043b07657b2524b85e, type: 2}
-    _itemAmount: 200
+    _itemAmount: 350
     _isBomb: 0
   - _itemData: {fileID: 11400000, guid: f16244c4138745841b1e0a831f62f91a, type: 2}
-    _itemAmount: 10
+    _itemAmount: 20
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: 7cbab3c3cff947846b04109f6d6ddf51, type: 2}
+    _itemAmount: 8
     _isBomb: 0
   - _itemData: {fileID: 11400000, guid: 01952f4db5c2db94daa52a3ec8bc10dd, type: 2}
-    _itemAmount: 5
+    _itemAmount: 3
     _isBomb: 0
-  - _itemData: {fileID: 11400000, guid: 80870958719230e4589d72cefc47b1d2, type: 2}
-    _itemAmount: 5
-    _isBomb: 0
-  - _itemData: {fileID: 11400000, guid: 0a4431ea5bf28fd4699512fdfb0b8743, type: 2}
+  - _itemData: {fileID: 11400000, guid: 86d05a856fe7ae9459564ab12701c980, type: 2}
     _itemAmount: 2
     _isBomb: 0
-  - _itemData: {fileID: 11400000, guid: ee5bb28cf168a0243ac3bbdecd903ff5, type: 2}
+  - _itemData: {fileID: 11400000, guid: a300fdfe49ade2148b9cc8436663f3c2, type: 2}
     _itemAmount: 1
     _isBomb: 0
-  - _itemData: {fileID: 11400000, guid: 3a3ec777a9d608d4f90cd968fa0e01ba, type: 2}
+  - _itemData: {fileID: 11400000, guid: a758ec7bc3dd9db40ad44dae2291bdcc, type: 2}
     _itemAmount: 1
     _isBomb: 0
   - _itemData: {fileID: 11400000, guid: 377bbbd4409b84f47bc4c7081a9ef674, type: 2}

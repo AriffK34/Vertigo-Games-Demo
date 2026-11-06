@@ -15,7 +15,7 @@ MonoBehaviour:
   _firstZone: 10
   _lastZone: 19
   _interval: 1
-  _wheel: {fileID: 11400000, guid: 0aba8c5e0b587364c8cd22759cdba420, type: 2}
+  _wheel: {fileID: 11400000, guid: 3b502947865ea9a49864727b589e4a2f, type: 2}
   _hasBomb: 1
   _isLeaveAllowed: 0
   _zoneSprite: {fileID: 21300000, guid: 2c0c263f4046b3648b8c5c52d811668d, type: 3}
