@@ -754,8 +754,8 @@ MonoBehaviour:
   - {fileID: 483162042}
   - {fileID: 1535454634}
   - {fileID: 1606809541}
-  spinDuration: 3.5
-  fullTurns: 5
+  _animationConfig: {fileID: 11400000, guid: be6bbe0814bfd5240b0b6408fd13793c, type: 2}
+  _sliceRadius: 235
 --- !u!1 &315918313
 GameObject:
   m_ObjectHideFlags: 0

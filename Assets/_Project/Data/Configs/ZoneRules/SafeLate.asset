@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a2fbfb07701e7b419ca9288205c80be, type: 3}
-  m_Name: NormalZoneRule
+  m_Name: SafeLate
   m_EditorClassIdentifier: 
-  _firstZone: 1
+  _firstZone: 20
   _lastZone: 0
-  _interval: 1
-  _wheel: {fileID: 11400000, guid: c0f2447c75f5a9e46b7e57573c5ebf86, type: 2}
-  _hasBomb: 1
-  _isLeaveAllowed: 0
-  _zoneSprite: {fileID: 21300000, guid: 2c0c263f4046b3648b8c5c52d811668d, type: 3}
+  _interval: 5
+  _wheel: {fileID: 11400000, guid: 19dc6c947e787a042a04e524e5f6ede9, type: 2}
+  _hasBomb: 0
+  _isLeaveAllowed: 1
+  _zoneSprite: {fileID: 21300000, guid: 3db1f38521e405e40b06fae21921e924, type: 3}
+  _hasEntryEffect: 1
+  _entryEffectColor: {r: 0.7411765, g: 0.92156863, b: 1, a: 1}

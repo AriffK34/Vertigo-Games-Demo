@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a2fbfb07701e7b419ca9288205c80be, type: 3}
-  m_Name: SafeZoneRule
+  m_Name: SafeEarly
   m_EditorClassIdentifier: 
   _firstZone: 1
-  _lastZone: 0
+  _lastZone: 9
   _interval: 5
   _wheel: {fileID: 11400000, guid: a9d5429f77f314a47b506b06a158a5c4, type: 2}
   _hasBomb: 0

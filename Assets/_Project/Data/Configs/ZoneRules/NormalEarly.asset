@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a2fbfb07701e7b419ca9288205c80be, type: 3}
-  m_Name: SuperZoneRule
+  m_Name: NormalEarly
   m_EditorClassIdentifier: 
   _firstZone: 1
-  _lastZone: 0
-  _interval: 30
-  _wheel: {fileID: 11400000, guid: 15d53a597a7292246bac0bf1dfebe057, type: 2}
-  _hasBomb: 0
-  _isLeaveAllowed: 1
-  _zoneSprite: {fileID: 21300000, guid: 868dabed37c3c6a4aabca4d1f60ef9b8, type: 3}
-  _hasEntryEffect: 1
-  _entryEffectColor: {r: 1, g: 0.83137256, b: 0.3529412, a: 1}
+  _lastZone: 9
+  _interval: 1
+  _wheel: {fileID: 11400000, guid: c0f2447c75f5a9e46b7e57573c5ebf86, type: 2}
+  _hasBomb: 1
+  _isLeaveAllowed: 0
+  _zoneSprite: {fileID: 21300000, guid: 2c0c263f4046b3648b8c5c52d811668d, type: 3}
+  _hasEntryEffect: 0
+  _entryEffectColor: {r: 1, g: 1, b: 1, a: 1}

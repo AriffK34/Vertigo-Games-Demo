@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 839c86e9faf0eed46957f242e77df39c, type: 3}
-  m_Name: BronzeWheel
+  m_Name: SilverWheelLate
   m_EditorClassIdentifier: 
-  _wheelTheme: {fileID: 11400000, guid: 665dd50957307c64ab923ccef5ebd85e, type: 2}
+  _wheelTheme: {fileID: 11400000, guid: 75120c0bc2f5c984b8910525478f90e9, type: 2}
   _wheelSlices:
   - itemData: {fileID: 11400000, guid: d00484db25138e6489f8359e1f21bf6e, type: 2}
     itemAmount: 1
@@ -22,7 +22,7 @@ MonoBehaviour:
     itemAmount: 1
   - itemData: {fileID: 11400000, guid: a300fdfe49ade2148b9cc8436663f3c2, type: 2}
     itemAmount: 1
-  - itemData: {fileID: 11400000, guid: 377bbbd4409b84f47bc4c7081a9ef674, type: 2}
+  - itemData: {fileID: 11400000, guid: 0a4431ea5bf28fd4699512fdfb0b8743, type: 2}
     itemAmount: 1
   - itemData: {fileID: 11400000, guid: de41aef03f804b043b07657b2524b85e, type: 2}
     itemAmount: 300
