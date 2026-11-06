@@ -5,7 +5,7 @@ using VertigoDemo.Data;
 
 namespace VertigoDemo.Tests
 {
-    public class RewardStoreTests
+    public class ItemCollectionTests
     {
         #region Fields
 
@@ -32,9 +32,9 @@ namespace VertigoDemo.Tests
         #region Tests
 
         [Test]
-        public void TrySpend_WhenBalanceIsInsufficient_PreservesBalance()
+        public void TrySpend_WhenAmountIsInsufficient_PreservesAmount()
         {
-            RewardStore store = new RewardStore();
+            ItemCollection store = new ItemCollection();
             store.Add(_item, 10);
             bool isSuccessful = store.TrySpend(_item, 15);
             Assert.That(isSuccessful, Is.False);
@@ -44,7 +44,7 @@ namespace VertigoDemo.Tests
         [Test]
         public void Add_WhenSameItemIsAddedAgain_AccumulatesAmount()
         {
-            RewardStore store = new RewardStore();
+            ItemCollection store = new ItemCollection();
             store.Add(_item, 10);
             store.Add(_item, 5);
             Assert.That(store.GetAmount(_item), Is.EqualTo(15));
@@ -52,20 +52,20 @@ namespace VertigoDemo.Tests
 
         [TestCase(4, 6)]
         [TestCase(10, 0)]
-        public void TrySpend_WhenBalanceIsSufficient_DeductsAmount(int spendAmount, int expectedBalance)
+        public void TrySpend_WhenAmountIsSufficient_DeductsAmount(int spendAmount, int expectedAmount)
         {
-            RewardStore store = new RewardStore();
+            ItemCollection store = new ItemCollection();
             store.Add(_item, 10);
             bool isSuccessful = store.TrySpend(_item, spendAmount);
             Assert.That(isSuccessful, Is.True);
-            Assert.That(store.GetAmount(_item), Is.EqualTo(expectedBalance));
+            Assert.That(store.GetAmount(_item), Is.EqualTo(expectedAmount));
         }
 
         [TestCase(0)]
         [TestCase(-5)]
         public void TrySpend_WhenAmountIsNotPositive_RejectsRequest(int spendAmount)
         {
-            RewardStore store = new RewardStore();
+            ItemCollection store = new ItemCollection();
             store.Add(_item, 10);
             Assert.Throws<System.ArgumentOutOfRangeException>(() => store.TrySpend(_item, spendAmount));
             Assert.That(store.GetAmount(_item), Is.EqualTo(10));

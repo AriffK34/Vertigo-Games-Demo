@@ -14,6 +14,8 @@ namespace VertigoDemo.Core.Contracts
 
         bool TryRevive();
 
+        bool TryOpenInventory();
+
         #endregion
     }
 }

@@ -4,7 +4,7 @@ using VertigoDemo.Data;
 
 namespace VertigoDemo.Core
 {
-    public sealed class RewardStore
+    public sealed class ItemCollection
     {
         #region Fields
 

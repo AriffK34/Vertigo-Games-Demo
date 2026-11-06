@@ -13,6 +13,7 @@ namespace VertigoDemo.UI
         [SerializeField] private InventorySlotView _slotPrefab;
         [SerializeField] private Transform _slotsParent;
         [SerializeField] private ScrollRect _scrollRect;
+        [SerializeField] private GameObject _title;
         private readonly Dictionary<ItemData, InventorySlotView> _slotViews =
             new Dictionary<ItemData, InventorySlotView>();
         private InventorySlotPool _slotPool;
@@ -58,6 +59,11 @@ namespace VertigoDemo.UI
 
                 slotView = _slotPool.Rent(item, amount);
                 _slotViews.Add(item, slotView);
+            }
+
+            if (_title)
+            {
+                _title.SetActive(true);
             }
 
             return slotView;
@@ -106,6 +112,11 @@ namespace VertigoDemo.UI
 
             _slotViews.Clear();
             _scrollRect.verticalNormalizedPosition = 1f;
+
+            if (_title)
+            {
+                _title.SetActive(false);
+            }
         }
 
         public void CompleteRewardPresentation()

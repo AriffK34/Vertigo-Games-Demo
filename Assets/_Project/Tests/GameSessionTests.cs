@@ -214,7 +214,7 @@ namespace VertigoDemo.Tests
             _session.ClaimRewards();
             _session.ClaimRewards();
 
-            Assert.That(_economy.GetBalance(_reward), Is.EqualTo(10));
+            Assert.That(_economy.GetAmount(_reward), Is.EqualTo(10));
             Assert.That(_inventory.Inventory, Is.Empty);
             Assert.That(_session.CurrentState, Is.EqualTo(GameState.Resetting));
             Assert.That(_transition.Zone, Is.EqualTo(1));
@@ -243,7 +243,7 @@ namespace VertigoDemo.Tests
             _session.GiveUp();
 
             Assert.That(_inventory.Inventory, Is.Empty);
-            Assert.That(_economy.GetBalance(_reward), Is.Zero);
+            Assert.That(_economy.GetAmount(_reward), Is.Zero);
             Assert.That(_session.CurrentState, Is.EqualTo(GameState.Resetting));
             Assert.That(_transition.Zone, Is.EqualTo(1));
             Assert.That(_session.TrySpin(), Is.False);
@@ -270,7 +270,7 @@ namespace VertigoDemo.Tests
 
             Assert.That(result, Is.EqualTo(expectedSuccess));
             Assert.That(_inventory.Inventory[_reward], Is.EqualTo(3));
-            Assert.That(_economy.GetBalance(_reward), Is.Zero);
+            Assert.That(_economy.GetAmount(_reward), Is.Zero);
 
             GameState expectedState = expectedSuccess ? GameState.Reviving : GameState.BombExploded;
             Assert.That(_session.CurrentState, Is.EqualTo(expectedState));
@@ -281,7 +281,7 @@ namespace VertigoDemo.Tests
             GameState completedState = expectedSuccess ? GameState.Idle : GameState.BombExploded;
             Assert.That(_session.CurrentState, Is.EqualTo(completedState));
             Assert.That(_inventory.Inventory[_reward], Is.EqualTo(3));
-            Assert.That(_economy.GetBalance(_reward), Is.Zero);
+            Assert.That(_economy.GetAmount(_reward), Is.Zero);
 
             if (!expectedSuccess)
             {
@@ -306,7 +306,7 @@ namespace VertigoDemo.Tests
 
             Assert.That(_session.TryRevive(), Is.True);
             Assert.That(_session.CurrentState, Is.EqualTo(GameState.Reviving));
-            Assert.That(_economy.GetBalance(_reward), Is.EqualTo(5));
+            Assert.That(_economy.GetAmount(_reward), Is.EqualTo(5));
             Assert.That(_session.TrySpin(), Is.False);
 
             _session.RequestLeave();
@@ -320,7 +320,7 @@ namespace VertigoDemo.Tests
 
             Assert.That(_session.CurrentState, Is.EqualTo(GameState.Reviving));
             Assert.That(_session.TrySpin(), Is.False);
-            Assert.That(_economy.GetBalance(_reward), Is.EqualTo(5));
+            Assert.That(_economy.GetAmount(_reward), Is.EqualTo(5));
             Assert.That(_inventory.Inventory[_reward], Is.EqualTo(10));
             Assert.That(_zones.CurrentZone, Is.EqualTo(2));
             Assert.That(_transitionCount, Is.EqualTo(2));
@@ -330,13 +330,77 @@ namespace VertigoDemo.Tests
             _session.CompleteRevive();
 
             Assert.That(_session.CurrentState, Is.EqualTo(GameState.Idle));
-            Assert.That(_economy.GetBalance(_reward), Is.EqualTo(5));
+            Assert.That(_economy.GetAmount(_reward), Is.EqualTo(5));
             Assert.That(_inventory.Inventory[_reward], Is.EqualTo(10));
             Assert.That(_zones.CurrentZone, Is.EqualTo(2));
             Assert.That(_transitionCount, Is.EqualTo(2));
 
             _random.Index = 0;
             Assert.That(_session.TrySpin(), Is.True);
+        }
+
+        [Test]
+        public void InventoryView_BlocksGameplayUntilCloseAndPreservesRun()
+        {
+            Assert.That(_session.TryOpenInventory(), Is.False);
+            _session.CompleteInventoryClose();
+            Assert.That(_session.CurrentState, Is.EqualTo(GameState.Resetting));
+
+            StartReadySession();
+            _inventory.AddItem(_reward, 3);
+
+            Assert.That(_session.TryOpenInventory(), Is.True);
+            Assert.That(_session.CurrentState, Is.EqualTo(GameState.InventoryViewing));
+            Assert.That(_economy.Items, Is.Empty);
+            Assert.That(_session.TrySpin(), Is.False);
+            Assert.That(_session.TryOpenInventory(), Is.False);
+            Assert.That(_session.TryRevive(), Is.False);
+
+            _session.RequestLeave();
+            _session.ClaimRewards();
+            _session.GiveUp();
+            _session.CompleteSpin();
+            _session.CompleteRewardPresentation();
+            _session.CompleteZoneTransition();
+            _session.CompleteRevive();
+
+            Assert.That(_session.CurrentState, Is.EqualTo(GameState.InventoryViewing));
+            Assert.That(_inventory.Inventory[_reward], Is.EqualTo(3));
+            Assert.That(_zones.CurrentZone, Is.EqualTo(1));
+
+            _session.CompleteInventoryClose();
+            _session.CompleteInventoryClose();
+
+            Assert.That(_session.CurrentState, Is.EqualTo(GameState.Idle));
+            Assert.That(_inventory.Inventory[_reward], Is.EqualTo(3));
+            Assert.That(_zones.CurrentZone, Is.EqualTo(1));
+            Assert.That(_session.TrySpin(), Is.True);
+            Assert.That(_session.TryOpenInventory(), Is.False);
+        }
+
+        [Test]
+        public void PlayerInventory_AccumulatesClaimedItemsAcrossRuns()
+        {
+            StartReadySession();
+
+            for (int i = 0; i < 2; i++)
+            {
+                CompleteRewardSpin();
+                _session.CompleteZoneTransition();
+                _session.RequestLeave();
+                _session.ClaimRewards();
+                _session.CompleteZoneTransition();
+            }
+
+            IPlayerInventoryReader reader = _economy;
+            Assert.That(reader.Items[_reward], Is.EqualTo(20));
+            Assert.That(_inventory.Inventory, Is.Empty);
+            Assert.That(_session.TryOpenInventory(), Is.True);
+            Assert.That(reader.Items[_reward], Is.EqualTo(20));
+
+            _session.CompleteInventoryClose();
+            Assert.That(reader.Items[_reward], Is.EqualTo(20));
+            Assert.That(_zones.CurrentZone, Is.EqualTo(1));
         }
 
         #endregion

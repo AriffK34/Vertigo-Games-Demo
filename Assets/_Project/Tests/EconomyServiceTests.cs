@@ -61,9 +61,9 @@ namespace VertigoDemo.Tests
             runInventory.AddItem(_cash, 50);
             runInventory.AddItem(_chest, 3);
             _economy.ClaimRewards(runInventory);
-            Assert.That(_economy.GetBalance(_gold), Is.EqualTo(100));
-            Assert.That(_economy.GetBalance(_cash), Is.EqualTo(50));
-            Assert.That(_economy.GetBalance(_chest), Is.EqualTo(3));
+            Assert.That(_economy.GetAmount(_gold), Is.EqualTo(100));
+            Assert.That(_economy.GetAmount(_cash), Is.EqualTo(50));
+            Assert.That(_economy.GetAmount(_chest), Is.EqualTo(3));
             Assert.That(runInventory.Inventory, Is.Empty);
         }
 
@@ -74,7 +74,7 @@ namespace VertigoDemo.Tests
             runInventory.AddItem(_chest, 3);
             _economy.ClaimRewards(runInventory);
             _economy.ClaimRewards(runInventory);
-            Assert.That(_economy.GetBalance(_chest), Is.EqualTo(3));
+            Assert.That(_economy.GetAmount(_chest), Is.EqualTo(3));
             Assert.That(runInventory.Inventory, Is.Empty);
         }
 
@@ -93,9 +93,9 @@ namespace VertigoDemo.Tests
             bool isSuccessful = _economy.TryRevive();
             Assert.That(hasReviveFunds, Is.EqualTo(expectedSuccess));
             Assert.That(isSuccessful, Is.EqualTo(expectedSuccess));
-            Assert.That(_economy.GetBalance(_cash), Is.EqualTo(expectedBalance));
-            Assert.That(_economy.GetBalance(_gold), Is.EqualTo(100));
-            Assert.That(_economy.GetBalance(_chest), Is.EqualTo(3));
+            Assert.That(_economy.GetAmount(_cash), Is.EqualTo(expectedBalance));
+            Assert.That(_economy.GetAmount(_gold), Is.EqualTo(100));
+            Assert.That(_economy.GetAmount(_chest), Is.EqualTo(3));
         }
 
         #endregion

@@ -12,6 +12,8 @@ namespace VertigoDemo.Core.Contracts
 
         void CompleteRevive();
 
+        void CompleteInventoryClose();
+
         #endregion
     }
 }

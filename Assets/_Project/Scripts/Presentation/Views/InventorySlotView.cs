@@ -19,7 +19,7 @@ namespace VertigoDemo.UI
 
         #endregion
 
-        #region Propertie
+        #region Properties
 
         public Vector3 IconPosition
         {

@@ -8,7 +8,7 @@ namespace VertigoDemo.Core
     {
         #region Fields
 
-        private readonly RewardStore _rewardStore = new RewardStore();
+        private readonly ItemCollection _items = new ItemCollection();
 
         #endregion
 
@@ -18,7 +18,7 @@ namespace VertigoDemo.Core
         {
             get
             {
-                return _rewardStore.Amounts;
+                return _items.Amounts;
             }
         }
 
@@ -28,12 +28,12 @@ namespace VertigoDemo.Core
 
         public void AddItem(ItemData item, int amount)
         {
-            _rewardStore.Add(item, amount);
+            _items.Add(item, amount);
         }
 
         public void Clear()
         {
-            _rewardStore.Clear();
+            _items.Clear();
         }
 
         #endregion

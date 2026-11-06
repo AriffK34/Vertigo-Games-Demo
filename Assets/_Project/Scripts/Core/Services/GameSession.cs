@@ -143,9 +143,30 @@ namespace VertigoDemo.Core
             }
 
             SetState(GameState.Reviving);
-            _eventBus.Publish(new BalancesChanged());
+            _eventBus.Publish(new PlayerInventoryChanged());
 
             return true;
+        }
+
+        public bool TryOpenInventory()
+        {
+            if (CurrentState != GameState.Idle)
+            {
+                return false;
+            }
+
+            SetState(GameState.InventoryViewing);
+            return true;
+        }
+
+        public void CompleteInventoryClose()
+        {
+            if (CurrentState != GameState.InventoryViewing)
+            {
+                return;
+            }
+
+            SetState(GameState.Idle);
         }
 
         public void CompleteSpin()
@@ -213,15 +234,15 @@ namespace VertigoDemo.Core
 
         #region Private Methods
 
-        private void RestartRun(bool hasBalanceChange)
+        private void RestartRun(bool hasInventoryChange)
         {
             _zones.ResetZone();
 
             SetState(GameState.Resetting);
 
-            if (hasBalanceChange)
+            if (hasInventoryChange)
             {
-                _eventBus.Publish(new BalancesChanged());
+                _eventBus.Publish(new PlayerInventoryChanged());
             }
 
             _eventBus.Publish(new RunRewardsCleared());

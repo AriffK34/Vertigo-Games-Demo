@@ -82,7 +82,7 @@ namespace VertigoDemo.Core.Events
     {
     }
 
-    public readonly struct BalancesChanged
+    public readonly struct PlayerInventoryChanged
     {
     }
 }

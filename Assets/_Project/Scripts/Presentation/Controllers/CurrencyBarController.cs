@@ -12,7 +12,7 @@ namespace VertigoDemo.Presentation
         #region Fields
 
         [SerializeField] private CurrencyBarView _currencyBarView;
-        private IEconomyReader _economy;
+        private IPlayerInventoryReader _inventory;
         private IEventBus _eventBus;
 
         #endregion
@@ -23,7 +23,7 @@ namespace VertigoDemo.Presentation
         {
             if (_eventBus != null)
             {
-                _eventBus.Unsubscribe<BalancesChanged>(HandleBalancesChanged);
+                _eventBus.Unsubscribe<PlayerInventoryChanged>(HandlePlayerInventoryChanged);
             }
         }
 
@@ -31,7 +31,7 @@ namespace VertigoDemo.Presentation
 
         #region Public Methods
 
-        public void Initialize(IEconomyReader economy, IEventBus eventBus)
+        public void Initialize(IPlayerInventoryReader inventory, IEventBus eventBus)
         {
             if (_eventBus != null)
             {
@@ -43,20 +43,20 @@ namespace VertigoDemo.Presentation
                 throw new InvalidOperationException($"{name}: Currency bar view must be assigned.");
             }
 
-            _economy = economy ?? throw new ArgumentNullException(nameof(economy));
+            _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
 
-            _eventBus.Subscribe<BalancesChanged>(HandleBalancesChanged);
-            _currencyBarView.Refresh(_economy.Balances, false);
+            _eventBus.Subscribe<PlayerInventoryChanged>(HandlePlayerInventoryChanged);
+            _currencyBarView.Refresh(_inventory.Items, false);
         }
 
         #endregion
 
         #region Private Methods
 
-        private void HandleBalancesChanged(BalancesChanged message)
+        private void HandlePlayerInventoryChanged(PlayerInventoryChanged message)
         {
-            _currencyBarView.Refresh(_economy.Balances, true);
+            _currencyBarView.Refresh(_inventory.Items, true);
         }
 
         #endregion

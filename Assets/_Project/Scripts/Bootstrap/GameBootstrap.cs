@@ -21,6 +21,7 @@ namespace VertigoDemo.Bootstrap
         [SerializeField] private LeaveController _leaveController;
         [SerializeField] private ClaimPopupController _claimPopupController;
         [SerializeField] private BombPopupController _bombPopupController;
+        [SerializeField] private PlayerInventoryController _playerInventoryController;
 
         #endregion
 
@@ -35,6 +36,7 @@ namespace VertigoDemo.Bootstrap
             _leaveController = GetComponent<LeaveController>();
             _claimPopupController = GetComponent<ClaimPopupController>();
             _bombPopupController = GetComponent<BombPopupController>();
+            _playerInventoryController = GetComponent<PlayerInventoryController>();
         }
 
         private void Start()
@@ -65,6 +67,7 @@ namespace VertigoDemo.Bootstrap
             _leaveController.Initialize(session, session, zones, events);
             _claimPopupController.Initialize(session, session, inventory, events);
             _bombPopupController.Initialize(session, session, economy, session, events);
+            _playerInventoryController.Initialize(session, session, session, economy, events);
 
             session.StartGame();
         }
@@ -87,7 +90,8 @@ namespace VertigoDemo.Bootstrap
                 !_currencyBarController ||
                 !_leaveController ||
                 !_claimPopupController ||
-                !_bombPopupController)
+                !_bombPopupController ||
+                !_playerInventoryController)
             {
                 throw new InvalidOperationException(
                     $"{name}: All presentation controllers must be on the bootstrap object.");

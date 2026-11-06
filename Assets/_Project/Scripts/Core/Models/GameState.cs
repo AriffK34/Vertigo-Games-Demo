@@ -10,5 +10,6 @@ namespace VertigoDemo.Core
         RewardsClaiming,
         Resetting,
         Reviving,
+        InventoryViewing,
     }
 }

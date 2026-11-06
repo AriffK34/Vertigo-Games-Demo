@@ -112,6 +112,18 @@ namespace VertigoDemo.Tests
             Assert.That(_machine.CurrentState, Is.EqualTo(GameState.Spinning));
         }
 
+        [Test]
+        public void InventoryFlow_RequiresClosingBeforeNextSpin()
+        {
+            MoveThrough(GameState.Idle, GameState.InventoryViewing);
+
+            Assert.That(_machine.TryTransition(GameState.Spinning), Is.False);
+            Assert.That(_machine.TryTransition(GameState.RewardsClaiming), Is.False);
+            Assert.That(_machine.TryTransition(GameState.InventoryViewing), Is.False);
+
+            MoveThrough(GameState.Idle, GameState.Spinning);
+        }
+
         #endregion
 
         #region Private Methods

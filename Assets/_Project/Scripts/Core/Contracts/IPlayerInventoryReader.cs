@@ -1,18 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using VertigoDemo.Data;
 
-public class IPlayerInventoryReader : MonoBehaviour
+namespace VertigoDemo.Core.Contracts
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface IPlayerInventoryReader
     {
-        
-    }
+        #region Properties
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        IReadOnlyDictionary<ItemData, int> Items
+        {
+            get;
+        }
+
+        #endregion
     }
 }

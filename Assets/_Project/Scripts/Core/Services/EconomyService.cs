@@ -5,22 +5,22 @@ using VertigoDemo.Data;
 
 namespace VertigoDemo.Core
 {
-    public sealed class EconomyService : IEconomyReader
+    public sealed class EconomyService : IEconomyReader, IPlayerInventoryReader
     {
         #region Fields
 
-        private readonly RewardStore _balances = new RewardStore();
+        private readonly ItemCollection _ownedItems = new ItemCollection();
         private readonly EconomyConfig _config;
 
         #endregion
 
         #region Properties
 
-        public IReadOnlyDictionary<ItemData, int> Balances
+        public IReadOnlyDictionary<ItemData, int> Items
         {
             get
             {
-                return _balances.Amounts;
+                return _ownedItems.Amounts;
             }
         }
 
@@ -28,7 +28,7 @@ namespace VertigoDemo.Core
         {
             get
             {
-                return GetBalance(_config.ReviveCurrency) >= _config.ReviveCost;
+                return GetAmount(_config.ReviveCurrency) >= _config.ReviveCost;
             }
         }
 
@@ -73,9 +73,9 @@ namespace VertigoDemo.Core
 
         #region Public Methods
 
-        public int GetBalance(ItemData item)
+        public int GetAmount(ItemData item)
         {
-            return _balances.GetAmount(item);
+            return _ownedItems.GetAmount(item);
         }
 
         public void ClaimRewards(SessionInventory runInventory)
@@ -87,12 +87,12 @@ namespace VertigoDemo.Core
 
             foreach (var reward in runInventory.Inventory)
             {
-                _ = checked(_balances.GetAmount(reward.Key) + reward.Value);
+                _ = checked(_ownedItems.GetAmount(reward.Key) + reward.Value);
             }
 
             foreach (var reward in runInventory.Inventory)
             {
-                _balances.Add(reward.Key, reward.Value);
+                _ownedItems.Add(reward.Key, reward.Value);
             }
 
             runInventory.Clear();
@@ -100,7 +100,7 @@ namespace VertigoDemo.Core
 
         public bool TryRevive()
         {
-            bool isSuccessful = _balances.TrySpend(_config.ReviveCurrency, _config.ReviveCost);
+            bool isSuccessful = _ownedItems.TrySpend(_config.ReviveCurrency, _config.ReviveCost);
             if (!isSuccessful)
             {
                 return false;

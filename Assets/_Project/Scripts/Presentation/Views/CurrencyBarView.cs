@@ -35,7 +35,7 @@ namespace VertigoDemo.UI
 
         #region Public Methods
 
-        public void Refresh(IReadOnlyDictionary<ItemData, int> balances, bool hasAnimation)
+        public void Refresh(IReadOnlyDictionary<ItemData, int> items, bool hasAnimation)
         {
             foreach (CurrencyBinding binding in _bindings)
             {
@@ -44,7 +44,7 @@ namespace VertigoDemo.UI
                     throw new InvalidOperationException("Each currency binding requires a currency and amount text.");
                 }
 
-                balances.TryGetValue(binding.Currency, out int amount);
+                items.TryGetValue(binding.Currency, out int amount);
                 string amountText = NumberFormatter.Format(amount);
                 if (binding.AmountText.text == amountText)
                 {

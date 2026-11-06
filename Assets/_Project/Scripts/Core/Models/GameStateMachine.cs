@@ -46,7 +46,9 @@ namespace VertigoDemo.Core
                     return nextState == GameState.Idle;
 
                 case GameState.Idle:
-                    return nextState == GameState.Spinning || nextState == GameState.RewardsClaiming;
+                    return nextState == GameState.Spinning ||
+                           nextState == GameState.RewardsClaiming ||
+                           nextState == GameState.InventoryViewing;
 
                 case GameState.Spinning:
                     return nextState == GameState.RewardGiving || nextState == GameState.BombExploded;
@@ -61,6 +63,7 @@ namespace VertigoDemo.Core
                     return nextState == GameState.Resetting || nextState == GameState.Reviving;
 
                 case GameState.Reviving:
+                case GameState.InventoryViewing:
                     return nextState == GameState.Idle;
 
                 default:
