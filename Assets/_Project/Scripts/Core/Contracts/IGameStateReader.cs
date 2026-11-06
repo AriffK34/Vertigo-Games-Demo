@@ -2,6 +2,13 @@ namespace VertigoDemo.Core.Contracts
 {
     public interface IGameStateReader
     {
-        GameState CurrentState { get; }
+        #region Properties
+
+        GameState CurrentState
+        {
+            get;
+        }
+
+        #endregion
     }
 }

@@ -13,15 +13,13 @@ namespace VertigoDemo.UI
         [SerializeField] private InventorySlotView _slotPrefab;
         [SerializeField] private Transform _slotsParent;
         [SerializeField] private ScrollRect _scrollRect;
-
         private readonly Dictionary<ItemData, InventorySlotView> _slotViews =
             new Dictionary<ItemData, InventorySlotView>();
-        
         private InventorySlotPool _slotPool;
-        
+
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnValidate()
         {
@@ -64,7 +62,6 @@ namespace VertigoDemo.UI
 
             return slotView;
         }
-        
 
         public void RevealSlot(InventorySlotView slotView)
         {

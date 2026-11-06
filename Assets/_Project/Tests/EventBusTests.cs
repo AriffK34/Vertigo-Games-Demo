@@ -15,7 +15,7 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Setup
+        #region Setup and Teardown
 
         [SetUp]
         public void SetUp()
@@ -78,7 +78,7 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Handlers
+        #region Private Methods
 
         private void HandleFirstReward(TestRewardEvent message)
         {
@@ -98,16 +98,24 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Test Messages
+        #region Nested Types
 
         private readonly struct TestRewardEvent
         {
+            #region Fields
+
             public readonly int Amount;
+
+            #endregion
+
+            #region Constructors
 
             public TestRewardEvent(int amount)
             {
                 Amount = amount;
             }
+
+            #endregion
         }
 
         private readonly struct OtherEvent

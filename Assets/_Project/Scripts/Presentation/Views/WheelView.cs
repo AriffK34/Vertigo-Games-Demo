@@ -10,32 +10,33 @@ namespace VertigoDemo.UI
 {
     public class WheelView : MonoBehaviour
     {
-        #region Events
+        #region Constants
 
-        public event Action OnSpinClicked;
+        private const float FULL_CIRCLE = 360f;
 
         #endregion
 
         #region Fields
-
-        private const float FULL_CIRCLE = 360f;
 
         [SerializeField] private Image _wheelBaseImage;
         [SerializeField] private Image _indicatorImage;
         [SerializeField] private Button _spinButton;
         [SerializeField] private RectTransform _raysTransform;
         [SerializeField] private WheelSliceView[] _sliceViews;
-
         [SerializeField] private WheelAnimationConfig _animationConfig;
         [SerializeField, Min(0f)] private float _sliceRadius = 235f;
-
         private Tween _rotationTween;
         private Tween _raysTween;
         private Tween _indicatorTween;
-
         private Action _onRotationComplete;
         private int _targetSliceIndex;
-        private int _lastTickSlice;
+        private int _lastTickSliceIndex;
+
+        #endregion
+
+        #region Events
+
+        public event Action OnSpinClicked;
 
         #endregion
 
@@ -51,7 +52,7 @@ namespace VertigoDemo.UI
 
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnValidate()
         {
@@ -193,7 +194,7 @@ namespace VertigoDemo.UI
             }
 
             _targetSliceIndex = targetIndex;
-            _lastTickSlice = -1;
+            _lastTickSliceIndex = -1;
             _onRotationComplete = onComplete;
             _indicatorTween.Rewind();
 
@@ -272,12 +273,12 @@ namespace VertigoDemo.UI
             float angle = _wheelBaseImage.rectTransform.eulerAngles.z;
             int currentSlice = Mathf.FloorToInt(angle / sliceAngle);
 
-            if (currentSlice == _lastTickSlice)
+            if (currentSlice == _lastTickSliceIndex)
             {
                 return;
             }
 
-            _lastTickSlice = currentSlice;
+            _lastTickSliceIndex = currentSlice;
             _indicatorTween.Restart();
         }
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7335115181777679244}
   - component: {fileID: 5993806635598660740}
   m_Layer: 5
-  m_Name: ui_image_zone_bg
+  m_Name: ui_image_zone_background_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 8733555748644025544}
   - component: {fileID: 366880142384275845}
   m_Layer: 5
-  m_Name: ui_text_zone_value
+  m_Name: ui_text_zone_number_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

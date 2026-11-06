@@ -4,12 +4,29 @@ namespace VertigoDemo.Core.Contracts
 {
     public interface IZoneReader
     {
-        int CurrentZone { get; }
+        #region Properties
 
-        ZoneRuleConfig CurrentRule { get; }
+        int CurrentZone
+        {
+            get;
+        }
 
-        bool CanLeave { get; }
+        ZoneRuleConfig CurrentRule
+        {
+            get;
+        }
+
+        bool IsLeaveAllowed
+        {
+            get;
+        }
+
+        #endregion
+
+        #region Public Methods
 
         ZoneRuleConfig GetRule(int zone);
+
+        #endregion
     }
 }

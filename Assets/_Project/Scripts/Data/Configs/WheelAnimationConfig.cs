@@ -13,28 +13,22 @@ namespace VertigoDemo.Data
         [SerializeField, Min(0.01f)] private float _spinDuration = 3.5f;
         [SerializeField, Min(1)] private int _fullTurns = 5;
         [SerializeField] private Ease _spinEase = Ease.OutCubic;
-
         [SerializeField, Min(0.01f)] private float _resetDuration = 0.6f;
         [SerializeField] private Ease _resetEase = Ease.OutQuad;
-
         [SerializeField, Range(0f, 0.49f)]
         private float _landingOffsetRatio = 0.4f;
-
         [SerializeField, Min(0.01f)] private float _raysDuration = 30f;
         [SerializeField] private Ease _raysEase = Ease.Linear;
-
         [SerializeField, Min(0f)] private float _indicatorAngle = 20f;
         [SerializeField, Min(0.01f)] private float _indicatorDuration = 0.15f;
         [SerializeField, Min(1)] private int _indicatorVibrato = 1;
         [SerializeField, Range(0f, 1f)] private float _indicatorElasticity = 0.5f;
         [SerializeField] private Ease _indicatorEase = Ease.OutQuad;
-
         [SerializeField, Min(0f)] private float _slicePunchStrength = 0.25f;
         [SerializeField, Min(0.01f)] private float _slicePunchDuration = 0.4f;
         [SerializeField, Min(1)] private int _slicePunchVibrato = 2;
         [SerializeField, Range(0f, 1f)] private float _slicePunchElasticity = 0.5f;
         [SerializeField] private Ease _slicePunchEase = Ease.OutQuad;
-
         [SerializeField, Min(0f)] private float _glowEndScale = 1.5f;
         [SerializeField, Min(0.01f)] private float _glowDuration = 0.6f;
         [SerializeField] private Color _glowColor = new Color(1f, 0.95f, 0.6f, 1f);
@@ -45,39 +39,193 @@ namespace VertigoDemo.Data
 
         #region Properties
 
-        public float SpinDuration { get { return _spinDuration; } }
-        public int FullTurns { get { return _fullTurns; } }
-        public Ease SpinEase { get { return _spinEase; } }
+        public float SpinDuration
+        {
+            get
+            {
+                return _spinDuration;
+            }
+        }
 
-        public float ResetDuration { get { return _resetDuration; } }
-        public Ease ResetEase { get { return _resetEase; } }
+        public int FullTurns
+        {
+            get
+            {
+                return _fullTurns;
+            }
+        }
 
-        public float LandingOffsetRatio { get { return _landingOffsetRatio; } }
+        public Ease SpinEase
+        {
+            get
+            {
+                return _spinEase;
+            }
+        }
 
-        public float RaysDuration { get { return _raysDuration; } }
-        public Ease RaysEase { get { return _raysEase; } }
+        public float ResetDuration
+        {
+            get
+            {
+                return _resetDuration;
+            }
+        }
 
-        public float IndicatorAngle { get { return _indicatorAngle; } }
-        public float IndicatorDuration { get { return _indicatorDuration; } }
-        public int IndicatorVibrato { get { return _indicatorVibrato; } }
-        public float IndicatorElasticity { get { return _indicatorElasticity; } }
-        public Ease IndicatorEase { get { return _indicatorEase; } }
+        public Ease ResetEase
+        {
+            get
+            {
+                return _resetEase;
+            }
+        }
 
-        public float SlicePunchStrength { get { return _slicePunchStrength; } }
-        public float SlicePunchDuration { get { return _slicePunchDuration; } }
-        public int SlicePunchVibrato { get { return _slicePunchVibrato; } }
-        public float SlicePunchElasticity { get { return _slicePunchElasticity; } }
-        public Ease SlicePunchEase { get { return _slicePunchEase; } }
+        public float LandingOffsetRatio
+        {
+            get
+            {
+                return _landingOffsetRatio;
+            }
+        }
 
-        public float GlowEndScale { get { return _glowEndScale; } }
-        public float GlowDuration { get { return _glowDuration; } }
-        public Color GlowColor { get { return _glowColor; } }
-        public Ease GlowScaleEase { get { return _glowScaleEase; } }
-        public Ease GlowFadeEase { get { return _glowFadeEase; } }
+        public float RaysDuration
+        {
+            get
+            {
+                return _raysDuration;
+            }
+        }
+
+        public Ease RaysEase
+        {
+            get
+            {
+                return _raysEase;
+            }
+        }
+
+        public float IndicatorAngle
+        {
+            get
+            {
+                return _indicatorAngle;
+            }
+        }
+
+        public float IndicatorDuration
+        {
+            get
+            {
+                return _indicatorDuration;
+            }
+        }
+
+        public int IndicatorVibrato
+        {
+            get
+            {
+                return _indicatorVibrato;
+            }
+        }
+
+        public float IndicatorElasticity
+        {
+            get
+            {
+                return _indicatorElasticity;
+            }
+        }
+
+        public Ease IndicatorEase
+        {
+            get
+            {
+                return _indicatorEase;
+            }
+        }
+
+        public float SlicePunchStrength
+        {
+            get
+            {
+                return _slicePunchStrength;
+            }
+        }
+
+        public float SlicePunchDuration
+        {
+            get
+            {
+                return _slicePunchDuration;
+            }
+        }
+
+        public int SlicePunchVibrato
+        {
+            get
+            {
+                return _slicePunchVibrato;
+            }
+        }
+
+        public float SlicePunchElasticity
+        {
+            get
+            {
+                return _slicePunchElasticity;
+            }
+        }
+
+        public Ease SlicePunchEase
+        {
+            get
+            {
+                return _slicePunchEase;
+            }
+        }
+
+        public float GlowEndScale
+        {
+            get
+            {
+                return _glowEndScale;
+            }
+        }
+
+        public float GlowDuration
+        {
+            get
+            {
+                return _glowDuration;
+            }
+        }
+
+        public Color GlowColor
+        {
+            get
+            {
+                return _glowColor;
+            }
+        }
+
+        public Ease GlowScaleEase
+        {
+            get
+            {
+                return _glowScaleEase;
+            }
+        }
+
+        public Ease GlowFadeEase
+        {
+            get
+            {
+                return _glowFadeEase;
+            }
+        }
 
         #endregion
 
-        #region Validation
+        #region Unity Callbacks
 
         private void OnValidate()
         {

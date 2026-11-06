@@ -12,7 +12,6 @@ namespace VertigoDemo.Tests
         #region Fields
 
         private readonly List<ZoneRuleConfig> _createdRules = new List<ZoneRuleConfig>();
-
         private ZoneRuleConfig _normal;
         private ZoneRuleConfig _safe;
         private ZoneRuleConfig _super;
@@ -20,7 +19,7 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Setup and Cleanup
+        #region Setup and Teardown
 
         [SetUp]
         public void SetUp()
@@ -60,7 +59,7 @@ namespace VertigoDemo.Tests
             ZoneRuleConfig result = _resolver.GetRule(zone);
             Assert.That(result, Is.SameAs(_safe));
         }
-        
+
         [TestCase(30)]
         [TestCase(60)]
         public void GetRule_ForSuperZone_ReturnsSuperRule(int zone)
@@ -83,7 +82,7 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Helpers
+        #region Private Methods
 
         private ZoneRuleConfig CreateRule(int firstZone, int lastZone, int interval)
         {

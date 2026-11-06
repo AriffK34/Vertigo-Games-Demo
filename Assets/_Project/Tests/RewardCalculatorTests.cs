@@ -17,7 +17,7 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Setup and Cleanup
+        #region Setup and Teardown
 
         [SetUp]
         public void SetUp()
@@ -87,7 +87,7 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Helpers
+        #region Private Methods
 
         private void SetProfile(RewardGrowthConfig profile)
         {

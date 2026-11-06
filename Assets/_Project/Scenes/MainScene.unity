@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 1681453}
   - component: {fileID: 1681452}
   m_Layer: 5
-  m_Name: ui_text_subtitle_bomb
+  m_Name: ui_text_bomb_subtitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 44020079}
   - component: {fileID: 44020078}
   m_Layer: 5
-  m_Name: ui_image_wheel_base
+  m_Name: ui_image_wheel_base_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 62866604}
   - component: {fileID: 62866603}
   m_Layer: 5
-  m_Name: ui_image_border_cash
+  m_Name: ui_image_cash_border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -464,7 +464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 69003914}
   m_Layer: 5
-  m_Name: ui_bomb
+  m_Name: ui_container_bomb_content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -836,7 +836,7 @@ GameObject:
   - component: {fileID: 318337869}
   - component: {fileID: 318337868}
   m_Layer: 5
-  m_Name: ui_content_rewards
+  m_Name: ui_content_claim_rewards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1025,7 +1025,7 @@ GameObject:
   - component: {fileID: 339391795}
   - component: {fileID: 339391794}
   m_Layer: 5
-  m_Name: ui_image_bg_cash
+  m_Name: ui_image_cash_background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1101,7 +1101,7 @@ GameObject:
   - component: {fileID: 352362518}
   - component: {fileID: 352362519}
   m_Layer: 5
-  m_Name: ui_content_slots
+  m_Name: ui_content_inventory_slots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1183,7 +1183,7 @@ GameObject:
   - component: {fileID: 381220594}
   - component: {fileID: 381220593}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameSystems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1899,7 +1899,7 @@ GameObject:
   - component: {fileID: 555358741}
   - component: {fileID: 555358740}
   m_Layer: 5
-  m_Name: ui_image_icon_cash
+  m_Name: ui_image_cash_icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1973,7 +1973,7 @@ GameObject:
   m_Component:
   - component: {fileID: 598191627}
   m_Layer: 5
-  m_Name: ui_container_buttons
+  m_Name: ui_container_bomb_buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2011,7 +2011,7 @@ GameObject:
   m_Component:
   - component: {fileID: 620407114}
   m_Layer: 5
-  m_Name: ui_image_badge_gold
+  m_Name: ui_image_gold_badge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2130,7 +2130,7 @@ GameObject:
   - component: {fileID: 717793107}
   - component: {fileID: 717793109}
   m_Layer: 5
-  m_Name: ui_viewport_rewards
+  m_Name: ui_viewport_claim_rewards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2410,7 +2410,7 @@ GameObject:
   - component: {fileID: 810964788}
   - component: {fileID: 810964787}
   m_Layer: 5
-  m_Name: ui_image_bg_bomb
+  m_Name: ui_image_bomb_background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2484,7 +2484,7 @@ GameObject:
   m_Component:
   - component: {fileID: 881446298}
   m_Layer: 5
-  m_Name: ui_image_badge_cash
+  m_Name: ui_image_cash_badge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2526,7 +2526,7 @@ GameObject:
   - component: {fileID: 904812804}
   - component: {fileID: 904812803}
   m_Layer: 5
-  m_Name: ui_text_revive
+  m_Name: ui_text_revive_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2890,7 +2890,7 @@ GameObject:
   - component: {fileID: 918808149}
   - component: {fileID: 918808148}
   m_Layer: 5
-  m_Name: ui_viewport
+  m_Name: ui_viewport_inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3117,7 +3117,7 @@ GameObject:
   - component: {fileID: 959371523}
   - component: {fileID: 959371522}
   m_Layer: 5
-  m_Name: ui_image_border_gold
+  m_Name: ui_image_gold_border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3307,7 +3307,7 @@ GameObject:
   - component: {fileID: 991034874}
   - component: {fileID: 991034873}
   m_Layer: 5
-  m_Name: ui_image_border_bomb_1
+  m_Name: ui_image_bomb_border_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4068,7 +4068,7 @@ GameObject:
   - component: {fileID: 1262293661}
   - component: {fileID: 1262293660}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: ui_canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4315,7 +4315,7 @@ GameObject:
   - component: {fileID: 1285987890}
   - component: {fileID: 1285987889}
   m_Layer: 5
-  m_Name: ui_image_indicator
+  m_Name: ui_image_wheel_indicator_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4392,7 +4392,7 @@ GameObject:
   - component: {fileID: 1315264906}
   - component: {fileID: 1315264905}
   m_Layer: 5
-  m_Name: ui_image_zone_entry_effect
+  m_Name: ui_image_zone_entry_effect_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4483,7 +4483,7 @@ GameObject:
   - component: {fileID: 1325022025}
   - component: {fileID: 1325022024}
   m_Layer: 5
-  m_Name: ui_image_reward_flight
+  m_Name: ui_image_reward_flight_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4829,7 +4829,7 @@ GameObject:
   - component: {fileID: 1381682038}
   - component: {fileID: 1381682037}
   m_Layer: 5
-  m_Name: ui_image_border_bomb_0
+  m_Name: ui_image_bomb_border_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5499,7 +5499,7 @@ GameObject:
   - component: {fileID: 1575507445}
   - component: {fileID: 1575507444}
   m_Layer: 5
-  m_Name: ui_text_title
+  m_Name: ui_text_claim_title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5784,7 +5784,7 @@ GameObject:
   - component: {fileID: 1643349421}
   - component: {fileID: 1643349420}
   m_Layer: 5
-  m_Name: ui_text_title_bomb
+  m_Name: ui_text_bomb_title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6054,7 +6054,7 @@ GameObject:
   - component: {fileID: 1758290744}
   - component: {fileID: 1758290743}
   m_Layer: 5
-  m_Name: ui_image_bg_gold
+  m_Name: ui_image_gold_background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6130,7 +6130,7 @@ GameObject:
   - component: {fileID: 1772713416}
   - component: {fileID: 1772713415}
   m_Layer: 5
-  m_Name: ui_image_icon_gold
+  m_Name: ui_image_gold_icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6636,7 +6636,7 @@ GameObject:
   - component: {fileID: 1853388443}
   - component: {fileID: 1853388444}
   m_Layer: 5
-  m_Name: ui_scroll_rewards
+  m_Name: ui_scroll_claim_rewards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

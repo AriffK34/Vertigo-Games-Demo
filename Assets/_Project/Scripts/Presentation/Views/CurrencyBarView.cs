@@ -15,7 +15,7 @@ namespace VertigoDemo.UI
 
         [SerializeField] private CurrencyBinding[] _bindings = Array.Empty<CurrencyBinding>();
         [SerializeField] private UIAnimationConfig _animationConfig;
-        
+
         #endregion
 
         #region Unity Callbacks
@@ -33,7 +33,7 @@ namespace VertigoDemo.UI
 
         #endregion
 
-        #region Methods
+        #region Public Methods
 
         public void Refresh(IReadOnlyDictionary<ItemData, int> balances, bool hasAnimation)
         {
@@ -55,7 +55,7 @@ namespace VertigoDemo.UI
                 RectTransform amountTransform = binding.AmountText.rectTransform;
                 amountTransform.DOKill();
                 amountTransform.localScale = Vector3.one;
-                
+
                 if (hasAnimation)
                 {
                     UIPunchAnimation.Play(
@@ -68,13 +68,19 @@ namespace VertigoDemo.UI
 
         #endregion
 
-        #region Binding Definition
+        #region Nested Types
 
         [Serializable]
         private sealed class CurrencyBinding
         {
+            #region Fields
+
             [SerializeField] private ItemData _currency;
             [SerializeField] private TextMeshProUGUI _amountText;
+
+            #endregion
+
+            #region Properties
 
             public ItemData Currency
             {
@@ -91,6 +97,8 @@ namespace VertigoDemo.UI
                     return _amountText;
                 }
             }
+
+            #endregion
         }
 
         #endregion

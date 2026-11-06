@@ -4,25 +4,34 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VertigoDemo.Data;
+using VertigoDemo.Presentation.Animations;
 using VertigoDemo.Presentation.Formatting;
 
 namespace VertigoDemo.UI
 {
     public class BombPopupView : MonoBehaviour
     {
-        public event Action OnGiveUpClicked;
-        public event Action OnReviveClicked;
-        
+        #region Fields
+
         [SerializeField] private Button _giveUpButton;
         [SerializeField] private Button _reviveButton;
         [SerializeField] private Transform _cardTransform;
         [SerializeField] private TMP_Text _reviveText;
-
         [SerializeField] private UIAnimationConfig _animationConfig;
         private Tween _popupTween;
-
         [SerializeField] private UIBurstView _burstView;
-        
+
+        #endregion
+
+        #region Events
+
+        public event Action OnGiveUpClicked;
+        public event Action OnReviveClicked;
+
+        #endregion
+
+        #region Unity Callbacks
+
         [ContextMenu("Refresh Button References")]
         private void OnValidate()
         {
@@ -51,7 +60,31 @@ namespace VertigoDemo.UI
                 _reviveText = _reviveButton.GetComponentInChildren<TMP_Text>(true);
             }
         }
-        
+
+        private void Awake()
+        {
+            _giveUpButton.onClick.AddListener(HandleGiveUpClicked);
+            _reviveButton.onClick.AddListener(HandleReviveClicked);
+        }
+
+        private void OnDestroy()
+        {
+            _popupTween?.Kill();
+            _popupTween = null;
+            if (_giveUpButton)
+            {
+                _giveUpButton.onClick.RemoveListener(HandleGiveUpClicked);
+            }
+            if (_reviveButton)
+            {
+                _reviveButton.onClick.RemoveListener(HandleReviveClicked);
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+
         public void ValidateReferences()
         {
             if (!_giveUpButton ||
@@ -66,21 +99,7 @@ namespace VertigoDemo.UI
                     $"{name}: Bomb popup references are incomplete. Refresh button references.");
             }
         }
-        
-        private void Awake()
-        {
-            _giveUpButton.onClick.AddListener(HandleGiveUpClicked);
-            _reviveButton.onClick.AddListener(HandleReviveClicked);
-        }
-        
-        private void OnDestroy()
-        {
-            _popupTween?.Kill();
-            _popupTween = null;
-            if (_giveUpButton != null) _giveUpButton.onClick.RemoveListener(HandleGiveUpClicked);
-            if (_reviveButton != null) _reviveButton.onClick.RemoveListener(HandleReviveClicked);
-        }
-        
+
         public void Show(bool canAffordRevive, int reviveCost)
         {
             _reviveText.text = $"REVIVE ({NumberFormatter.Format(reviveCost)})";
@@ -90,7 +109,7 @@ namespace VertigoDemo.UI
             _popupTween = PopupAnimation.Show(_cardTransform, _animationConfig);
             _burstView.Play();
         }
-        
+
         public void Hide()
         {
             _burstView.Stop();
@@ -107,21 +126,26 @@ namespace VertigoDemo.UI
                 .OnComplete(HandleHideComplete);
         }
 
+        #endregion
+
+        #region Private Methods
+
         private void HandleHideComplete()
         {
             _popupTween = null;
             gameObject.SetActive(false);
         }
-        
+
         private void HandleGiveUpClicked()
         {
             OnGiveUpClicked?.Invoke();
         }
-        
+
         private void HandleReviveClicked()
         {
             OnReviveClicked?.Invoke();
         }
-    }
 
+        #endregion
+    }
 }

@@ -14,20 +14,19 @@ namespace VertigoDemo.Presentation
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private WheelView _wheelView;
         [SerializeField] private RewardFlightView _rewardFlightView;
-
-        private IGameFlowCallbacks _callbacks;
-        private IEventBus _events;
+        private IGameFlowCallbacks _flowCallbacks;
+        private IEventBus _eventBus;
 
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnDestroy()
         {
-            if (_events != null)
+            if (_eventBus != null)
             {
-                _events.Unsubscribe<RewardGranted>(HandleRewardGranted);
-                _events.Unsubscribe<RunRewardsCleared>(HandleRewardsCleared);
+                _eventBus.Unsubscribe<RewardGranted>(HandleRewardGranted);
+                _eventBus.Unsubscribe<RunRewardsCleared>(HandleRewardsCleared);
             }
 
             if (_rewardFlightView)
@@ -47,8 +46,8 @@ namespace VertigoDemo.Presentation
 
         public void Initialize(
             IRunRewardsReader rewards,
-            IGameFlowCallbacks callbacks,
-            IEventBus events)
+            IGameFlowCallbacks flowCallbacks,
+            IEventBus eventBus)
         {
             if (!_inventoryView || !_wheelView || !_rewardFlightView)
             {
@@ -60,11 +59,11 @@ namespace VertigoDemo.Presentation
                 throw new ArgumentNullException(nameof(rewards));
             }
 
-            _callbacks = callbacks ?? throw new ArgumentNullException(nameof(callbacks));
-            _events = events ?? throw new ArgumentNullException(nameof(events));
+            _flowCallbacks = flowCallbacks ?? throw new ArgumentNullException(nameof(flowCallbacks));
+            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
 
-            _events.Subscribe<RewardGranted>(HandleRewardGranted);
-            _events.Subscribe<RunRewardsCleared>(HandleRewardsCleared);
+            _eventBus.Subscribe<RewardGranted>(HandleRewardGranted);
+            _eventBus.Subscribe<RunRewardsCleared>(HandleRewardsCleared);
 
             _inventoryView.Refresh(rewards.Inventory);
         }
@@ -97,7 +96,7 @@ namespace VertigoDemo.Presentation
         private void HandleFlightComplete()
         {
             _inventoryView.CompleteRewardPresentation();
-            _callbacks.CompleteRewardPresentation();
+            _flowCallbacks.CompleteRewardPresentation();
         }
 
         #endregion

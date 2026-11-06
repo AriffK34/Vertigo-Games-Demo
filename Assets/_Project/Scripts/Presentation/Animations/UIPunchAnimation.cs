@@ -6,6 +6,8 @@ namespace VertigoDemo.Presentation.Animations
 {
     public static class UIPunchAnimation
     {
+        #region Public Methods
+
         public static Tween Play(
             RectTransform target,
             PunchAnimationSettings settings,
@@ -24,5 +26,7 @@ namespace VertigoDemo.Presentation.Animations
                 .SetRecyclable(false)
                 .SetLink(owner);
         }
+
+        #endregion
     }
 }

@@ -12,13 +12,12 @@ namespace VertigoDemo.UI
 
         [SerializeField] private Image _iconImage;
         [SerializeField] private UIAnimationConfig _animationConfig;
-
-        private Tween _flighTween;
+        private Tween _flightTween;
         private Action _onFlightComplete;
 
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnValidate()
         {
@@ -75,7 +74,7 @@ namespace VertigoDemo.UI
                     .DOScale(Vector3.one, halfDuration)
                     .SetEase(_animationConfig.RewardFlightEase));
 
-            _flighTween = flightSequence
+            _flightTween = flightSequence
                 .SetRecyclable(false)
                 .SetLink(gameObject)
                 .OnComplete(HandleFlightComplete);
@@ -83,14 +82,13 @@ namespace VertigoDemo.UI
 
         public void Cancel()
         {
-            _flighTween?.Kill();
-            _flighTween = null;
+            _flightTween?.Kill();
+            _flightTween = null;
             _onFlightComplete = null;
             if (_iconImage)
             {
                 _iconImage.enabled = false;
                 _iconImage.rectTransform.localScale = Vector3.one;
-
             }
         }
 
@@ -100,7 +98,7 @@ namespace VertigoDemo.UI
 
         private void HandleFlightComplete()
         {
-            _flighTween = null;
+            _flightTween = null;
             _iconImage.enabled = false;
 
             Action onComplete = _onFlightComplete;

@@ -13,21 +13,20 @@ namespace VertigoDemo.Presentation
         #region Fields
 
         [SerializeField] private LeaveButtonView _leaveButtonView;
-
         private IGameCommands _commands;
         private IGameStateReader _state;
         private IZoneReader _zones;
-        private IEventBus _events;
+        private IEventBus _eventBus;
 
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnDestroy()
         {
-            if (_events != null)
+            if (_eventBus != null)
             {
-                _events.Unsubscribe<GameStateChanged>(HandleStateChanged);
+                _eventBus.Unsubscribe<GameStateChanged>(HandleStateChanged);
             }
 
             if (_leaveButtonView)
@@ -44,9 +43,9 @@ namespace VertigoDemo.Presentation
             IGameCommands commands,
             IGameStateReader state,
             IZoneReader zones,
-            IEventBus events)
+            IEventBus eventBus)
         {
-            if (_events != null)
+            if (_eventBus != null)
             {
                 throw new InvalidOperationException("Leave controller is already initialized.");
             }
@@ -59,12 +58,12 @@ namespace VertigoDemo.Presentation
             _commands = commands ?? throw new ArgumentNullException(nameof(commands));
             _state = state ?? throw new ArgumentNullException(nameof(state));
             _zones = zones ?? throw new ArgumentNullException(nameof(zones));
-            _events = events ?? throw new ArgumentNullException(nameof(events));
+            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
 
             _leaveButtonView.OnLeaveClicked += HandleLeaveClicked;
-            _events.Subscribe<GameStateChanged>(HandleStateChanged);
+            _eventBus.Subscribe<GameStateChanged>(HandleStateChanged);
 
-            Refresh();
+            RefreshVisibility();
         }
 
         #endregion
@@ -78,14 +77,14 @@ namespace VertigoDemo.Presentation
 
         private void HandleStateChanged(GameStateChanged message)
         {
-            Refresh();
+            RefreshVisibility();
         }
 
-        private void Refresh()
+        private void RefreshVisibility()
         {
             bool isVisible =
                 _state.CurrentState == GameState.Idle &&
-                _zones.CanLeave;
+                _zones.IsLeaveAllowed;
 
             _leaveButtonView.SetVisible(isVisible);
         }

@@ -5,6 +5,13 @@ namespace VertigoDemo.Core.Contracts
 {
     public interface IRunRewardsReader
     {
-        IReadOnlyDictionary<ItemData, int> Inventory { get; }
+        #region Properties
+
+        IReadOnlyDictionary<ItemData, int> Inventory
+        {
+            get;
+        }
+
+        #endregion
     }
 }

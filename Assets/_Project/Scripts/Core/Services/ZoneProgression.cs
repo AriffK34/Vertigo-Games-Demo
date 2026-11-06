@@ -6,9 +6,13 @@ namespace VertigoDemo.Core
 {
     public sealed class ZoneProgression : IZoneReader
     {
-        #region Fields
+        #region Constants
 
         private const int FIRST_ZONE = 1;
+
+        #endregion
+
+        #region Fields
 
         private readonly ZoneRuleResolver _ruleResolver;
         private int _currentZone = FIRST_ZONE;
@@ -33,7 +37,7 @@ namespace VertigoDemo.Core
             }
         }
 
-        public bool CanLeave
+        public bool IsLeaveAllowed
         {
             get
             {
@@ -43,7 +47,7 @@ namespace VertigoDemo.Core
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public ZoneProgression(ZoneRuleResolver ruleResolver)
         {
@@ -55,7 +59,7 @@ namespace VertigoDemo.Core
             _ruleResolver = ruleResolver;
             _ruleResolver.GetRule(FIRST_ZONE);
         }
- 
+
         #endregion
 
         #region Public Methods

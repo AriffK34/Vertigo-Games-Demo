@@ -13,7 +13,7 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Setup and Cleanup
+        #region Setup and Teardown
 
         [SetUp]
         public void SetUp()
@@ -60,7 +60,7 @@ namespace VertigoDemo.Tests
             Assert.That(isSuccessful, Is.True);
             Assert.That(store.GetAmount(_item), Is.EqualTo(expectedBalance));
         }
-        
+
         [TestCase(0)]
         [TestCase(-5)]
         public void TrySpend_WhenAmountIsNotPositive_RejectsRequest(int spendAmount)
@@ -70,7 +70,7 @@ namespace VertigoDemo.Tests
             Assert.Throws<System.ArgumentOutOfRangeException>(() => store.TrySpend(_item, spendAmount));
             Assert.That(store.GetAmount(_item), Is.EqualTo(10));
         }
-        
+
         #endregion
     }
 }

@@ -20,29 +20,26 @@ namespace VertigoDemo.Presentation
         [SerializeField] private ZoneEntryEffectView _entryEffectView;
         [SerializeField] private WheelAnimationConfig _wheelAnimationConfig;
         [SerializeField] private Sprite _currentZoneSprite;
-
         private IZoneReader _zones;
-        private IGameFlowCallbacks _callbacks;
-        private IEventBus _events;
+        private IGameFlowCallbacks _flowCallbacks;
+        private IEventBus _eventBus;
         private RewardCalculator _rewardCalculator;
-
         private SliceDisplayData[] _sliceData = Array.Empty<SliceDisplayData>();
         private ZoneSlotDisplayData[] _zoneData = Array.Empty<ZoneSlotDisplayData>();
-
         private Tween _transitionTween;
 
         #endregion
 
-        #region LifeCycle
+        #region Unity Callbacks
 
         private void OnDestroy()
         {
-            if (_events == null)
+            if (_eventBus == null)
             {
                 return;
             }
-            
-            _events.Unsubscribe<ZoneTransitionRequested>(HandleTransitionRequested);
+
+            _eventBus.Unsubscribe<ZoneTransitionRequested>(HandleTransitionRequested);
             CancelTransition();
         }
 
@@ -52,15 +49,15 @@ namespace VertigoDemo.Presentation
 
         public void Initialize(
             IZoneReader zones,
-            IGameFlowCallbacks callbacks,
-            IEventBus events,
+            IGameFlowCallbacks flowCallbacks,
+            IEventBus eventBus,
             RewardCalculator rewardCalculator)
         {
-            if (_events != null)
+            if (_eventBus != null)
             {
                 throw new InvalidOperationException("Zone transition controller is already initialized.");
             }
-            
+
             if (!_wheelView ||
                 !_zoneBarView ||
                 !_entryEffectView ||
@@ -69,20 +66,19 @@ namespace VertigoDemo.Presentation
             {
                 throw new InvalidOperationException($"{name}: Zone transition references must be assigned.");
             }
-            
+
             if (_zoneBarView.SlotCount == 0)
             {
                 throw new InvalidOperationException($"{name}: Zone bar requires slots.");
             }
 
             _zones = zones ?? throw new ArgumentNullException(nameof(zones));
-            _callbacks = callbacks ?? throw new ArgumentNullException(nameof(callbacks));
+            _flowCallbacks = flowCallbacks ?? throw new ArgumentNullException(nameof(flowCallbacks));
             _rewardCalculator = rewardCalculator ?? throw new ArgumentNullException(nameof(rewardCalculator));
-            _events = events ?? throw new ArgumentNullException(nameof(events));
+            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
 
-            _events.Subscribe<ZoneTransitionRequested>(
+            _eventBus.Subscribe<ZoneTransitionRequested>(
                 HandleTransitionRequested);
-
         }
 
         public void CancelTransition()
@@ -94,7 +90,7 @@ namespace VertigoDemo.Presentation
             {
                 _wheelView.CancelRotation();
             }
-            
+
             if (_zoneBarView)
             {
                 _zoneBarView.CancelTransition();
@@ -116,10 +112,10 @@ namespace VertigoDemo.Presentation
 
             ZoneRuleConfig rule = _zones.GetRule(message.Zone);
             WheelConfig wheel = rule.Wheel;
-            
+
             PrepareWheelData(wheel, message.Zone);
             PrepareZoneData(message.Zone);
-            
+
             _wheelView.UpdateWheel(wheel.WheelTheme, _sliceData);
 
             Sequence sequence = DOTween.Sequence();
@@ -146,7 +142,7 @@ namespace VertigoDemo.Presentation
                 .SetLink(gameObject)
                 .OnComplete(HandleTransitionComplete);
         }
-        
+
         private void PrepareWheelData(WheelConfig wheel, int zone)
         {
             if (_sliceData.Length != wheel.WheelSlices.Length)
@@ -172,7 +168,7 @@ namespace VertigoDemo.Presentation
                 _sliceData[i] = new SliceDisplayData(slice.ItemData.ItemIcon, text);
             }
         }
-        
+
         private void PrepareZoneData(int currentZone)
         {
             if (_zoneData.Length != _zoneBarView.SlotCount)
@@ -190,11 +186,11 @@ namespace VertigoDemo.Presentation
                 _zoneData[i] = new ZoneSlotDisplayData(sprite, zone.ToString());
             }
         }
-        
+
         private void HandleTransitionComplete()
         {
             _transitionTween = null;
-            _callbacks.CompleteZoneTransition();
+            _flowCallbacks.CompleteZoneTransition();
         }
 
         #endregion

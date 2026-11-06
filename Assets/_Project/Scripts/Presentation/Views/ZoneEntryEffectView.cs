@@ -12,13 +12,12 @@ namespace VertigoDemo.UI
 
         [SerializeField] private Image _image;
         [SerializeField] private UIAnimationConfig _animationConfig;
-
         private Tween _effectTween;
         private Action _onComplete;
 
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnValidate()
         {
@@ -50,7 +49,7 @@ namespace VertigoDemo.UI
             _image.rectTransform.localScale = Vector3.one;
             _image.enabled = true;
             _onComplete = onComplete;
-            
+
             Sequence sequence = DOTween.Sequence();
 
             sequence.Append(
@@ -103,4 +102,3 @@ namespace VertigoDemo.UI
         #endregion
     }
 }
-

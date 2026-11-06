@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,14 +11,13 @@ namespace VertigoDemo.UI
 
         [SerializeField] private Image _image;
         [SerializeField] private UIAnimationConfig _animationConfig;
-
         private Tween _burstTween;
         private Vector3 _initialScale;
         private Color _initialColor;
 
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnValidate()
         {
@@ -51,7 +49,7 @@ namespace VertigoDemo.UI
             float halfDuration = _animationConfig.BurstDuration * 0.5f;
             Color peakColor = Color.Lerp(_initialColor, Color.white, _animationConfig.BurstBrightness);
             peakColor.a = _initialColor.a;
-            
+
             Sequence sequence = DOTween.Sequence();
             sequence.Append(
                 _image.rectTransform

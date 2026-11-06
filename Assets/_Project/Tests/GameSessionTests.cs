@@ -15,7 +15,6 @@ namespace VertigoDemo.Tests
         #region Fields
 
         private readonly List<ScriptableObject> _assets = new List<ScriptableObject>();
-
         private ItemData _reward;
         private ZoneRuleConfig _rule;
         private SessionInventory _inventory;
@@ -23,7 +22,6 @@ namespace VertigoDemo.Tests
         private FixedRandomSource _random;
         private GameSession _session;
         private IEventBus _bus;
-
         private ZoneTransitionRequested _transition;
         private SpinResult _spin;
         private int _transitionCount;
@@ -31,7 +29,7 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Setup and Cleanup
+        #region Setup and Teardown
 
         [SetUp]
         public void SetUp()
@@ -278,7 +276,7 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Helpers
+        #region Private Methods
 
         private void StartReadySession()
         {
@@ -334,16 +332,24 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Test Random Source
+        #region Nested Types
 
         private sealed class FixedRandomSource : IRandomSource
         {
+            #region Fields
+
             public int Index;
+
+            #endregion
+
+            #region Public Methods
 
             public int Next(int maxExclusive)
             {
                 return Index;
             }
+
+            #endregion
         }
 
         #endregion

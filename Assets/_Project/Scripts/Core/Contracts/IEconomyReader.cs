@@ -5,14 +5,34 @@ namespace VertigoDemo.Core.Contracts
 {
     public interface IEconomyReader
     {
-        IReadOnlyDictionary<ItemData, int> Balances { get; }
+        #region Properties
 
-        bool HasReviveFunds { get; }
+        IReadOnlyDictionary<ItemData, int> Balances
+        {
+            get;
+        }
 
-        ItemData ReviveCurrency { get; }
+        bool HasReviveFunds
+        {
+            get;
+        }
 
-        int ReviveCost { get; }
+        ItemData ReviveCurrency
+        {
+            get;
+        }
+
+        int ReviveCost
+        {
+            get;
+        }
+
+        #endregion
+
+        #region Public Methods
 
         int GetBalance(ItemData item);
+
+        #endregion
     }
 }

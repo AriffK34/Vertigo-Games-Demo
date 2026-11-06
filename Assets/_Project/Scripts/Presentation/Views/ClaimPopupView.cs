@@ -4,41 +4,60 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using VertigoDemo.Data;
+using VertigoDemo.Presentation.Animations;
 using VertigoDemo.Presentation.Pooling;
 
 namespace VertigoDemo.UI
 {
     public class ClaimPopupView : MonoBehaviour
     {
-        public event Action OnClaimClicked;
-        
+        #region Fields
+
         [SerializeField] private Transform _contentParent;
         [SerializeField] private InventorySlotView _slotPrefab;
         [SerializeField] private Button _claimButton;
         [SerializeField] private Transform _cardTransform;
-
         [SerializeField] private UIAnimationConfig _animationConfig;
         private Tween _popupTween;
-        
-        private readonly List<InventorySlotView> _spawnedSlots = new();
+        private readonly List<InventorySlotView> _activeSlots = new();
         private InventorySlotPool _slotPool;
-        
+
+        #endregion
+
+        #region Events
+
+        public event Action OnClaimClicked;
+
+        #endregion
+
+        #region Unity Callbacks
+
         private void OnValidate()
         {
-            if (!_claimButton) _claimButton = GetComponentInChildren<Button>(true);
+            if (!_claimButton)
+            {
+                _claimButton = GetComponentInChildren<Button>(true);
+            }
         }
 
         private void Awake()
         {
             _claimButton.onClick.AddListener(HandleClaimButtonClicked);
         }
-        
+
         private void OnDestroy()
         {
             _popupTween?.Kill();
             _popupTween = null;
-            if (_claimButton != null) _claimButton.onClick.RemoveListener(HandleClaimButtonClicked);
+            if (_claimButton)
+            {
+                _claimButton.onClick.RemoveListener(HandleClaimButtonClicked);
+            }
         }
+
+        #endregion
+
+        #region Public Methods
 
         public void Show(IReadOnlyDictionary<ItemData, int> rewards)
         {
@@ -54,7 +73,7 @@ namespace VertigoDemo.UI
             foreach (var reward in rewards)
             {
                 InventorySlotView slot = _slotPool.Rent(reward.Key, reward.Value);
-                _spawnedSlots.Add(slot);
+                _activeSlots.Add(slot);
             }
 
             gameObject.SetActive(true);
@@ -76,14 +95,18 @@ namespace VertigoDemo.UI
                 .OnComplete(HandleHideComplete);
         }
 
+        #endregion
+
+        #region Private Methods
+
         private void ClearSlots()
         {
-            foreach (InventorySlotView slot in _spawnedSlots)
+            foreach (InventorySlotView slot in _activeSlots)
             {
                 _slotPool.Return(slot);
             }
 
-            _spawnedSlots.Clear();
+            _activeSlots.Clear();
         }
 
         private void HandleHideComplete()
@@ -92,12 +115,12 @@ namespace VertigoDemo.UI
             ClearSlots();
             gameObject.SetActive(false);
         }
-        
+
         private void HandleClaimButtonClicked()
         {
             OnClaimClicked?.Invoke();
         }
+
+        #endregion
     }
-
 }
-

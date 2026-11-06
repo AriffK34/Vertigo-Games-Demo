@@ -50,22 +50,28 @@ namespace VertigoDemo.Core
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public EconomyService(EconomyConfig config)
         {
             if (!config)
+            {
                 throw new ArgumentNullException(nameof(config));
+            }
             if (!config.ReviveCurrency)
+            {
                 throw new ArgumentException("Revive currency must be assigned.", nameof(config));
+            }
             if (config.ReviveCost <= 0)
+            {
                 throw new ArgumentException("Revive cost must be greater than zero.", nameof(config));
+            }
             _config = config;
         }
 
         #endregion
 
-        #region Methods
+        #region Public Methods
 
         public int GetBalance(ItemData item)
         {
@@ -74,21 +80,31 @@ namespace VertigoDemo.Core
 
         public void ClaimRewards(SessionInventory runInventory)
         {
-            if (runInventory == null) throw new ArgumentNullException(nameof(runInventory));
+            if (runInventory == null)
+            {
+                throw new ArgumentNullException(nameof(runInventory));
+            }
 
             foreach (var reward in runInventory.Inventory)
+            {
                 _ = checked(_balances.GetAmount(reward.Key) + reward.Value);
-            
+            }
+
             foreach (var reward in runInventory.Inventory)
+            {
                 _balances.Add(reward.Key, reward.Value);
-            
+            }
+
             runInventory.Clear();
         }
 
         public bool TryRevive()
         {
             bool isSuccessful = _balances.TrySpend(_config.ReviveCurrency, _config.ReviveCost);
-            if (!isSuccessful) return false;
+            if (!isSuccessful)
+            {
+                return false;
+            }
             return true;
         }
 

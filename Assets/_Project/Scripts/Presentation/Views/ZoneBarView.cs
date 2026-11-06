@@ -14,7 +14,6 @@ namespace VertigoDemo.UI
         [SerializeField] private RectTransform _content;
         [SerializeField] private GridLayoutGroup _layout;
         [SerializeField] private UIAnimationConfig _animationConfig;
-
         private Tween _slideTween;
         private ZoneSlotDisplayData[] _pendingSlotsData;
         private Action _onTransitionComplete;
@@ -30,10 +29,10 @@ namespace VertigoDemo.UI
                 return _zoneSlots.Length;
             }
         }
-        
+
         #endregion
-        
-        #region Lifecycle
+
+        #region Unity Callbacks
 
         private void OnValidate()
         {
@@ -49,7 +48,7 @@ namespace VertigoDemo.UI
         }
 
         #endregion
-        
+
         #region Public Methods
 
         public Tween UpdateSlots(ZoneSlotDisplayData[] slotsData, bool hasAnimation, Action onComplete)
@@ -84,10 +83,6 @@ namespace VertigoDemo.UI
                 .OnComplete(HandleSlideComplete);
             return _slideTween;
         }
-        
-        #endregion
-
-        #region Public Methods
 
         public void CancelTransition()
         {
@@ -96,14 +91,14 @@ namespace VertigoDemo.UI
         }
 
         #endregion
-        
+
         #region Private Methods
 
         private void ApplySlots(ZoneSlotDisplayData[] slotsData)
         {
             for (int i = 0; i < _zoneSlots.Length; i++)
             {
-                _zoneSlots[i].Setup(slotsData[i].BgSprite, slotsData[i].Text);
+                _zoneSlots[i].Setup(slotsData[i].BackgroundSprite, slotsData[i].Text);
             }
         }
 
@@ -128,7 +123,5 @@ namespace VertigoDemo.UI
         }
 
         #endregion
-
     }
-
 }

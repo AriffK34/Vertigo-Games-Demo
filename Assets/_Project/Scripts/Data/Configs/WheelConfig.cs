@@ -13,8 +13,27 @@ namespace VertigoDemo.Data
 
         #endregion
 
-        public WheelTheme WheelTheme => _wheelTheme;
-        public WheelSliceData[] WheelSlices => _wheelSlices;
+        #region Properties
+
+        public WheelTheme WheelTheme
+        {
+            get
+            {
+                return _wheelTheme;
+            }
+        }
+
+        public WheelSliceData[] WheelSlices
+        {
+            get
+            {
+                return _wheelSlices;
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
 
         public void ValidateConfiguration(bool hasBomb)
         {
@@ -53,5 +72,7 @@ namespace VertigoDemo.Data
                     $"{name}: Expected {expectedBombCount} bomb slice(s), but found {bombCount}");
             }
         }
+
+        #endregion
     }
 }

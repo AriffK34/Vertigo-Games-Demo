@@ -7,9 +7,13 @@ namespace VertigoDemo.Tests
 {
     public class WheelConfigTests
     {
-        #region Fields
+        #region Constants
 
         private const int TEST_SLICE_COUNT = 8;
+
+        #endregion
+
+        #region Fields
 
         private ItemData _reward;
         private ItemData _bomb;
@@ -17,7 +21,7 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Setup and Cleanup
+        #region Setup and Teardown
 
         [SetUp]
         public void SetUp()
@@ -59,14 +63,14 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Helpers
+        #region Private Methods
 
         private void ConfigureWheel(int bombCount)
         {
             SerializedObject serializedWheel = new SerializedObject(_wheel);
             SerializedProperty slices = serializedWheel.FindProperty("_wheelSlices");
             slices.arraySize = TEST_SLICE_COUNT;
-            
+
             for (int i = 0; i < TEST_SLICE_COUNT; i++)
             {
                 SerializedProperty slice = slices.GetArrayElementAtIndex(i);
@@ -81,6 +85,4 @@ namespace VertigoDemo.Tests
 
         #endregion
     }
-        
 }
-

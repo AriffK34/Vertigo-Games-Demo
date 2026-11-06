@@ -12,19 +12,18 @@ namespace VertigoDemo.Presentation
         #region Fields
 
         [SerializeField] private CurrencyBarView _currencyBarView;
-
         private IEconomyReader _economy;
-        private IEventBus _events;
+        private IEventBus _eventBus;
 
         #endregion
 
-        #region LifeCycle
+        #region Unity Callbacks
 
         private void OnDestroy()
         {
-            if (_events != null)
+            if (_eventBus != null)
             {
-                _events.Unsubscribe<BalancesChanged>(HandleBalancesChanged);
+                _eventBus.Unsubscribe<BalancesChanged>(HandleBalancesChanged);
             }
         }
 
@@ -32,9 +31,9 @@ namespace VertigoDemo.Presentation
 
         #region Public Methods
 
-        public void Initialize(IEconomyReader economy, IEventBus events)
+        public void Initialize(IEconomyReader economy, IEventBus eventBus)
         {
-            if (_events != null)
+            if (_eventBus != null)
             {
                 throw new InvalidOperationException("Currency bar controller is already initialized.");
             }
@@ -45,12 +44,12 @@ namespace VertigoDemo.Presentation
             }
 
             _economy = economy ?? throw new ArgumentNullException(nameof(economy));
-            _events = events ?? throw new ArgumentNullException(nameof(events));
+            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
 
-            _events.Subscribe<BalancesChanged>(HandleBalancesChanged);
+            _eventBus.Subscribe<BalancesChanged>(HandleBalancesChanged);
             _currencyBarView.Refresh(_economy.Balances, false);
         }
-        
+
         #endregion
 
         #region Private Methods
@@ -61,5 +60,5 @@ namespace VertigoDemo.Presentation
         }
 
         #endregion
-    } 
+    }
 }

@@ -33,13 +33,13 @@ namespace VertigoDemo.Data
 
         #endregion
 
-        #region Validation
+        #region Unity Callbacks
 
         private void OnValidate()
         {
             _reviveCost = Math.Max(1, _reviveCost);
         }
-        
+
         #endregion
     }
 }

@@ -13,21 +13,20 @@ namespace VertigoDemo.Presentation
         #region Fields
 
         [SerializeField] private WheelView _wheelView;
-
         private IGameCommands _commands;
-        private IGameFlowCallbacks _callbacks;
-        private IEventBus _events;
+        private IGameFlowCallbacks _flowCallbacks;
+        private IEventBus _eventBus;
 
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnDestroy()
         {
-            if (_events != null)
+            if (_eventBus != null)
             {
-                _events.Unsubscribe<SpinStarted>(HandleSpinStarted);
-                _events.Unsubscribe<GameStateChanged>(HandleStateChanged);
+                _eventBus.Unsubscribe<SpinStarted>(HandleSpinStarted);
+                _eventBus.Unsubscribe<GameStateChanged>(HandleStateChanged);
             }
 
             if (_wheelView)
@@ -44,8 +43,8 @@ namespace VertigoDemo.Presentation
         public void Initialize(
             IGameCommands commands,
             IGameStateReader state,
-            IGameFlowCallbacks callbacks,
-            IEventBus events)
+            IGameFlowCallbacks flowCallbacks,
+            IEventBus eventBus)
         {
             if (!_wheelView)
             {
@@ -58,12 +57,12 @@ namespace VertigoDemo.Presentation
             }
 
             _commands = commands ?? throw new ArgumentNullException(nameof(commands));
-            _callbacks = callbacks ?? throw new ArgumentNullException(nameof(callbacks));
-            _events = events ?? throw new ArgumentNullException(nameof(events));
+            _flowCallbacks = flowCallbacks ?? throw new ArgumentNullException(nameof(flowCallbacks));
+            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
 
             _wheelView.OnSpinClicked += HandleSpinClicked;
-            _events.Subscribe<SpinStarted>(HandleSpinStarted);
-            _events.Subscribe<GameStateChanged>(HandleStateChanged);
+            _eventBus.Subscribe<SpinStarted>(HandleSpinStarted);
+            _eventBus.Subscribe<GameStateChanged>(HandleStateChanged);
 
             _wheelView.SetSpinInteractable(
                 state.CurrentState == GameState.Idle);
@@ -82,7 +81,7 @@ namespace VertigoDemo.Presentation
         {
             _wheelView.RotateWheel(
                 message.Result.SliceIndex,
-                _callbacks.CompleteSpin);
+                _flowCallbacks.CompleteSpin);
         }
 
         private void HandleStateChanged(GameStateChanged message)

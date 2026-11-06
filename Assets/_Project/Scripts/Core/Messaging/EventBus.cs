@@ -38,7 +38,7 @@ namespace VertigoDemo.Messaging
             {
                 return;
             }
-            
+
             Delegate remainingHandlers = Delegate.Remove(existingHandlers, handler);
             if (remainingHandlers == null)
             {

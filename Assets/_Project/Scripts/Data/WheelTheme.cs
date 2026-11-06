@@ -14,8 +14,21 @@ namespace VertigoDemo.Data
 
         #region Properties
 
-        public Sprite WheelSprite { get { return _wheelSprite; } }
-        public Sprite IndicatorSprite { get { return _indicatorSprite; } }
+        public Sprite WheelSprite
+        {
+            get
+            {
+                return _wheelSprite;
+            }
+        }
+
+        public Sprite IndicatorSprite
+        {
+            get
+            {
+                return _indicatorSprite;
+            }
+        }
 
         #endregion
     }

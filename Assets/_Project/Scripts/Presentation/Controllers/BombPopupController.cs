@@ -13,21 +13,20 @@ namespace VertigoDemo.Presentation
         #region Fields
 
         [SerializeField] private BombPopupView _bombPopupView;
-
         private IGameCommands _commands;
         private IGameStateReader _state;
         private IEconomyReader _economy;
-        private IEventBus _events;
+        private IEventBus _eventBus;
 
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnDestroy()
         {
-            if (_events != null)
+            if (_eventBus != null)
             {
-                _events.Unsubscribe<GameStateChanged>(HandleStateChanged);
+                _eventBus.Unsubscribe<GameStateChanged>(HandleStateChanged);
             }
 
             if (_bombPopupView)
@@ -45,9 +44,9 @@ namespace VertigoDemo.Presentation
             IGameCommands commands,
             IGameStateReader state,
             IEconomyReader economy,
-            IEventBus events)
+            IEventBus eventBus)
         {
-            if (_events != null)
+            if (_eventBus != null)
             {
                 throw new InvalidOperationException("Bomb popup controller is already initialized.");
             }
@@ -56,17 +55,17 @@ namespace VertigoDemo.Presentation
             {
                 throw new InvalidOperationException($"{name}: Bomb popup view must be assigned.");
             }
-            
+
             _bombPopupView.ValidateReferences();
-            
+
             _commands = commands ?? throw new ArgumentNullException(nameof(commands));
             _state = state ?? throw new ArgumentNullException(nameof(state));
             _economy = economy ?? throw new ArgumentNullException(nameof(economy));
-            _events = events ?? throw new ArgumentNullException(nameof(events));
+            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
 
             _bombPopupView.OnGiveUpClicked += HandleGiveUpClicked;
             _bombPopupView.OnReviveClicked += HandleReviveClicked;
-            _events.Subscribe<GameStateChanged>(HandleStateChanged);
+            _eventBus.Subscribe<GameStateChanged>(HandleStateChanged);
 
             _bombPopupView.gameObject.SetActive(false);
         }

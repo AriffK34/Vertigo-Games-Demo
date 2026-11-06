@@ -15,9 +15,29 @@ namespace VertigoDemo.Data
 
         #region Properties
 
-        public ItemData ItemData { get { return _itemData; } }
-        public int ItemAmount { get { return _itemAmount; } }
-        public bool IsBomb { get { return _isBomb; } }
+        public ItemData ItemData
+        {
+            get
+            {
+                return _itemData;
+            }
+        }
+
+        public int ItemAmount
+        {
+            get
+            {
+                return _itemAmount;
+            }
+        }
+
+        public bool IsBomb
+        {
+            get
+            {
+                return _isBomb;
+            }
+        }
 
         #endregion
     }

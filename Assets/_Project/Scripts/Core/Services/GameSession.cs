@@ -16,9 +16,7 @@ namespace VertigoDemo.Core
         private readonly RewardCalculator _rewardCalculator;
         private readonly IRandomSource _random;
         private readonly IEventBus _eventBus;
-
         private readonly GameStateMachine _stateMachine = new GameStateMachine();
-
         private SpinResult _pendingSpin;
         private bool _isStarted;
 
@@ -36,7 +34,7 @@ namespace VertigoDemo.Core
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public GameSession(
             ZoneProgression zones,
@@ -56,7 +54,7 @@ namespace VertigoDemo.Core
 
         #endregion
 
-        #region Startup
+        #region Public Methods
 
         public void StartGame()
         {
@@ -64,17 +62,13 @@ namespace VertigoDemo.Core
             {
                 return;
             }
-            
+
             _zones.ResetZone();
             _isStarted = true;
 
             PublishStateChanged();
             PublishZoneTransition(true);
         }
-
-        #endregion
-
-        #region Player Commands
 
         public bool TrySpin()
         {
@@ -88,7 +82,7 @@ namespace VertigoDemo.Core
 
             if (sliceIndex < 0 || sliceIndex >= wheel.WheelSlices.Length)
             {
-                throw new InvalidOperationException("Random source returned an invalid slice index."); 
+                throw new InvalidOperationException("Random source returned an invalid slice index.");
             }
 
             WheelSliceData slice = wheel.WheelSlices[sliceIndex];
@@ -100,13 +94,13 @@ namespace VertigoDemo.Core
 
             SetState(GameState.Spinning);
             _eventBus.Publish(new SpinStarted(_pendingSpin));
-            
+
             return true;
         }
 
         public void RequestLeave()
         {
-            if (CurrentState != GameState.Idle || !_zones.CanLeave)
+            if (CurrentState != GameState.Idle || !_zones.IsLeaveAllowed)
             {
                 return;
             }
@@ -131,7 +125,7 @@ namespace VertigoDemo.Core
             {
                 return;
             }
-            
+
             _inventory.Clear();
             RestartRun(false);
         }
@@ -153,10 +147,6 @@ namespace VertigoDemo.Core
 
             return true;
         }
-
-        #endregion
-
-        #region Presentation Callbacks
 
         public void CompleteSpin()
         {
@@ -187,7 +177,7 @@ namespace VertigoDemo.Core
             {
                 return;
             }
-            
+
             _zones.AdvanceZone();
 
             SetState(GameState.ZoneTransition);
@@ -211,7 +201,7 @@ namespace VertigoDemo.Core
 
         #endregion
 
-        #region PrivateMethots
+        #region Private Methods
 
         private void RestartRun(bool hasBalanceChange)
         {
@@ -223,7 +213,7 @@ namespace VertigoDemo.Core
             {
                 _eventBus.Publish(new BalancesChanged());
             }
-            
+
             _eventBus.Publish(new RunRewardsCleared());
             PublishZoneTransition(true);
         }

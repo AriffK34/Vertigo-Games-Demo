@@ -24,7 +24,7 @@ namespace VertigoDemo.Data
 
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnValidate()
         {

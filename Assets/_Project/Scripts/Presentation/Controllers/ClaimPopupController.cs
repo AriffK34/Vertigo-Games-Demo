@@ -13,21 +13,20 @@ namespace VertigoDemo.Presentation
         #region Fields
 
         [SerializeField] private ClaimPopupView _claimPopupView;
-
         private IGameCommands _commands;
         private IGameStateReader _state;
         private IRunRewardsReader _rewards;
-        private IEventBus _events;
+        private IEventBus _eventBus;
 
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnDestroy()
         {
-            if (_events != null)
+            if (_eventBus != null)
             {
-                _events.Unsubscribe<GameStateChanged>(HandleStateChanged);
+                _eventBus.Unsubscribe<GameStateChanged>(HandleStateChanged);
             }
 
             if (_claimPopupView)
@@ -44,9 +43,9 @@ namespace VertigoDemo.Presentation
             IGameCommands commands,
             IGameStateReader state,
             IRunRewardsReader rewards,
-            IEventBus events)
+            IEventBus eventBus)
         {
-            if (_events != null)
+            if (_eventBus != null)
             {
                 throw new InvalidOperationException("Claim popup controller is already initialized.");
             }
@@ -59,10 +58,10 @@ namespace VertigoDemo.Presentation
             _commands = commands ?? throw new ArgumentNullException(nameof(commands));
             _state = state ?? throw new ArgumentNullException(nameof(state));
             _rewards = rewards ?? throw new ArgumentNullException(nameof(rewards));
-            _events = events ?? throw new ArgumentNullException(nameof(events));
-            
+            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+
             _claimPopupView.OnClaimClicked += HandleClaimClicked;
-            _events.Subscribe<GameStateChanged>(HandleStateChanged);
+            _eventBus.Subscribe<GameStateChanged>(HandleStateChanged);
 
             _claimPopupView.gameObject.SetActive(false);
         }

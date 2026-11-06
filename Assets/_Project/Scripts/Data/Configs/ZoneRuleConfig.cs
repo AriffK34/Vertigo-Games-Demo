@@ -10,12 +10,10 @@ namespace VertigoDemo.Data
         [SerializeField, Min(1)] private int _firstZone = 1;
         [SerializeField, Min(0)] private int _lastZone;
         [SerializeField, Min(1)] private int _interval = 1;
-
         [SerializeField] private WheelConfig _wheel;
         [SerializeField] private bool _hasBomb = true;
         [SerializeField] private bool _isLeaveAllowed;
         [SerializeField] private Sprite _zoneSprite;
-
         [SerializeField] private bool _hasEntryEffect;
         [SerializeField] private Color _entryEffectColor = Color.white;
 
@@ -38,7 +36,7 @@ namespace VertigoDemo.Data
                 return _hasBomb;
             }
         }
-        
+
         public bool IsLeaveAllowed
         {
             get
@@ -46,7 +44,7 @@ namespace VertigoDemo.Data
                 return _isLeaveAllowed;
             }
         }
-        
+
         public Sprite ZoneSprite
         {
             get
@@ -54,7 +52,7 @@ namespace VertigoDemo.Data
                 return _zoneSprite;
             }
         }
-        
+
         public bool HasEntryEffect
         {
             get
@@ -73,7 +71,28 @@ namespace VertigoDemo.Data
 
         #endregion
 
-        #region Methods
+        #region Unity Callbacks
+
+        private void OnValidate()
+        {
+            _firstZone = Mathf.Max(1, _firstZone);
+            _lastZone = Mathf.Max(0, _lastZone);
+            _interval = Mathf.Max(1, _interval);
+
+            if (_lastZone > 0 && _lastZone < _firstZone)
+            {
+                _lastZone = _firstZone;
+            }
+
+            if (_wheel)
+            {
+                ValidateWheel();
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
 
         public bool IsMatch(int zone)
         {
@@ -98,27 +117,6 @@ namespace VertigoDemo.Data
                 throw new System.InvalidOperationException($"{name}: A wheel config must be assigned.");
             }
             _wheel.ValidateConfiguration(_hasBomb);
-        }
-
-        #endregion
-
-        #region Validation
-
-        private void OnValidate()
-        {
-            _firstZone = Mathf.Max(1, _firstZone);
-            _lastZone = Mathf.Max(0, _lastZone);
-            _interval = Mathf.Max(1, _interval);
-            
-            if (_lastZone > 0 && _lastZone < _firstZone)
-            {
-                _lastZone = _firstZone;
-            }
-
-            if (_wheel)
-            {
-                ValidateWheel();
-            }
         }
 
         #endregion

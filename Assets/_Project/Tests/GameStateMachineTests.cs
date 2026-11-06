@@ -11,7 +11,7 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Setup
+        #region Setup and Teardown
 
         [SetUp]
         public void SetUp()
@@ -49,7 +49,7 @@ namespace VertigoDemo.Tests
                 GameState.Spinning,
                 GameState.RewardGiving,
                 GameState.ZoneTransition);
-            
+
             Assert.That(_machine.CurrentState, Is.EqualTo(GameState.ZoneTransition));
             MoveThrough(GameState.Idle);
             Assert.That(_machine.CurrentState, Is.EqualTo(GameState.Idle));
@@ -76,7 +76,7 @@ namespace VertigoDemo.Tests
                 GameState.Idle,
                 GameState.RewardsClaiming,
                 GameState.Resetting);
-            
+
             Assert.That(_machine.TryTransition(GameState.Spinning), Is.False);
             Assert.That(_machine.CurrentState, Is.EqualTo(GameState.Resetting));
             MoveThrough(GameState.Idle, GameState.Spinning);
@@ -85,7 +85,7 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Helpers
+        #region Private Methods
 
         private void MoveThrough(params GameState[] states)
         {

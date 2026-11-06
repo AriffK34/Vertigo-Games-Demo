@@ -12,12 +12,11 @@ namespace VertigoDemo.Presentation.Pooling
 
         private readonly InventorySlotView _prefab;
         private readonly Transform _parent;
-
         private readonly Stack<InventorySlotView> _available = new Stack<InventorySlotView>();
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public InventorySlotPool(InventorySlotView prefab, Transform parent)
         {

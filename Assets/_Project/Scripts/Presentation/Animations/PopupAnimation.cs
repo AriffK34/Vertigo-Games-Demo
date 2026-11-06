@@ -2,10 +2,12 @@ using DG.Tweening;
 using UnityEngine;
 using VertigoDemo.Data;
 
-namespace VertigoDemo.UI
+namespace VertigoDemo.Presentation.Animations
 {
     public static class PopupAnimation
     {
+        #region Public Methods
+
         public static Tween Show(Transform animatedTransform, UIAnimationConfig config)
         {
             animatedTransform.localScale = Vector3.zero;
@@ -24,5 +26,7 @@ namespace VertigoDemo.UI
                 .SetRecyclable(false)
                 .SetLink(animatedTransform.gameObject);
         }
+
+        #endregion
     }
 }

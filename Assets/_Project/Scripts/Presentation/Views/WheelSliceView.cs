@@ -15,9 +15,8 @@ namespace VertigoDemo.UI
         [SerializeField] private Image _glowImage;
         [SerializeField] private Image _iconImage;
         [SerializeField] private TextMeshProUGUI _amountText;
-
         private WheelAnimationConfig _animationConfig;
-        private Vector2 _defaultIconPos;
+        private Vector2 _defaultIconPosition;
         private Tween _punchTween;
         private Tween _glowTween;
 
@@ -35,7 +34,7 @@ namespace VertigoDemo.UI
 
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnValidate()
         {
@@ -72,7 +71,7 @@ namespace VertigoDemo.UI
             }
 
             _animationConfig = animationConfig;
-            _defaultIconPos = _iconImage.rectTransform.anchoredPosition;
+            _defaultIconPosition = _iconImage.rectTransform.anchoredPosition;
             CancelFeedback();
         }
 
@@ -86,7 +85,7 @@ namespace VertigoDemo.UI
             _iconImage.rectTransform.anchoredPosition =
                 string.IsNullOrEmpty(data.Text)
                     ? Vector2.zero
-                    : _defaultIconPos;
+                    : _defaultIconPosition;
         }
 
         public void PlayPunchAnimation()

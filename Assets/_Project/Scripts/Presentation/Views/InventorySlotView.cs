@@ -21,7 +21,11 @@ namespace VertigoDemo.UI
 
         #region Properties
 
-        public ItemData Item { get; private set; }
+        public ItemData Item
+        {
+            get;
+            private set;
+        }
 
         public Vector3 IconPosition
         {
@@ -33,16 +37,16 @@ namespace VertigoDemo.UI
 
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnDisable()
         {
-            StopAnimation();
+            StopPunchAnimation();
         }
 
         private void OnDestroy()
         {
-            StopAnimation();
+            StopPunchAnimation();
         }
 
         #endregion
@@ -54,18 +58,18 @@ namespace VertigoDemo.UI
             Item = item;
             _itemIconImage.sprite = item.ItemIcon;
             _itemAmountText.text = $"x{NumberFormatter.Format(amount)}";
-            PunchAnimation();
+            PlayPunchAnimation();
         }
 
         public void UpdateAmount(int amount)
         {
             _itemAmountText.text = $"x{NumberFormatter.Format(amount)}";
-            PunchAnimation();
+            PlayPunchAnimation();
         }
 
         public void ResetForPool()
         {
-            StopAnimation();
+            StopPunchAnimation();
 
             Item = null;
             _itemIconImage.sprite = null;
@@ -76,7 +80,7 @@ namespace VertigoDemo.UI
 
         #region Private Methods
 
-        private void PunchAnimation()
+        private void PlayPunchAnimation()
         {
             UIPunchAnimation.Play(
                 _slotContent,
@@ -84,7 +88,7 @@ namespace VertigoDemo.UI
                 gameObject);
         }
 
-        private void StopAnimation()
+        private void StopPunchAnimation()
         {
             if (_slotContent)
             {

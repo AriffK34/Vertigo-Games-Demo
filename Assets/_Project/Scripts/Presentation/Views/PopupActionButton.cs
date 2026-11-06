@@ -22,12 +22,25 @@ namespace VertigoDemo.UI
 
         #region Properties
 
-        public PopupAction Action { get { return _action; } }
-        public Button Button { get { return _button; } }
+        public PopupAction Action
+        {
+            get
+            {
+                return _action;
+            }
+        }
+
+        public Button Button
+        {
+            get
+            {
+                return _button;
+            }
+        }
 
         #endregion
 
-        #region Validation
+        #region Unity Callbacks
 
         private void OnValidate()
         {

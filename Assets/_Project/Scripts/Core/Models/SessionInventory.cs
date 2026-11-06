@@ -24,7 +24,7 @@ namespace VertigoDemo.Core
 
         #endregion
 
-        #region Methods
+        #region Public Methods
 
         public void AddItem(ItemData item, int amount)
         {
@@ -38,6 +38,4 @@ namespace VertigoDemo.Core
 
         #endregion
     }
-
 }
-

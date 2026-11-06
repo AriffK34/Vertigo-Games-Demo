@@ -5,6 +5,8 @@ namespace VertigoDemo.Bootstrap
 {
     public sealed class UnityRandomSource : IRandomSource
     {
+        #region Public Methods
+
         public int Next(int maxExclusive)
         {
             if (maxExclusive <= 0)
@@ -14,5 +16,7 @@ namespace VertigoDemo.Bootstrap
 
             return UnityEngine.Random.Range(0, maxExclusive);
         }
+
+        #endregion
     }
 }

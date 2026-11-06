@@ -1,19 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace VertigoDemo.Data
 {
     public readonly struct ZoneSlotDisplayData
     {
-        public readonly Sprite BgSprite;
+        #region Fields
+
+        public readonly Sprite BackgroundSprite;
         public readonly string Text;
 
-        public ZoneSlotDisplayData(Sprite bgSprite, string text)
+        #endregion
+
+        #region Constructors
+
+        public ZoneSlotDisplayData(Sprite backgroundSprite, string text)
         {
-            BgSprite = bgSprite;
+            BackgroundSprite = backgroundSprite;
             Text = text;
         }
-    }
 
+        #endregion
+    }
 }

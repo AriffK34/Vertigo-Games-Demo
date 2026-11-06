@@ -20,7 +20,7 @@ namespace VertigoDemo.Core
 
         #endregion
 
-        #region Methods
+        #region Public Methods
 
         public bool TryTransition(GameState nextState)
         {
@@ -32,7 +32,11 @@ namespace VertigoDemo.Core
             _currentState = nextState;
             return true;
         }
-        
+
+        #endregion
+
+        #region Private Methods
+
         private static bool IsTransitionAllowed(GameState currentState, GameState nextState)
         {
             switch (currentState)
@@ -40,22 +44,22 @@ namespace VertigoDemo.Core
                 case GameState.Resetting:
                 case GameState.ZoneTransition:
                     return nextState == GameState.Idle;
-                
+
                 case GameState.Idle:
                     return nextState == GameState.Spinning || nextState == GameState.RewardsClaiming;
-                
+
                 case GameState.Spinning:
                     return nextState == GameState.RewardGiving || nextState == GameState.BombExploded;
-                
+
                 case GameState.RewardGiving:
                     return nextState == GameState.ZoneTransition;
-                
+
                 case GameState.RewardsClaiming:
                     return nextState == GameState.Resetting;
-                
+
                 case GameState.BombExploded:
                     return nextState == GameState.Resetting || nextState == GameState.Idle;
-                
+
                 default:
                     return false;
             }

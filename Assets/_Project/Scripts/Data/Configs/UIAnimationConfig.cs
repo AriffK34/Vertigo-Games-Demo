@@ -23,33 +23,136 @@ namespace VertigoDemo.Data
         [SerializeField] private Ease _burstEase = Ease.OutQuad;
         [SerializeField] private PunchAnimationSettings _inventoryPunch =
             new PunchAnimationSettings(0.25f, 0.2f, 1, 0.5f);
-
         [SerializeField] private PunchAnimationSettings _currencyPunch =
             new PunchAnimationSettings(0.3f, 0.35f, 2, 0.5f);
-        
+
         #endregion
 
         #region Properties
 
-        public float ZoneSlideDuration { get { return _zoneSlideDuration; } }
-        public Ease ZoneSlideEase { get { return _zoneSlideEase; } }
-        public float PopupShowDuration { get { return _popupShowDuration; } }
-        public Ease PopupShowEase { get { return _popupShowEase; } }
-        public float PopupHideDuration { get { return _popupHideDuration; } }
-        public Ease PopupHideEase { get { return _popupHideEase; } }
-        public float RewardFlightDuration { get { return _rewardFlightDuration; } }
-        public float RewardFlightPeakScale { get { return _rewardFlightPeakScale; } }
-        public Ease RewardFlightEase { get { return _rewardFlightEase; } }
-        public float BurstDuration { get { return _burstDuration; } }
-        public float BurstPeakScale { get { return _burstPeakScale; } }
-        public float BurstBrightness { get { return _burstBrightness; } }
-        public Ease BurstEase { get { return _burstEase; } }
-        public PunchAnimationSettings InventoryPunch { get { return _inventoryPunch; } }
-        public PunchAnimationSettings CurrencyPunch { get { return _currencyPunch; } }
+        public float ZoneSlideDuration
+        {
+            get
+            {
+                return _zoneSlideDuration;
+            }
+        }
+
+        public Ease ZoneSlideEase
+        {
+            get
+            {
+                return _zoneSlideEase;
+            }
+        }
+
+        public float PopupShowDuration
+        {
+            get
+            {
+                return _popupShowDuration;
+            }
+        }
+
+        public Ease PopupShowEase
+        {
+            get
+            {
+                return _popupShowEase;
+            }
+        }
+
+        public float PopupHideDuration
+        {
+            get
+            {
+                return _popupHideDuration;
+            }
+        }
+
+        public Ease PopupHideEase
+        {
+            get
+            {
+                return _popupHideEase;
+            }
+        }
+
+        public float RewardFlightDuration
+        {
+            get
+            {
+                return _rewardFlightDuration;
+            }
+        }
+
+        public float RewardFlightPeakScale
+        {
+            get
+            {
+                return _rewardFlightPeakScale;
+            }
+        }
+
+        public Ease RewardFlightEase
+        {
+            get
+            {
+                return _rewardFlightEase;
+            }
+        }
+
+        public float BurstDuration
+        {
+            get
+            {
+                return _burstDuration;
+            }
+        }
+
+        public float BurstPeakScale
+        {
+            get
+            {
+                return _burstPeakScale;
+            }
+        }
+
+        public float BurstBrightness
+        {
+            get
+            {
+                return _burstBrightness;
+            }
+        }
+
+        public Ease BurstEase
+        {
+            get
+            {
+                return _burstEase;
+            }
+        }
+
+        public PunchAnimationSettings InventoryPunch
+        {
+            get
+            {
+                return _inventoryPunch;
+            }
+        }
+
+        public PunchAnimationSettings CurrencyPunch
+        {
+            get
+            {
+                return _currencyPunch;
+            }
+        }
 
         #endregion
-        
-        #region Validation
+
+        #region Unity Callbacks
 
         private void OnValidate()
         {

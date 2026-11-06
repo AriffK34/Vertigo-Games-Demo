@@ -12,13 +12,13 @@ namespace VertigoDemo.Core
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public ZoneRuleResolver(IReadOnlyList<ZoneRuleConfig> rules)
         {
             if (rules == null)
             {
-                throw new System.ArgumentNullException(nameof(rules));
+                throw new ArgumentNullException(nameof(rules));
             }
 
             if (rules.Count == 0)
@@ -38,7 +38,7 @@ namespace VertigoDemo.Core
 
         #endregion
 
-        #region Methods
+        #region Public Methods
 
         public ZoneRuleConfig GetRule(int zone)
         {

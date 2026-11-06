@@ -14,7 +14,6 @@ namespace VertigoDemo.Bootstrap
         [SerializeField] private ZoneProgressionConfig _progressionConfig;
         [SerializeField] private EconomyConfig _economyConfig;
         [SerializeField] private RuntimeConfig _runtimeConfig;
-
         [SerializeField] private WheelController _wheelController;
         [SerializeField] private InventoryController _inventoryController;
         [SerializeField] private ZoneTransitionController _zoneTransitionController;
@@ -25,7 +24,7 @@ namespace VertigoDemo.Bootstrap
 
         #endregion
 
-        #region Lifecycle
+        #region Unity Callbacks
 
         private void OnValidate()
         {
@@ -72,7 +71,7 @@ namespace VertigoDemo.Bootstrap
 
         #endregion
 
-        #region Validation
+        #region Private Methods
 
         private void ValidateConfiguration()
         {

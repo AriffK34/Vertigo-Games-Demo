@@ -8,9 +8,13 @@ namespace VertigoDemo.Tests
 {
     public class EconomyServiceTests
     {
-        #region Fields
+        #region Constants
 
         private const int REVIVE_COST = 37;
+
+        #endregion
+
+        #region Fields
 
         private ItemData _gold;
         private ItemData _cash;
@@ -20,7 +24,7 @@ namespace VertigoDemo.Tests
 
         #endregion
 
-        #region Setup and Cleanup
+        #region Setup and Teardown
 
         [SetUp]
         public void SetUp()

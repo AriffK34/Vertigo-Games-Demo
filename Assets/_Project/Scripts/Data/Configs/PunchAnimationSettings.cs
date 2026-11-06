@@ -19,15 +19,49 @@ namespace VertigoDemo.Data
 
         #region Properties
 
-        public float Duration { get { return _duration; } }
-        public float Strength { get { return _strength; } }
-        public int Vibrato { get { return _vibrato; } }
-        public float Elasticity { get { return _elasticity; } }
-        public Ease Ease { get { return _ease; } }
+        public float Duration
+        {
+            get
+            {
+                return _duration;
+            }
+        }
+
+        public float Strength
+        {
+            get
+            {
+                return _strength;
+            }
+        }
+
+        public int Vibrato
+        {
+            get
+            {
+                return _vibrato;
+            }
+        }
+
+        public float Elasticity
+        {
+            get
+            {
+                return _elasticity;
+            }
+        }
+
+        public Ease Ease
+        {
+            get
+            {
+                return _ease;
+            }
+        }
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public PunchAnimationSettings(
             float duration,
@@ -47,7 +81,7 @@ namespace VertigoDemo.Data
 
         #endregion
 
-        #region Validation
+        #region Public Methods
 
         public void Validate()
         {
