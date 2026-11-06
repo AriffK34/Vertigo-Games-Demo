@@ -16,14 +16,6 @@ namespace VertigoDemo.Data
         public WheelTheme WheelTheme => _wheelTheme;
         public WheelSliceData[] WheelSlices => _wheelSlices;
 
-        private void OnValidate()
-        {
-            if (_wheelSlices is not { Length: 8 })
-            {
-                System.Array.Resize(ref _wheelSlices, 8);
-            }
-        }
-
         public void ValidateConfiguration(bool hasBomb)
         {
             if (_wheelSlices == null || _wheelSlices.Length == 0)
