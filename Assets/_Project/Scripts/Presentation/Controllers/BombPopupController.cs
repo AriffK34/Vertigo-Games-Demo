@@ -99,8 +99,7 @@ namespace VertigoDemo.Presentation
                 return;
             }
 
-            _bombPopupView.Hide();
-            _commands.GiveUp();
+            _bombPopupView.Hide(_commands.GiveUp);
         }
 
         private void HandleReviveClicked()

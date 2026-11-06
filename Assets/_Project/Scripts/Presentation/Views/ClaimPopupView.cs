@@ -19,6 +19,7 @@ namespace VertigoDemo.UI
         [SerializeField] private Transform _cardTransform;
         [SerializeField] private UIAnimationConfig _animationConfig;
         private Tween _popupTween;
+        private Action _onHideComplete;
         private readonly List<InventorySlotView> _activeSlots = new();
         private InventorySlotPool _slotPool;
 
@@ -49,6 +50,7 @@ namespace VertigoDemo.UI
         {
             _popupTween?.Kill();
             _popupTween = null;
+            _onHideComplete = null;
             if (_claimButton)
             {
                 _claimButton.onClick.RemoveListener(HandleClaimButtonClicked);
@@ -62,6 +64,8 @@ namespace VertigoDemo.UI
         public void Show(IReadOnlyDictionary<ItemData, int> rewards)
         {
             _popupTween?.Kill();
+            _onHideComplete = null;
+            _claimButton.interactable = true;
 
             if (_slotPool == null)
             {
@@ -80,13 +84,14 @@ namespace VertigoDemo.UI
             _popupTween = PopupAnimation.Show(_cardTransform, _animationConfig);
         }
 
-        public void Hide()
+        public void Hide(Action onComplete)
         {
             _popupTween?.Kill();
+            _onHideComplete = onComplete;
+            _claimButton.interactable = false;
             if (!gameObject.activeInHierarchy)
             {
-                _popupTween = null;
-                ClearSlots();
+                HandleHideComplete();
                 return;
             }
 
@@ -114,6 +119,9 @@ namespace VertigoDemo.UI
             _popupTween = null;
             ClearSlots();
             gameObject.SetActive(false);
+            Action onComplete = _onHideComplete;
+            _onHideComplete = null;
+            onComplete?.Invoke();
         }
 
         private void HandleClaimButtonClicked()

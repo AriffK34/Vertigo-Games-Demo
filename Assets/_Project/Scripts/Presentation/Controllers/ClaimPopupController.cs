@@ -85,8 +85,7 @@ namespace VertigoDemo.Presentation
                 return;
             }
 
-            _claimPopupView.Hide();
-            _commands.ClaimRewards();
+            _claimPopupView.Hide(_commands.ClaimRewards);
         }
 
         #endregion
