@@ -133,15 +133,15 @@ namespace VertigoDemo.UI
                 float angle = (index + 0.5f) * Mathf.PI * 2f / _smoke.Length;
                 Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
                 RectTransform rect = particle.rectTransform;
-                rect.anchoredPosition = direction * distance * 0.25f;
+                rect.anchoredPosition = direction * distance * _animationConfig.BombSmokeStartDistanceRatio;
                 rect.localRotation = Quaternion.identity;
                 rect.localScale = Vector3.one;
-                rect.sizeDelta = Vector2.one * 100f;
-                particle.color = new Color(0.14f, 0.12f, 0.1f, 0.7f);
+                rect.sizeDelta = _animationConfig.BombSmokeStartSize;
+                particle.color = _animationConfig.BombSmokeColor;
                 particle.enabled = true;
-                sequence.Insert(0f, rect.DOAnchorPos(direction * distance * 0.7f, duration).SetEase(Ease.OutCubic));
-                sequence.Insert(0f, rect.DOSizeDelta(Vector2.one * 240f, duration).SetEase(Ease.OutQuad));
-                sequence.Insert(0f, particle.DOFade(0f, duration).SetEase(Ease.InQuad));
+                sequence.Insert(0f, rect.DOAnchorPos(direction * distance * _animationConfig.BombSmokeEndDistanceRatio, duration).SetEase(_animationConfig.BombParticleMoveEase));
+                sequence.Insert(0f, rect.DOSizeDelta(_animationConfig.BombSmokeEndSize, duration).SetEase(_animationConfig.BombParticleSizeEase));
+                sequence.Insert(0f, particle.DOFade(0f, duration).SetEase(_animationConfig.BombParticleFadeEase));
             }
 
             for (int index = 0; index < _sparks.Length; index++)
@@ -149,20 +149,21 @@ namespace VertigoDemo.UI
                 Image particle = _sparks[index];
                 float angle = (index + 0.25f) * Mathf.PI * 2f / _sparks.Length;
                 Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-                float sparkDuration = duration * (0.7f + (index % 3) * 0.1f);
+                float sparkDuration = duration * Mathf.Lerp(_animationConfig.BombSparkLifetimeRange.x,
+                    _animationConfig.BombSparkLifetimeRange.y, (index % 3) / 2f);
                 RectTransform rect = particle.rectTransform;
-                rect.anchoredPosition = direction * distance * 0.35f;
+                rect.anchoredPosition = direction * distance * _animationConfig.BombSparkStartDistanceRatio;
                 rect.localRotation = Quaternion.Euler(0f, 0f, angle * Mathf.Rad2Deg);
                 rect.localScale = Vector3.one;
-                rect.sizeDelta = new Vector2(64f, 18f);
+                rect.sizeDelta = _animationConfig.BombSparkStartSize;
                 particle.color = index % 2 == 0
-                    ? new Color(1f, 0.8f, 0.25f, 1f)
-                    : new Color(1f, 0.35f, 0.05f, 1f);
+                    ? _animationConfig.BombSparkPrimaryColor
+                    : _animationConfig.BombSparkSecondaryColor;
                 particle.enabled = true;
-                sequence.Insert(0f, rect.DOAnchorPos(direction * distance, sparkDuration).SetEase(Ease.OutCubic));
-                sequence.Insert(0f, rect.DOSizeDelta(new Vector2(18f, 5f), sparkDuration));
-                sequence.Insert(sparkDuration * 0.2f,
-                    particle.DOFade(0f, sparkDuration * 0.8f).SetEase(Ease.InQuad));
+                sequence.Insert(0f, rect.DOAnchorPos(direction * distance, sparkDuration).SetEase(_animationConfig.BombParticleMoveEase));
+                sequence.Insert(0f, rect.DOSizeDelta(_animationConfig.BombSparkEndSize, sparkDuration).SetEase(_animationConfig.BombSparkSizeEase));
+                sequence.Insert(sparkDuration * _animationConfig.BombSparkFadeStartRatio,
+                    particle.DOFade(0f, sparkDuration * (1f - _animationConfig.BombSparkFadeStartRatio)).SetEase(_animationConfig.BombParticleFadeEase));
             }
         }
 
