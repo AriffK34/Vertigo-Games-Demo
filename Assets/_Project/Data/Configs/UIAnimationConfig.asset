@@ -25,6 +25,10 @@ MonoBehaviour:
   _burstPeakScale: 1.4
   _burstBrightness: 0.4
   _burstEase: 6
+  _bombSparkCount: 12
+  _bombSmokeCount: 5
+  _bombParticleDuration: 0.65
+  _bombParticleDistance: 280
   _inventoryPunch:
     _duration: 0.25
     _strength: 0.2

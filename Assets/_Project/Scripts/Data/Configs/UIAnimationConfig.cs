@@ -21,6 +21,10 @@ namespace VertigoDemo.Data
         [SerializeField, Min(1f)] private float _burstPeakScale = 1.15f;
         [SerializeField, Range(0f, 1f)] private float _burstBrightness = 0.3f;
         [SerializeField] private Ease _burstEase = Ease.OutQuad;
+        [SerializeField, Range(1, 24)] private int _bombSparkCount = 12;
+        [SerializeField, Range(1, 12)] private int _bombSmokeCount = 5;
+        [SerializeField, Min(0.01f)] private float _bombParticleDuration = 0.65f;
+        [SerializeField, Min(1f)] private float _bombParticleDistance = 280f;
         [SerializeField] private PunchAnimationSettings _inventoryPunch =
             new PunchAnimationSettings(0.25f, 0.2f, 1, 0.5f);
         [SerializeField] private PunchAnimationSettings _currencyPunch =
@@ -134,6 +138,38 @@ namespace VertigoDemo.Data
             }
         }
 
+        public int BombSparkCount
+        {
+            get
+            {
+                return _bombSparkCount;
+            }
+        }
+
+        public int BombSmokeCount
+        {
+            get
+            {
+                return _bombSmokeCount;
+            }
+        }
+
+        public float BombParticleDuration
+        {
+            get
+            {
+                return _bombParticleDuration;
+            }
+        }
+
+        public float BombParticleDistance
+        {
+            get
+            {
+                return _bombParticleDistance;
+            }
+        }
+
         public PunchAnimationSettings InventoryPunch
         {
             get
@@ -164,6 +200,10 @@ namespace VertigoDemo.Data
             _burstDuration = Mathf.Max(0.01f, _burstDuration);
             _burstPeakScale = Mathf.Max(1f, _burstPeakScale);
             _burstBrightness = Mathf.Clamp01(_burstBrightness);
+            _bombSparkCount = Mathf.Clamp(_bombSparkCount, 1, 24);
+            _bombSmokeCount = Mathf.Clamp(_bombSmokeCount, 1, 12);
+            _bombParticleDuration = Mathf.Max(0.01f, _bombParticleDuration);
+            _bombParticleDistance = Mathf.Max(1f, _bombParticleDistance);
             _inventoryPunch.Validate();
             _currencyPunch.Validate();
         }

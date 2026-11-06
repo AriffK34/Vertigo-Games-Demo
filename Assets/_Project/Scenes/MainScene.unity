@@ -3200,6 +3200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 913759058}
   _animationConfig: {fileID: 11400000, guid: 8da6380025c2e774fbd64a577cca5393, type: 2}
+  _particleSprite: {fileID: 21300000, guid: da58ebf1f46252447b4656b700582e8c, type: 3}
 --- !u!1 &918808145
 GameObject:
   m_ObjectHideFlags: 0
