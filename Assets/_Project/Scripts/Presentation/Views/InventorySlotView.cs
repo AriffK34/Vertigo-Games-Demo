@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VertigoDemo.Data;
+using VertigoDemo.Presentation.Formatting;
 
 namespace VertigoDemo.UI
 {
@@ -50,13 +51,13 @@ namespace VertigoDemo.UI
         {
             Item = item;
             itemIconImage.sprite = item.ItemIcon;
-            itemAmountText.text = $"x{amount}";
+            itemAmountText.text = $"x{NumberFormatter.Format(amount)}";
             PunchAnimation();
         }
 
         public void UpdateAmount(int amount)
         {
-            itemAmountText.text = $"x{amount}";
+            itemAmountText.text = $"x{NumberFormatter.Format(amount)}";
             PunchAnimation();
         }
 

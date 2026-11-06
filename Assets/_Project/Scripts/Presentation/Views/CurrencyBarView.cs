@@ -4,6 +4,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using VertigoDemo.Data;
+using VertigoDemo.Presentation.Formatting;
 
 namespace VertigoDemo.UI
 {
@@ -46,7 +47,7 @@ namespace VertigoDemo.UI
                 }
 
                 balances.TryGetValue(binding.Currency, out int amount);
-                string amountText = amount.ToString();
+                string amountText = NumberFormatter.Format(amount);
                 if (binding.AmountText.text == amountText)
                 {
                     continue;

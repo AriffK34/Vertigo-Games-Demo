@@ -6,6 +6,7 @@ using VertigoDemo.Core.Contracts;
 using VertigoDemo.Core.Events;
 using VertigoDemo.Data;
 using VertigoDemo.Messaging;
+using VertigoDemo.Presentation.Formatting;
 using VertigoDemo.UI;
 
 namespace VertigoDemo.Presentation
@@ -71,21 +72,13 @@ namespace VertigoDemo.Presentation
             
             if (_zoneBarView.SlotCount == 0)
             {
-                throw new InvalidOperationException(
-                    $"{name}: Zone bar requires slots.");
+                throw new InvalidOperationException($"{name}: Zone bar requires slots.");
             }
 
-            _zones = zones
-                     ?? throw new ArgumentNullException(nameof(zones));
-
-            _callbacks = callbacks
-                         ?? throw new ArgumentNullException(nameof(callbacks));
-
-            _rewardCalculator = rewardCalculator
-                                ?? throw new ArgumentNullException(nameof(rewardCalculator));
-
-            _events = events
-                      ?? throw new ArgumentNullException(nameof(events));
+            _zones = zones ?? throw new ArgumentNullException(nameof(zones));
+            _callbacks = callbacks ?? throw new ArgumentNullException(nameof(callbacks));
+            _rewardCalculator = rewardCalculator ?? throw new ArgumentNullException(nameof(rewardCalculator));
+            _events = events ?? throw new ArgumentNullException(nameof(events));
 
             _events.Subscribe<ZoneTransitionRequested>(
                 HandleTransitionRequested);
@@ -164,9 +157,17 @@ namespace VertigoDemo.Presentation
             for (int i = 0; i < _sliceData.Length; i++)
             {
                 WheelSliceData slice = wheel.WheelSlices[i];
-                string text = slice.IsBomb
-                    ? string.Empty
-                    : $"x{_rewardCalculator.Calculate(slice.ItemData, slice.ItemAmount, zone)}";
+                string text = string.Empty;
+
+                if (!slice.IsBomb)
+                {
+                    int amount = _rewardCalculator.Calculate(
+                        slice.ItemData,
+                        slice.ItemAmount,
+                        zone);
+
+                    text = $"x{NumberFormatter.Format(amount)}";
+                }
 
                 _sliceData[i] = new SliceDisplayData(slice.ItemData.ItemIcon, text);
             }

@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VertigoDemo.Data;
+using VertigoDemo.Presentation.Formatting;
 
 namespace VertigoDemo.UI
 {
@@ -50,7 +51,7 @@ namespace VertigoDemo.UI
         
         public void Show(bool canAffordRevive, int reviveCost)
         {
-            _reviveText.text = $"REVIVE ({reviveCost})";
+            _reviveText.text = $"REVIVE ({NumberFormatter.Format(reviveCost)})";
             _popupTween?.Kill();
             reviveButton.interactable = canAffordRevive;
             gameObject.SetActive(true);

@@ -13,6 +13,7 @@ namespace VertigoDemo.Bootstrap
 
         [SerializeField] private ZoneProgressionConfig _progressionConfig;
         [SerializeField] private EconomyConfig _economyConfig;
+        [SerializeField] private RuntimeConfig _runtimeConfig;
 
         [SerializeField] private WheelController _wheelController;
         [SerializeField] private InventoryController _inventoryController;
@@ -40,6 +41,7 @@ namespace VertigoDemo.Bootstrap
         private void Start()
         {
             ValidateConfiguration();
+            Application.targetFrameRate = _runtimeConfig.TargetFrameRate;
 
             IEventBus events = new EventBus();
 
@@ -74,9 +76,10 @@ namespace VertigoDemo.Bootstrap
 
         private void ValidateConfiguration()
         {
-            if (!_progressionConfig || !_economyConfig)
+            if (!_progressionConfig || !_economyConfig || !_runtimeConfig)
             {
-                throw new InvalidOperationException($"{name}: Progression and economy configs must be assigned.");
+                throw new InvalidOperationException(
+                    $"{name}: Progression, economy and runtime configs must be assigned.");
             }
 
             if (!_wheelController ||
