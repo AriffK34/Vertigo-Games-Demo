@@ -377,6 +377,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationRoot: {fileID: 7799654330365210988}
-  glowImage: {fileID: 1351282978479801756}
-  iconImage: {fileID: 4764601168385932130}
-  amountText: {fileID: 114962155065069590}
+  _glowImage: {fileID: 1351282978479801756}
+  _iconImage: {fileID: 4764601168385932130}
+  _amountText: {fileID: 114962155065069590}

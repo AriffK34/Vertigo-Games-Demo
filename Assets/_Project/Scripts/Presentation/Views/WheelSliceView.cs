@@ -12,9 +12,9 @@ namespace VertigoDemo.UI
         #region Fields
 
         [SerializeField] private RectTransform _animationRoot;
-        [SerializeField] private Image glowImage;
-        [SerializeField] private Image iconImage;
-        [SerializeField] private TextMeshProUGUI amountText;
+        [SerializeField] private Image _glowImage;
+        [SerializeField] private Image _iconImage;
+        [SerializeField] private TextMeshProUGUI _amountText;
 
         private WheelAnimationConfig _animationConfig;
         private Vector2 _defaultIconPos;
@@ -29,7 +29,7 @@ namespace VertigoDemo.UI
         {
             get
             {
-                return iconImage.rectTransform.position;
+                return _iconImage.rectTransform.position;
             }
         }
 
@@ -39,9 +39,9 @@ namespace VertigoDemo.UI
 
         private void OnValidate()
         {
-            if (!amountText)
+            if (!_amountText)
             {
-                amountText = GetComponentInChildren<TextMeshProUGUI>(true);
+                _amountText = GetComponentInChildren<TextMeshProUGUI>(true);
             }
         }
 
@@ -66,13 +66,13 @@ namespace VertigoDemo.UI
                 throw new ArgumentNullException(nameof(animationConfig));
             }
 
-            if (!_animationRoot || !glowImage || !iconImage || !amountText)
+            if (!_animationRoot || !_glowImage || !_iconImage || !_amountText)
             {
                 throw new InvalidOperationException($"{name}: Slice view references must be assigned.");
             }
 
             _animationConfig = animationConfig;
-            _defaultIconPos = iconImage.rectTransform.anchoredPosition;
+            _defaultIconPos = _iconImage.rectTransform.anchoredPosition;
             CancelFeedback();
         }
 
@@ -80,10 +80,10 @@ namespace VertigoDemo.UI
         {
             CancelFeedback();
 
-            iconImage.sprite = data.Icon;
-            amountText.text = data.Text;
+            _iconImage.sprite = data.Icon;
+            _amountText.text = data.Text;
 
-            iconImage.rectTransform.anchoredPosition =
+            _iconImage.rectTransform.anchoredPosition =
                 string.IsNullOrEmpty(data.Text)
                     ? Vector2.zero
                     : _defaultIconPos;
@@ -103,19 +103,19 @@ namespace VertigoDemo.UI
                 .SetRecyclable(false)
                 .SetLink(gameObject);
 
-            glowImage.color = _animationConfig.GlowColor;
+            _glowImage.color = _animationConfig.GlowColor;
 
             Sequence sequence = DOTween.Sequence();
 
             sequence.Append(
-                glowImage.rectTransform
+                _glowImage.rectTransform
                     .DOScale(
                         Vector3.one * _animationConfig.GlowEndScale,
                         _animationConfig.GlowDuration)
                     .SetEase(_animationConfig.GlowScaleEase));
 
             sequence.Join(
-                glowImage
+                _glowImage
                     .DOFade(0f, _animationConfig.GlowDuration)
                     .SetEase(_animationConfig.GlowFadeEase));
 
@@ -137,12 +137,12 @@ namespace VertigoDemo.UI
                 _animationRoot.localScale = Vector3.one;
             }
 
-            if (glowImage)
+            if (_glowImage)
             {
-                Color color = glowImage.color;
+                Color color = _glowImage.color;
                 color.a = 0f;
-                glowImage.color = color;
-                glowImage.rectTransform.localScale = Vector3.zero;
+                _glowImage.color = color;
+                _glowImage.rectTransform.localScale = Vector3.zero;
             }
         }
 

@@ -7,16 +7,16 @@ namespace VertigoDemo.Data
     {
         #region Fields
 
-        [SerializeField] private ItemData itemData;
-        [SerializeField, Min(0)] private int itemAmount;
+        [SerializeField] private ItemData _itemData;
+        [SerializeField, Min(0)] private int _itemAmount;
         [SerializeField] private bool _isBomb;
 
         #endregion
 
         #region Properties
 
-        public ItemData ItemData { get { return itemData; } }
-        public int ItemAmount { get { return itemAmount; } }
+        public ItemData ItemData { get { return _itemData; } }
+        public int ItemAmount { get { return _itemAmount; } }
         public bool IsBomb { get { return _isBomb; } }
 
         #endregion

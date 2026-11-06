@@ -13,9 +13,9 @@ namespace VertigoDemo.UI
         public event Action OnGiveUpClicked;
         public event Action OnReviveClicked;
         
-        [SerializeField] private Button giveUpButton;
-        [SerializeField] private Button reviveButton;
-        [SerializeField] private Transform cardTransform;
+        [SerializeField] private Button _giveUpButton;
+        [SerializeField] private Button _reviveButton;
+        [SerializeField] private Transform _cardTransform;
         [SerializeField] private TMP_Text _reviveText;
 
         [SerializeField] private UIAnimationConfig _animationConfig;
@@ -26,8 +26,8 @@ namespace VertigoDemo.UI
         [ContextMenu("Refresh Button References")]
         private void OnValidate()
         {
-            giveUpButton = null;
-            reviveButton = null;
+            _giveUpButton = null;
+            _reviveButton = null;
 
             PopupActionButton[] bindings =
                 GetComponentsInChildren<PopupActionButton>(true);
@@ -37,27 +37,27 @@ namespace VertigoDemo.UI
                 switch (binding.Action)
                 {
                     case PopupAction.GiveUp:
-                        giveUpButton = binding.Button;
+                        _giveUpButton = binding.Button;
                         break;
 
                     case PopupAction.Revive:
-                        reviveButton = binding.Button;
+                        _reviveButton = binding.Button;
                         break;
                 }
             }
 
-            if (reviveButton)
+            if (_reviveButton)
             {
-                _reviveText = reviveButton.GetComponentInChildren<TMP_Text>(true);
+                _reviveText = _reviveButton.GetComponentInChildren<TMP_Text>(true);
             }
         }
         
         public void ValidateReferences()
         {
-            if (!giveUpButton ||
-                !reviveButton ||
-                giveUpButton == reviveButton ||
-                !cardTransform ||
+            if (!_giveUpButton ||
+                !_reviveButton ||
+                _giveUpButton == _reviveButton ||
+                !_cardTransform ||
                 !_reviveText ||
                 !_animationConfig ||
                 !_burstView)
@@ -69,25 +69,25 @@ namespace VertigoDemo.UI
         
         private void Awake()
         {
-            giveUpButton.onClick.AddListener(HandleGiveUpClicked);
-            reviveButton.onClick.AddListener(HandleReviveClicked);
+            _giveUpButton.onClick.AddListener(HandleGiveUpClicked);
+            _reviveButton.onClick.AddListener(HandleReviveClicked);
         }
         
         private void OnDestroy()
         {
             _popupTween?.Kill();
             _popupTween = null;
-            if (giveUpButton != null) giveUpButton.onClick.RemoveListener(HandleGiveUpClicked);
-            if (reviveButton != null) reviveButton.onClick.RemoveListener(HandleReviveClicked);
+            if (_giveUpButton != null) _giveUpButton.onClick.RemoveListener(HandleGiveUpClicked);
+            if (_reviveButton != null) _reviveButton.onClick.RemoveListener(HandleReviveClicked);
         }
         
         public void Show(bool canAffordRevive, int reviveCost)
         {
             _reviveText.text = $"REVIVE ({NumberFormatter.Format(reviveCost)})";
             _popupTween?.Kill();
-            reviveButton.interactable = canAffordRevive;
+            _reviveButton.interactable = canAffordRevive;
             gameObject.SetActive(true);
-            _popupTween = PopupAnimation.Show(cardTransform, _animationConfig);
+            _popupTween = PopupAnimation.Show(_cardTransform, _animationConfig);
             _burstView.Play();
         }
         
@@ -103,7 +103,7 @@ namespace VertigoDemo.UI
             }
 
             _popupTween = PopupAnimation
-                .Hide(cardTransform, _animationConfig)
+                .Hide(_cardTransform, _animationConfig)
                 .OnComplete(HandleHideComplete);
         }
 

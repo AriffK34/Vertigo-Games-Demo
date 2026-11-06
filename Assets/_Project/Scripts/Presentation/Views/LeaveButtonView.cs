@@ -8,21 +8,21 @@ namespace VertigoDemo.UI
     {
         public event Action OnLeaveClicked;
 
-        [SerializeField] private Button leaveButton;
+        [SerializeField] private Button _leaveButton;
 
         private void OnValidate()
         {
-            if (leaveButton == null) leaveButton = GetComponent<Button>();
+            if (_leaveButton == null) _leaveButton = GetComponent<Button>();
         }
 
         private void Awake()
         {
-            leaveButton.onClick.AddListener(HandleButtonClicked);
+            _leaveButton.onClick.AddListener(HandleButtonClicked);
         }
 
         private void OnDestroy()
         {
-            if (leaveButton != null) leaveButton.onClick.RemoveListener(HandleButtonClicked);
+            if (_leaveButton != null) _leaveButton.onClick.RemoveListener(HandleButtonClicked);
         }
 
         public void SetVisible(bool isVisible)

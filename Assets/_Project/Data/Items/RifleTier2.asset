@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 745760acde3f57140b5ed7228f602828, type: 3}
   m_Name: RifleTier2
   m_EditorClassIdentifier: 
-  itemName: Rifle Tier 2
-  itemType: 2
-  itemIcon: {fileID: 1651922615, guid: 186ce280ff95b57419709918a58026b2, type: 3}
+  _itemIcon: {fileID: 1651922615, guid: 186ce280ff95b57419709918a58026b2, type: 3}
   _growthProfile: {fileID: 11400000, guid: 4d70af4da7fe3bc4691f85da1b78c8d5, type: 2}

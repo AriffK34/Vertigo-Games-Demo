@@ -6,13 +6,13 @@ namespace VertigoDemo.UI
 {
     public class ZoneSlotView : MonoBehaviour
     {
-        [SerializeField] private Image zoneBgImage;
-        [SerializeField] private TextMeshProUGUI zoneNumberText;
+        [SerializeField] private Image _zoneBgImage;
+        [SerializeField] private TextMeshProUGUI _zoneNumberText;
 
         public void Setup(Sprite bgSprite, string text)
         {
-            if (zoneBgImage != null) zoneBgImage.sprite = bgSprite;
-            if (zoneNumberText != null) zoneNumberText.text = text;
+            if (_zoneBgImage != null) _zoneBgImage.sprite = bgSprite;
+            if (_zoneNumberText != null) _zoneNumberText.text = text;
             
         }
     }

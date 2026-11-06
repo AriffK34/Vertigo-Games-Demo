@@ -25,3 +25,15 @@ MonoBehaviour:
   _burstPeakScale: 1.4
   _burstBrightness: 0.4
   _burstEase: 6
+  _inventoryPunch:
+    _duration: 0.25
+    _strength: 0.2
+    _vibrato: 1
+    _elasticity: 0.5
+    _ease: 6
+  _currencyPunch:
+    _duration: 0.3
+    _strength: 0.35
+    _vibrato: 2
+    _elasticity: 0.5
+    _ease: 6

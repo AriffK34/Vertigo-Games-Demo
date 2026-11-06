@@ -741,11 +741,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 759d78bf978ecf640ba12d46b3e7d2b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelBaseImage: {fileID: 44020078}
-  indicatorImage: {fileID: 1285987889}
-  spinButton: {fileID: 1331953302}
-  raysTransform: {fileID: 659807447}
-  sliceViews:
+  _wheelBaseImage: {fileID: 44020078}
+  _indicatorImage: {fileID: 1285987889}
+  _spinButton: {fileID: 1331953302}
+  _raysTransform: {fileID: 659807447}
+  _sliceViews:
   - {fileID: 434149386}
   - {fileID: 337861314}
   - {fileID: 1798144428}
@@ -1201,7 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a339d86373bab408c063e77b75f5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelView: {fileID: 145458317}
+  _wheelView: {fileID: 145458317}
 --- !u!4 &381220585
 Transform:
   m_ObjectHideFlags: 0
@@ -1229,7 +1229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2710599b5cd2b9c4dbfb7b00d3ba4cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leaveButtonView: {fileID: 920295645}
+  _leaveButtonView: {fileID: 920295645}
 --- !u!114 &381220588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1242,7 +1242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b55a2d84662d0e4caa92c79770c0184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryView: {fileID: 385056055}
+  _inventoryView: {fileID: 385056055}
   _wheelView: {fileID: 145458317}
   _rewardFlightView: {fileID: 1325022024}
 --- !u!114 &381220590
@@ -1270,7 +1270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5705f0c243e328a42a32db9813e04ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  claimPopupView: {fileID: 1177431056}
+  _claimPopupView: {fileID: 1177431056}
 --- !u!114 &381220592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1283,7 +1283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c223e2942cf18c54290ee9b72e59d76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombPopupView: {fileID: 1197975044}
+  _bombPopupView: {fileID: 1197975044}
 --- !u!114 &381220593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1374,9 +1374,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e05cd1263ca1540a12f9d2c244d748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPrefab: {fileID: 5492356828510589705, guid: 42c492ebc2a163a44b8267e54e8fcffc, type: 3}
-  slotsParent: {fileID: 352362517}
-  scrollRect: {fileID: 385056056}
+  _slotPrefab: {fileID: 5492356828510589705, guid: 42c492ebc2a163a44b8267e54e8fcffc, type: 3}
+  _slotsParent: {fileID: 352362517}
+  _scrollRect: {fileID: 385056056}
 --- !u!114 &385056056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3104,7 +3104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa1e7cc9db247e47ab1b203e2c45ba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leaveButton: {fileID: 920295642}
+  _leaveButton: {fileID: 920295642}
 --- !u!1 &959371520
 GameObject:
   m_ObjectHideFlags: 0
@@ -3856,10 +3856,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e2f93749492be44818c461298e48a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contentParent: {fileID: 318337867}
-  slotPrefab: {fileID: 5492356828510589705, guid: 42c492ebc2a163a44b8267e54e8fcffc, type: 3}
-  claimButton: {fileID: 1484170131}
-  cardTransform: {fileID: 80879143}
+  _contentParent: {fileID: 318337867}
+  _slotPrefab: {fileID: 5492356828510589705, guid: 42c492ebc2a163a44b8267e54e8fcffc, type: 3}
+  _claimButton: {fileID: 1484170131}
+  _cardTransform: {fileID: 80879143}
   _animationConfig: {fileID: 11400000, guid: 8da6380025c2e774fbd64a577cca5393, type: 2}
 --- !u!1 &1197975042
 GameObject:
@@ -3912,9 +3912,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac2d5703d0ce8a42897b7e15b2bfede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  giveUpButton: {fileID: 913007901}
-  reviveButton: {fileID: 1879000267}
-  cardTransform: {fileID: 753281351}
+  _giveUpButton: {fileID: 913007901}
+  _reviveButton: {fileID: 1879000267}
+  _cardTransform: {fileID: 753281351}
   _reviveText: {fileID: 904812803}
   _animationConfig: {fileID: 11400000, guid: 8da6380025c2e774fbd64a577cca5393, type: 2}
   _burstView: {fileID: 913759060}

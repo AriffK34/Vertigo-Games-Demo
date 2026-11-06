@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 745760acde3f57140b5ed7228f602828, type: 3}
   m_Name: Gold
   m_EditorClassIdentifier: 
-  itemName: Gold
-  itemType: 0
-  itemIcon: {fileID: -868911362, guid: fca5f36909fbed744a339b69e982b8dd, type: 3}
+  _itemIcon: {fileID: -868911362, guid: fca5f36909fbed744a339b69e982b8dd, type: 3}
   _growthProfile: {fileID: 11400000, guid: fa53fbb846d553c44902f7a2f55da705, type: 2}

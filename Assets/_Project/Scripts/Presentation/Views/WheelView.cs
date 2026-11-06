@@ -20,11 +20,11 @@ namespace VertigoDemo.UI
 
         private const float FULL_CIRCLE = 360f;
 
-        [SerializeField] private Image wheelBaseImage;
-        [SerializeField] private Image indicatorImage;
-        [SerializeField] private Button spinButton;
-        [SerializeField] private RectTransform raysTransform;
-        [SerializeField] private WheelSliceView[] sliceViews;
+        [SerializeField] private Image _wheelBaseImage;
+        [SerializeField] private Image _indicatorImage;
+        [SerializeField] private Button _spinButton;
+        [SerializeField] private RectTransform _raysTransform;
+        [SerializeField] private WheelSliceView[] _sliceViews;
 
         [SerializeField] private WheelAnimationConfig _animationConfig;
         [SerializeField, Min(0f)] private float _sliceRadius = 235f;
@@ -45,7 +45,7 @@ namespace VertigoDemo.UI
         {
             get
             {
-                return sliceViews[_targetSliceIndex].IconPosition;
+                return _sliceViews[_targetSliceIndex].IconPosition;
             }
         }
 
@@ -55,15 +55,15 @@ namespace VertigoDemo.UI
 
         private void OnValidate()
         {
-            if (!spinButton)
+            if (!_spinButton)
             {
-                spinButton = GetComponentInChildren<Button>(true);
+                _spinButton = GetComponentInChildren<Button>(true);
             }
 
-            if (wheelBaseImage)
+            if (_wheelBaseImage)
             {
-                sliceViews =
-                    wheelBaseImage.GetComponentsInChildren<WheelSliceView>(true);
+                _sliceViews =
+                    _wheelBaseImage.GetComponentsInChildren<WheelSliceView>(true);
             }
 
             _sliceRadius = Mathf.Max(0f, _sliceRadius);
@@ -71,19 +71,19 @@ namespace VertigoDemo.UI
 
         private void Awake()
         {
-            if (!wheelBaseImage ||
-                !indicatorImage ||
-                !spinButton ||
-                !raysTransform ||
+            if (!_wheelBaseImage ||
+                !_indicatorImage ||
+                !_spinButton ||
+                !_raysTransform ||
                 !_animationConfig ||
-                sliceViews == null ||
-                sliceViews.Length == 0)
+                _sliceViews == null ||
+                _sliceViews.Length == 0)
             {
                 throw new InvalidOperationException(
                     $"{name}: Wheel references and slices must be assigned.");
             }
 
-            foreach (WheelSliceView slice in sliceViews)
+            foreach (WheelSliceView slice in _sliceViews)
             {
                 if (!slice)
                 {
@@ -94,12 +94,12 @@ namespace VertigoDemo.UI
                 slice.Initialize(_animationConfig);
             }
 
-            spinButton.onClick.AddListener(HandleSpinClicked);
-            spinButton.interactable = false;
+            _spinButton.onClick.AddListener(HandleSpinClicked);
+            _spinButton.interactable = false;
 
-            indicatorImage.rectTransform.localEulerAngles = Vector3.zero;
+            _indicatorImage.rectTransform.localEulerAngles = Vector3.zero;
 
-            _indicatorTween = indicatorImage.rectTransform
+            _indicatorTween = _indicatorImage.rectTransform
                 .DOPunchRotation(
                     new Vector3(0f, 0f, -_animationConfig.IndicatorAngle),
                     _animationConfig.IndicatorDuration,
@@ -111,7 +111,7 @@ namespace VertigoDemo.UI
                 .SetLink(gameObject)
                 .Pause();
 
-            _raysTween = raysTransform
+            _raysTween = _raysTransform
                 .DORotate(
                     new Vector3(0f, 0f, -FULL_CIRCLE),
                     _animationConfig.RaysDuration,
@@ -124,9 +124,9 @@ namespace VertigoDemo.UI
 
         private void OnDestroy()
         {
-            if (spinButton)
+            if (_spinButton)
             {
-                spinButton.onClick.RemoveListener(HandleSpinClicked);
+                _spinButton.onClick.RemoveListener(HandleSpinClicked);
             }
 
             CancelRotation();
@@ -151,43 +151,43 @@ namespace VertigoDemo.UI
                 throw new ArgumentNullException(nameof(theme));
             }
 
-            if (slices == null || slices.Count != sliceViews.Length)
+            if (slices == null || slices.Count != _sliceViews.Length)
             {
                 throw new ArgumentException(
                     "Wheel data and prefab slice counts must match.",
                     nameof(slices));
             }
 
-            wheelBaseImage.sprite = theme.WheelSprite;
-            indicatorImage.sprite = theme.IndicatorSprite;
+            _wheelBaseImage.sprite = theme.WheelSprite;
+            _indicatorImage.sprite = theme.IndicatorSprite;
 
-            float sliceAngle = FULL_CIRCLE / sliceViews.Length;
+            float sliceAngle = FULL_CIRCLE / _sliceViews.Length;
 
-            for (int i = 0; i < sliceViews.Length; i++)
+            for (int i = 0; i < _sliceViews.Length; i++)
             {
                 float angle = i * sliceAngle;
                 float radians = angle * Mathf.Deg2Rad;
-                RectTransform rect = (RectTransform)sliceViews[i].transform;
+                RectTransform rect = (RectTransform)_sliceViews[i].transform;
 
                 rect.anchoredPosition = new Vector2(
                     Mathf.Sin(radians),
                     Mathf.Cos(radians)) * _sliceRadius;
 
                 rect.localRotation = Quaternion.Euler(0f, 0f, -angle);
-                sliceViews[i].Setup(slices[i]);
+                _sliceViews[i].Setup(slices[i]);
             }
         }
 
         public void RotateWheel(int targetIndex, Action onComplete)
         {
-            if (targetIndex < 0 || targetIndex >= sliceViews.Length)
+            if (targetIndex < 0 || targetIndex >= _sliceViews.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(targetIndex));
             }
 
             CancelRotation();
 
-            foreach (WheelSliceView slice in sliceViews)
+            foreach (WheelSliceView slice in _sliceViews)
             {
                 slice.CancelFeedback();
             }
@@ -197,12 +197,12 @@ namespace VertigoDemo.UI
             _onRotationComplete = onComplete;
             _indicatorTween.Rewind();
 
-            float sliceAngle = FULL_CIRCLE / sliceViews.Length;
+            float sliceAngle = FULL_CIRCLE / _sliceViews.Length;
             float maximumOffset =
                 sliceAngle * _animationConfig.LandingOffsetRatio;
 
             float currentAngle =
-                wheelBaseImage.rectTransform.eulerAngles.z % FULL_CIRCLE;
+                _wheelBaseImage.rectTransform.eulerAngles.z % FULL_CIRCLE;
 
             float targetAngle = targetIndex * sliceAngle +
                 Random.Range(-maximumOffset, maximumOffset);
@@ -218,7 +218,7 @@ namespace VertigoDemo.UI
                 _animationConfig.FullTurns * FULL_CIRCLE +
                 delta;
 
-            _rotationTween = wheelBaseImage.rectTransform
+            _rotationTween = _wheelBaseImage.rectTransform
                 .DORotate(
                     new Vector3(0f, 0f, finalAngle),
                     _animationConfig.SpinDuration,
@@ -236,7 +236,7 @@ namespace VertigoDemo.UI
             _onRotationComplete = onComplete;
             _indicatorTween.Rewind();
 
-            _rotationTween = wheelBaseImage.rectTransform
+            _rotationTween = _wheelBaseImage.rectTransform
                 .DORotate(Vector3.zero, duration)
                 .SetEase(_animationConfig.ResetEase)
                 .SetRecyclable(false)
@@ -256,9 +256,9 @@ namespace VertigoDemo.UI
 
         public void SetSpinInteractable(bool isInteractable)
         {
-            if (spinButton)
+            if (_spinButton)
             {
-                spinButton.interactable = isInteractable;
+                _spinButton.interactable = isInteractable;
             }
         }
 
@@ -268,8 +268,8 @@ namespace VertigoDemo.UI
 
         private void HandleSpinUpdate()
         {
-            float sliceAngle = FULL_CIRCLE / sliceViews.Length;
-            float angle = wheelBaseImage.rectTransform.eulerAngles.z;
+            float sliceAngle = FULL_CIRCLE / _sliceViews.Length;
+            float angle = _wheelBaseImage.rectTransform.eulerAngles.z;
             int currentSlice = Mathf.FloorToInt(angle / sliceAngle);
 
             if (currentSlice == _lastTickSlice)
@@ -284,7 +284,7 @@ namespace VertigoDemo.UI
         private void HandleSpinComplete()
         {
             _indicatorTween.Rewind();
-            sliceViews[_targetSliceIndex].PlayPunchAnimation();
+            _sliceViews[_targetSliceIndex].PlayPunchAnimation();
             CompleteRotation();
         }
 

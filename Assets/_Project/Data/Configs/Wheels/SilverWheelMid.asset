@@ -14,19 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _wheelTheme: {fileID: 11400000, guid: 75120c0bc2f5c984b8910525478f90e9, type: 2}
   _wheelSlices:
-  - itemData: {fileID: 11400000, guid: de41aef03f804b043b07657b2524b85e, type: 2}
-    itemAmount: 500
-  - itemData: {fileID: 11400000, guid: f16244c4138745841b1e0a831f62f91a, type: 2}
-    itemAmount: 40
-  - itemData: {fileID: 11400000, guid: 7cbab3c3cff947846b04109f6d6ddf51, type: 2}
-    itemAmount: 12
-  - itemData: {fileID: 11400000, guid: 0f257c801a05dc543b293c45029344e4, type: 2}
-    itemAmount: 3
-  - itemData: {fileID: 11400000, guid: 6b698f4ce3f635c41acb6e87f1c97d19, type: 2}
-    itemAmount: 3
-  - itemData: {fileID: 11400000, guid: 3a3ec777a9d608d4f90cd968fa0e01ba, type: 2}
-    itemAmount: 2
-  - itemData: {fileID: 11400000, guid: a300fdfe49ade2148b9cc8436663f3c2, type: 2}
-    itemAmount: 1
-  - itemData: {fileID: 11400000, guid: a758ec7bc3dd9db40ad44dae2291bdcc, type: 2}
-    itemAmount: 1
+  - _itemData: {fileID: 11400000, guid: de41aef03f804b043b07657b2524b85e, type: 2}
+    _itemAmount: 500
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: f16244c4138745841b1e0a831f62f91a, type: 2}
+    _itemAmount: 40
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: 7cbab3c3cff947846b04109f6d6ddf51, type: 2}
+    _itemAmount: 12
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: 0f257c801a05dc543b293c45029344e4, type: 2}
+    _itemAmount: 3
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: 6b698f4ce3f635c41acb6e87f1c97d19, type: 2}
+    _itemAmount: 3
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: 3a3ec777a9d608d4f90cd968fa0e01ba, type: 2}
+    _itemAmount: 2
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: a300fdfe49ade2148b9cc8436663f3c2, type: 2}
+    _itemAmount: 1
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: a758ec7bc3dd9db40ad44dae2291bdcc, type: 2}
+    _itemAmount: 1
+    _isBomb: 0

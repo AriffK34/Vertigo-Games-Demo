@@ -12,7 +12,7 @@ namespace VertigoDemo.Presentation
     {
         #region Fields
 
-        [SerializeField] private BombPopupView bombPopupView;
+        [SerializeField] private BombPopupView _bombPopupView;
 
         private IGameCommands _commands;
         private IGameStateReader _state;
@@ -30,10 +30,10 @@ namespace VertigoDemo.Presentation
                 _events.Unsubscribe<GameStateChanged>(HandleStateChanged);
             }
 
-            if (bombPopupView)
+            if (_bombPopupView)
             {
-                bombPopupView.OnGiveUpClicked -= HandleGiveUpClicked;
-                bombPopupView.OnReviveClicked -= HandleReviveClicked;
+                _bombPopupView.OnGiveUpClicked -= HandleGiveUpClicked;
+                _bombPopupView.OnReviveClicked -= HandleReviveClicked;
             }
         }
 
@@ -52,23 +52,23 @@ namespace VertigoDemo.Presentation
                 throw new InvalidOperationException("Bomb popup controller is already initialized.");
             }
 
-            if (!bombPopupView)
+            if (!_bombPopupView)
             {
                 throw new InvalidOperationException($"{name}: Bomb popup view must be assigned.");
             }
             
-            bombPopupView.ValidateReferences();
+            _bombPopupView.ValidateReferences();
             
             _commands = commands ?? throw new ArgumentNullException(nameof(commands));
             _state = state ?? throw new ArgumentNullException(nameof(state));
             _economy = economy ?? throw new ArgumentNullException(nameof(economy));
             _events = events ?? throw new ArgumentNullException(nameof(events));
 
-            bombPopupView.OnGiveUpClicked += HandleGiveUpClicked;
-            bombPopupView.OnReviveClicked += HandleReviveClicked;
+            _bombPopupView.OnGiveUpClicked += HandleGiveUpClicked;
+            _bombPopupView.OnReviveClicked += HandleReviveClicked;
             _events.Subscribe<GameStateChanged>(HandleStateChanged);
 
-            bombPopupView.gameObject.SetActive(false);
+            _bombPopupView.gameObject.SetActive(false);
         }
 
         #endregion
@@ -79,7 +79,7 @@ namespace VertigoDemo.Presentation
         {
             if (message.State == GameState.BombExploded)
             {
-                bombPopupView.Show(
+                _bombPopupView.Show(
                     _economy.HasReviveFunds,
                     _economy.ReviveCost);
             }
@@ -92,7 +92,7 @@ namespace VertigoDemo.Presentation
                 return;
             }
 
-            bombPopupView.Hide();
+            _bombPopupView.Hide();
             _commands.GiveUp();
         }
 
@@ -100,7 +100,7 @@ namespace VertigoDemo.Presentation
         {
             if (_commands.TryRevive())
             {
-                bombPopupView.Hide();
+                _bombPopupView.Hide();
             }
         }
 

@@ -12,10 +12,10 @@ namespace VertigoDemo.UI
     {
         public event Action OnClaimClicked;
         
-        [SerializeField] private Transform contentParent;
-        [SerializeField] private InventorySlotView slotPrefab;
-        [SerializeField] private Button claimButton;
-        [SerializeField] private Transform cardTransform;
+        [SerializeField] private Transform _contentParent;
+        [SerializeField] private InventorySlotView _slotPrefab;
+        [SerializeField] private Button _claimButton;
+        [SerializeField] private Transform _cardTransform;
 
         [SerializeField] private UIAnimationConfig _animationConfig;
         private Tween _popupTween;
@@ -25,19 +25,19 @@ namespace VertigoDemo.UI
         
         private void OnValidate()
         {
-            if (!claimButton) claimButton = GetComponentInChildren<Button>(true);
+            if (!_claimButton) _claimButton = GetComponentInChildren<Button>(true);
         }
 
         private void Awake()
         {
-            claimButton.onClick.AddListener(HandleClaimButtonClicked);
+            _claimButton.onClick.AddListener(HandleClaimButtonClicked);
         }
         
         private void OnDestroy()
         {
             _popupTween?.Kill();
             _popupTween = null;
-            if (claimButton != null) claimButton.onClick.RemoveListener(HandleClaimButtonClicked);
+            if (_claimButton != null) _claimButton.onClick.RemoveListener(HandleClaimButtonClicked);
         }
 
         public void Show(IReadOnlyDictionary<ItemData, int> rewards)
@@ -46,7 +46,7 @@ namespace VertigoDemo.UI
 
             if (_slotPool == null)
             {
-                _slotPool = new InventorySlotPool(slotPrefab, contentParent);
+                _slotPool = new InventorySlotPool(_slotPrefab, _contentParent);
             }
 
             ClearSlots();
@@ -58,7 +58,7 @@ namespace VertigoDemo.UI
             }
 
             gameObject.SetActive(true);
-            _popupTween = PopupAnimation.Show(cardTransform, _animationConfig);
+            _popupTween = PopupAnimation.Show(_cardTransform, _animationConfig);
         }
 
         public void Hide()
@@ -72,7 +72,7 @@ namespace VertigoDemo.UI
             }
 
             _popupTween = PopupAnimation
-                .Hide(cardTransform, _animationConfig)
+                .Hide(_cardTransform, _animationConfig)
                 .OnComplete(HandleHideComplete);
         }
 

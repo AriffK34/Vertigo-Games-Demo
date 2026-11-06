@@ -11,7 +11,7 @@ namespace VertigoDemo.Presentation
     {
         #region Fields
 
-        [SerializeField] private InventoryView inventoryView;
+        [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private WheelView _wheelView;
         [SerializeField] private RewardFlightView _rewardFlightView;
 
@@ -35,9 +35,9 @@ namespace VertigoDemo.Presentation
                 _rewardFlightView.Cancel();
             }
 
-            if (inventoryView)
+            if (_inventoryView)
             {
-                inventoryView.CompleteRewardPresentation();
+                _inventoryView.CompleteRewardPresentation();
             }
         }
 
@@ -50,7 +50,7 @@ namespace VertigoDemo.Presentation
             IGameFlowCallbacks callbacks,
             IEventBus events)
         {
-            if (!inventoryView || !_wheelView || !_rewardFlightView)
+            if (!_inventoryView || !_wheelView || !_rewardFlightView)
             {
                 throw new InvalidOperationException($"{name}: Inventory presentation references must be assigned.");
             }
@@ -66,7 +66,7 @@ namespace VertigoDemo.Presentation
             _events.Subscribe<RewardGranted>(HandleRewardGranted);
             _events.Subscribe<RunRewardsCleared>(HandleRewardsCleared);
 
-            inventoryView.Refresh(rewards.Inventory);
+            _inventoryView.Refresh(rewards.Inventory);
         }
 
         #endregion
@@ -75,11 +75,11 @@ namespace VertigoDemo.Presentation
 
         private void HandleRewardGranted(RewardGranted message)
         {
-            InventorySlotView slot = inventoryView.SetItem(
+            InventorySlotView slot = _inventoryView.SetItem(
                 message.Result.Item,
                 message.TotalAmount);
 
-            inventoryView.RevealSlot(slot);
+            _inventoryView.RevealSlot(slot);
 
             _rewardFlightView.Play(
                 message.Result.Item.ItemIcon,
@@ -91,12 +91,12 @@ namespace VertigoDemo.Presentation
         private void HandleRewardsCleared(RunRewardsCleared message)
         {
             _rewardFlightView.Cancel();
-            inventoryView.Clear();
+            _inventoryView.Clear();
         }
 
         private void HandleFlightComplete()
         {
-            inventoryView.CompleteRewardPresentation();
+            _inventoryView.CompleteRewardPresentation();
             _callbacks.CompleteRewardPresentation();
         }
 

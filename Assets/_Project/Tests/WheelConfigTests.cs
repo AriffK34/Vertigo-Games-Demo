@@ -71,8 +71,8 @@ namespace VertigoDemo.Tests
             {
                 SerializedProperty slice = slices.GetArrayElementAtIndex(i);
                 bool isBomb = i < bombCount;
-                slice.FindPropertyRelative("itemData").objectReferenceValue = isBomb ? _bomb : _reward;
-                slice.FindPropertyRelative("itemAmount").intValue = isBomb ? 0 : 1;
+                slice.FindPropertyRelative("_itemData").objectReferenceValue = isBomb ? _bomb : _reward;
+                slice.FindPropertyRelative("_itemAmount").intValue = isBomb ? 0 : 1;
                 slice.FindPropertyRelative("_isBomb").boolValue = isBomb;
             }
 

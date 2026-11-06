@@ -12,7 +12,7 @@ namespace VertigoDemo.Presentation
     {
         #region Fields
 
-        [SerializeField] private ClaimPopupView claimPopupView;
+        [SerializeField] private ClaimPopupView _claimPopupView;
 
         private IGameCommands _commands;
         private IGameStateReader _state;
@@ -30,9 +30,9 @@ namespace VertigoDemo.Presentation
                 _events.Unsubscribe<GameStateChanged>(HandleStateChanged);
             }
 
-            if (claimPopupView)
+            if (_claimPopupView)
             {
-                claimPopupView.OnClaimClicked -= HandleClaimClicked;
+                _claimPopupView.OnClaimClicked -= HandleClaimClicked;
             }
         }
 
@@ -51,7 +51,7 @@ namespace VertigoDemo.Presentation
                 throw new InvalidOperationException("Claim popup controller is already initialized.");
             }
 
-            if (!claimPopupView)
+            if (!_claimPopupView)
             {
                 throw new InvalidOperationException($"{name}: Claim popup view must be assigned.");
             }
@@ -61,10 +61,10 @@ namespace VertigoDemo.Presentation
             _rewards = rewards ?? throw new ArgumentNullException(nameof(rewards));
             _events = events ?? throw new ArgumentNullException(nameof(events));
             
-            claimPopupView.OnClaimClicked += HandleClaimClicked;
+            _claimPopupView.OnClaimClicked += HandleClaimClicked;
             _events.Subscribe<GameStateChanged>(HandleStateChanged);
 
-            claimPopupView.gameObject.SetActive(false);
+            _claimPopupView.gameObject.SetActive(false);
         }
 
         #endregion
@@ -75,7 +75,7 @@ namespace VertigoDemo.Presentation
         {
             if (message.State == GameState.RewardsClaiming)
             {
-                claimPopupView.Show(_rewards.Inventory);
+                _claimPopupView.Show(_rewards.Inventory);
             }
         }
 
@@ -86,7 +86,7 @@ namespace VertigoDemo.Presentation
                 return;
             }
 
-            claimPopupView.Hide();
+            _claimPopupView.Hide();
             _commands.ClaimRewards();
         }
 

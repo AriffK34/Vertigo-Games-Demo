@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dbcf290ce019fc47b019bdb16344e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoneBgImage: {fileID: 5993806635598660740}
-  zoneNumberText: {fileID: 366880142384275845}
+  _zoneBgImage: {fileID: 5993806635598660740}
+  _zoneNumberText: {fileID: 366880142384275845}
 --- !u!1 &6055385929628728651
 GameObject:
   m_ObjectHideFlags: 0

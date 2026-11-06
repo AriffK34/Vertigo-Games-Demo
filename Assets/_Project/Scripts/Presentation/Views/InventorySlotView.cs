@@ -12,9 +12,9 @@ namespace VertigoDemo.UI
     {
         #region Fields
 
-        [SerializeField] private RectTransform slotContent;
-        [SerializeField] private Image itemIconImage;
-        [SerializeField] private TextMeshProUGUI itemAmountText;
+        [SerializeField] private RectTransform _slotContent;
+        [SerializeField] private Image _itemIconImage;
+        [SerializeField] private TextMeshProUGUI _itemAmountText;
         [SerializeField] private UIAnimationConfig _animationConfig;
 
         #endregion
@@ -27,7 +27,7 @@ namespace VertigoDemo.UI
         {
             get
             {
-                return itemIconImage.rectTransform.position;
+                return _itemIconImage.rectTransform.position;
             }
         }
 
@@ -52,14 +52,14 @@ namespace VertigoDemo.UI
         public void Setup(ItemData item, int amount)
         {
             Item = item;
-            itemIconImage.sprite = item.ItemIcon;
-            itemAmountText.text = $"x{NumberFormatter.Format(amount)}";
+            _itemIconImage.sprite = item.ItemIcon;
+            _itemAmountText.text = $"x{NumberFormatter.Format(amount)}";
             PunchAnimation();
         }
 
         public void UpdateAmount(int amount)
         {
-            itemAmountText.text = $"x{NumberFormatter.Format(amount)}";
+            _itemAmountText.text = $"x{NumberFormatter.Format(amount)}";
             PunchAnimation();
         }
 
@@ -68,8 +68,8 @@ namespace VertigoDemo.UI
             StopAnimation();
 
             Item = null;
-            itemIconImage.sprite = null;
-            itemAmountText.text = string.Empty;
+            _itemIconImage.sprite = null;
+            _itemAmountText.text = string.Empty;
         }
 
         #endregion
@@ -79,17 +79,17 @@ namespace VertigoDemo.UI
         private void PunchAnimation()
         {
             UIPunchAnimation.Play(
-                slotContent,
+                _slotContent,
                 _animationConfig.InventoryPunch,
                 gameObject);
         }
 
         private void StopAnimation()
         {
-            if (slotContent)
+            if (_slotContent)
             {
-                slotContent.DOKill();
-                slotContent.localScale = Vector3.one;
+                _slotContent.DOKill();
+                _slotContent.localScale = Vector3.one;
             }
         }
 

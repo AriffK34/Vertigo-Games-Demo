@@ -10,9 +10,9 @@ namespace VertigoDemo.UI
     {
         #region Fields
 
-        [SerializeField] private InventorySlotView slotPrefab;
-        [SerializeField] private Transform slotsParent;
-        [SerializeField] private ScrollRect scrollRect;
+        [SerializeField] private InventorySlotView _slotPrefab;
+        [SerializeField] private Transform _slotsParent;
+        [SerializeField] private ScrollRect _scrollRect;
 
         private readonly Dictionary<ItemData, InventorySlotView> _slotViews =
             new Dictionary<ItemData, InventorySlotView>();
@@ -25,9 +25,9 @@ namespace VertigoDemo.UI
 
         private void OnValidate()
         {
-            if (!scrollRect)
+            if (!_scrollRect)
             {
-                scrollRect = GetComponent<ScrollRect>();
+                _scrollRect = GetComponent<ScrollRect>();
             }
         }
 
@@ -55,7 +55,7 @@ namespace VertigoDemo.UI
             {
                 if (_slotPool == null)
                 {
-                    _slotPool = new InventorySlotPool(slotPrefab, slotsParent);
+                    _slotPool = new InventorySlotPool(_slotPrefab, _slotsParent);
                 }
 
                 slotView = _slotPool.Rent(item, amount);
@@ -68,11 +68,11 @@ namespace VertigoDemo.UI
 
         public void RevealSlot(InventorySlotView slotView)
         {
-            scrollRect.StopMovement();
+            _scrollRect.StopMovement();
             Canvas.ForceUpdateCanvases();
 
-            RectTransform content = scrollRect.content;
-            RectTransform viewport = scrollRect.viewport;
+            RectTransform content = _scrollRect.content;
+            RectTransform viewport = _scrollRect.viewport;
             RectTransform slotTransform = (RectTransform)slotView.transform;
 
             float hiddenHeight = content.rect.height - viewport.rect.height;
@@ -85,22 +85,22 @@ namespace VertigoDemo.UI
                 float distanceFromTop = content.rect.yMax - slotCenter.y;
                 float scrollOffset = distanceFromTop - viewport.rect.height * 0.5f;
 
-                scrollRect.verticalNormalizedPosition =
+                _scrollRect.verticalNormalizedPosition =
                     Mathf.Clamp01(1f - scrollOffset / hiddenHeight);
             }
             else
             {
-                scrollRect.verticalNormalizedPosition = 1f;
+                _scrollRect.verticalNormalizedPosition = 1f;
             }
 
             Canvas.ForceUpdateCanvases();
-            scrollRect.enabled = false;
+            _scrollRect.enabled = false;
         }
 
         public void Clear()
         {
-            scrollRect.enabled = true;
-            scrollRect.StopMovement();
+            _scrollRect.enabled = true;
+            _scrollRect.StopMovement();
 
             foreach (InventorySlotView slotView in _slotViews.Values)
             {
@@ -108,12 +108,12 @@ namespace VertigoDemo.UI
             }
 
             _slotViews.Clear();
-            scrollRect.verticalNormalizedPosition = 1f;
+            _scrollRect.verticalNormalizedPosition = 1f;
         }
 
         public void CompleteRewardPresentation()
         {
-            scrollRect.enabled = true;
+            _scrollRect.enabled = true;
         }
 
         #endregion

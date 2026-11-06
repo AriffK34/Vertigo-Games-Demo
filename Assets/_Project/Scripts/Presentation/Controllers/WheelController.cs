@@ -12,7 +12,7 @@ namespace VertigoDemo.Presentation
     {
         #region Fields
 
-        [SerializeField] private WheelView wheelView;
+        [SerializeField] private WheelView _wheelView;
 
         private IGameCommands _commands;
         private IGameFlowCallbacks _callbacks;
@@ -30,10 +30,10 @@ namespace VertigoDemo.Presentation
                 _events.Unsubscribe<GameStateChanged>(HandleStateChanged);
             }
 
-            if (wheelView)
+            if (_wheelView)
             {
-                wheelView.OnSpinClicked -= HandleSpinClicked;
-                wheelView.CancelRotation();
+                _wheelView.OnSpinClicked -= HandleSpinClicked;
+                _wheelView.CancelRotation();
             }
         }
 
@@ -47,7 +47,7 @@ namespace VertigoDemo.Presentation
             IGameFlowCallbacks callbacks,
             IEventBus events)
         {
-            if (!wheelView)
+            if (!_wheelView)
             {
                 throw new InvalidOperationException($"{name}: Wheel view must be assigned.");
             }
@@ -61,11 +61,11 @@ namespace VertigoDemo.Presentation
             _callbacks = callbacks ?? throw new ArgumentNullException(nameof(callbacks));
             _events = events ?? throw new ArgumentNullException(nameof(events));
 
-            wheelView.OnSpinClicked += HandleSpinClicked;
+            _wheelView.OnSpinClicked += HandleSpinClicked;
             _events.Subscribe<SpinStarted>(HandleSpinStarted);
             _events.Subscribe<GameStateChanged>(HandleStateChanged);
 
-            wheelView.SetSpinInteractable(
+            _wheelView.SetSpinInteractable(
                 state.CurrentState == GameState.Idle);
         }
 
@@ -80,14 +80,14 @@ namespace VertigoDemo.Presentation
 
         private void HandleSpinStarted(SpinStarted message)
         {
-            wheelView.RotateWheel(
+            _wheelView.RotateWheel(
                 message.Result.SliceIndex,
                 _callbacks.CompleteSpin);
         }
 
         private void HandleStateChanged(GameStateChanged message)
         {
-            wheelView.SetSpinInteractable(
+            _wheelView.SetSpinInteractable(
                 message.State == GameState.Idle);
         }
 

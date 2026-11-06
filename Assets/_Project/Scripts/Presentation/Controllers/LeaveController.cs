@@ -12,7 +12,7 @@ namespace VertigoDemo.Presentation
     {
         #region Fields
 
-        [SerializeField] private LeaveButtonView leaveButtonView;
+        [SerializeField] private LeaveButtonView _leaveButtonView;
 
         private IGameCommands _commands;
         private IGameStateReader _state;
@@ -30,9 +30,9 @@ namespace VertigoDemo.Presentation
                 _events.Unsubscribe<GameStateChanged>(HandleStateChanged);
             }
 
-            if (leaveButtonView)
+            if (_leaveButtonView)
             {
-                leaveButtonView.OnLeaveClicked -= HandleLeaveClicked;
+                _leaveButtonView.OnLeaveClicked -= HandleLeaveClicked;
             }
         }
 
@@ -51,7 +51,7 @@ namespace VertigoDemo.Presentation
                 throw new InvalidOperationException("Leave controller is already initialized.");
             }
 
-            if (!leaveButtonView)
+            if (!_leaveButtonView)
             {
                 throw new InvalidOperationException($"{name}: Leave button view must be assigned.");
             }
@@ -61,7 +61,7 @@ namespace VertigoDemo.Presentation
             _zones = zones ?? throw new ArgumentNullException(nameof(zones));
             _events = events ?? throw new ArgumentNullException(nameof(events));
 
-            leaveButtonView.OnLeaveClicked += HandleLeaveClicked;
+            _leaveButtonView.OnLeaveClicked += HandleLeaveClicked;
             _events.Subscribe<GameStateChanged>(HandleStateChanged);
 
             Refresh();
@@ -87,7 +87,7 @@ namespace VertigoDemo.Presentation
                 _state.CurrentState == GameState.Idle &&
                 _zones.CanLeave;
 
-            leaveButtonView.SetVisible(isVisible);
+            _leaveButtonView.SetVisible(isVisible);
         }
 
         #endregion

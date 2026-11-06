@@ -7,15 +7,15 @@ namespace VertigoDemo.Data
     {
         #region Fields
 
-        [SerializeField] private Sprite wheelSprite;
-        [SerializeField] private Sprite indicatorSprite;
+        [SerializeField] private Sprite _wheelSprite;
+        [SerializeField] private Sprite _indicatorSprite;
 
         #endregion
 
         #region Properties
 
-        public Sprite WheelSprite { get { return wheelSprite; } }
-        public Sprite IndicatorSprite { get { return indicatorSprite; } }
+        public Sprite WheelSprite { get { return _wheelSprite; } }
+        public Sprite IndicatorSprite { get { return _indicatorSprite; } }
 
         #endregion
     }
