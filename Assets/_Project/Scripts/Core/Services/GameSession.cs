@@ -142,7 +142,7 @@ namespace VertigoDemo.Core
                 return false;
             }
 
-            SetState(GameState.Idle);
+            SetState(GameState.Reviving);
             _eventBus.Publish(new BalancesChanged());
 
             return true;
@@ -182,6 +182,16 @@ namespace VertigoDemo.Core
 
             SetState(GameState.ZoneTransition);
             PublishZoneTransition(false);
+        }
+
+        public void CompleteRevive()
+        {
+            if (CurrentState != GameState.Reviving)
+            {
+                return;
+            }
+
+            SetState(GameState.Idle);
         }
 
         public void CompleteZoneTransition()

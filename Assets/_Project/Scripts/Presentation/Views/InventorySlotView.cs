@@ -19,13 +19,7 @@ namespace VertigoDemo.UI
 
         #endregion
 
-        #region Properties
-
-        public ItemData Item
-        {
-            get;
-            private set;
-        }
+        #region Propertie
 
         public Vector3 IconPosition
         {
@@ -55,7 +49,6 @@ namespace VertigoDemo.UI
 
         public void Setup(ItemData item, int amount)
         {
-            Item = item;
             _itemIconImage.sprite = item.ItemIcon;
             _itemAmountText.text = $"x{NumberFormatter.Format(amount)}";
             PlayPunchAnimation();
@@ -71,7 +64,6 @@ namespace VertigoDemo.UI
         {
             StopPunchAnimation();
 
-            Item = null;
             _itemIconImage.sprite = null;
             _itemAmountText.text = string.Empty;
         }

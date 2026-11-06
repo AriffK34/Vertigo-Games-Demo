@@ -81,27 +81,6 @@ namespace VertigoDemo.Presentation
                 HandleTransitionRequested);
         }
 
-        public void CancelTransition()
-        {
-            _transitionTween?.Kill();
-            _transitionTween = null;
-
-            if (_wheelView)
-            {
-                _wheelView.CancelRotation();
-            }
-
-            if (_zoneBarView)
-            {
-                _zoneBarView.CancelTransition();
-            }
-
-            if (_entryEffectView)
-            {
-                _entryEffectView.Cancel();
-            }
-        }
-
         #endregion
 
         #region Private Methods
@@ -184,6 +163,27 @@ namespace VertigoDemo.Presentation
                     : _zones.GetRule(zone).ZoneSprite;
 
                 _zoneData[i] = new ZoneSlotDisplayData(sprite, zone.ToString());
+            }
+        }
+        
+        private void CancelTransition()
+        {
+            _transitionTween?.Kill();
+            _transitionTween = null;
+
+            if (_wheelView)
+            {
+                _wheelView.CancelRotation();
+            }
+
+            if (_zoneBarView)
+            {
+                _zoneBarView.CancelTransition();
+            }
+
+            if (_entryEffectView)
+            {
+                _entryEffectView.Cancel();
             }
         }
 

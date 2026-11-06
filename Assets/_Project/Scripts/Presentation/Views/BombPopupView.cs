@@ -19,6 +19,7 @@ namespace VertigoDemo.UI
         [SerializeField] private TMP_Text _reviveText;
         [SerializeField] private UIAnimationConfig _animationConfig;
         private Tween _popupTween;
+        private Action _onHideComplete;
         [SerializeField] private UIBurstView _burstView;
 
         #endregion
@@ -71,6 +72,7 @@ namespace VertigoDemo.UI
         {
             _popupTween?.Kill();
             _popupTween = null;
+            _onHideComplete = null;
             if (_giveUpButton)
             {
                 _giveUpButton.onClick.RemoveListener(HandleGiveUpClicked);
@@ -104,20 +106,25 @@ namespace VertigoDemo.UI
         {
             _reviveText.text = $"REVIVE ({NumberFormatter.Format(reviveCost)})";
             _popupTween?.Kill();
+            _onHideComplete = null;
+            _giveUpButton.interactable = true;
             _reviveButton.interactable = canAffordRevive;
             gameObject.SetActive(true);
             _popupTween = PopupAnimation.Show(_cardTransform, _animationConfig);
             _burstView.Play();
         }
 
-        public void Hide()
+        public void Hide(Action onComplete = null)
         {
             _burstView.Stop();
             _popupTween?.Kill();
+            _onHideComplete = onComplete;
+            _giveUpButton.interactable = false;
+            _reviveButton.interactable = false;
 
             if (!gameObject.activeInHierarchy)
             {
-                _popupTween = null;
+                HandleHideComplete();
                 return;
             }
 
@@ -134,6 +141,10 @@ namespace VertigoDemo.UI
         {
             _popupTween = null;
             gameObject.SetActive(false);
+
+            Action onComplete = _onHideComplete;
+            _onHideComplete = null;
+            onComplete?.Invoke();
         }
 
         private void HandleGiveUpClicked()

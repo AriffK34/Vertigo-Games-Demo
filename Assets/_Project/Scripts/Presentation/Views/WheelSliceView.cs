@@ -17,8 +17,8 @@ namespace VertigoDemo.UI
         [SerializeField] private TextMeshProUGUI _amountText;
         private WheelAnimationConfig _animationConfig;
         private Vector2 _defaultIconPosition;
-        private Tween _punchTween;
-        private Tween _glowTween;
+        private Tween _feedbackTween;
+        private Action _onFeedbackComplete;
 
         #endregion
 
@@ -88,25 +88,24 @@ namespace VertigoDemo.UI
                     : _defaultIconPosition;
         }
 
-        public void PlayPunchAnimation()
+        public void PlayPunchAnimation(Action onComplete)
         {
             CancelFeedback();
-
-            _punchTween = _animationRoot
-                .DOPunchScale(
-                    Vector3.one * _animationConfig.SlicePunchStrength,
-                    _animationConfig.SlicePunchDuration,
-                    _animationConfig.SlicePunchVibrato,
-                    _animationConfig.SlicePunchElasticity)
-                .SetEase(_animationConfig.SlicePunchEase)
-                .SetRecyclable(false)
-                .SetLink(gameObject);
-
+            _onFeedbackComplete = onComplete;
             _glowImage.color = _animationConfig.GlowColor;
 
             Sequence sequence = DOTween.Sequence();
 
             sequence.Append(
+                _animationRoot
+                    .DOPunchScale(
+                        Vector3.one * _animationConfig.SlicePunchStrength,
+                        _animationConfig.SlicePunchDuration,
+                        _animationConfig.SlicePunchVibrato,
+                        _animationConfig.SlicePunchElasticity)
+                    .SetEase(_animationConfig.SlicePunchEase));
+
+            sequence.Join(
                 _glowImage.rectTransform
                     .DOScale(
                         Vector3.one * _animationConfig.GlowEndScale,
@@ -118,18 +117,17 @@ namespace VertigoDemo.UI
                     .DOFade(0f, _animationConfig.GlowDuration)
                     .SetEase(_animationConfig.GlowFadeEase));
 
-            _glowTween = sequence
+            _feedbackTween = sequence
                 .SetRecyclable(false)
-                .SetLink(gameObject);
+                .SetLink(gameObject)
+                .OnComplete(HandleFeedbackComplete);
         }
 
         public void CancelFeedback()
         {
-            _punchTween?.Kill();
-            _punchTween = null;
-
-            _glowTween?.Kill();
-            _glowTween = null;
+            _feedbackTween?.Kill();
+            _feedbackTween = null;
+            _onFeedbackComplete = null;
 
             if (_animationRoot)
             {
@@ -143,6 +141,19 @@ namespace VertigoDemo.UI
                 _glowImage.color = color;
                 _glowImage.rectTransform.localScale = Vector3.zero;
             }
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void HandleFeedbackComplete()
+        {
+            _feedbackTween = null;
+
+            Action onComplete = _onFeedbackComplete;
+            _onFeedbackComplete = null;
+            onComplete?.Invoke();
         }
 
         #endregion

@@ -20,6 +20,7 @@ namespace VertigoDemo.Tests
         private SessionInventory _inventory;
         private EconomyService _economy;
         private FixedRandomSource _random;
+        private ZoneProgression _zones;
         private GameSession _session;
         private IEventBus _bus;
         private ZoneTransitionRequested _transition;
@@ -75,7 +76,7 @@ namespace VertigoDemo.Tests
             SetReference(economyConfig, "_reviveCurrency", _reward);
             SetInt(economyConfig, "_reviveCost", 5);
 
-            ZoneProgression zones = new ZoneProgression(new ZoneRuleResolver(new[] { _rule }));
+            _zones = new ZoneProgression(new ZoneRuleResolver(new[] { _rule }));
             _inventory = new SessionInventory();
             _economy = new EconomyService(economyConfig);
             _random = new FixedRandomSource();
@@ -86,7 +87,7 @@ namespace VertigoDemo.Tests
             _bus.Subscribe<RewardGranted>(HandleRewardGranted);
 
             _session = new GameSession(
-                zones,
+                _zones,
                 _inventory,
                 _economy,
                 new RewardCalculator(),
@@ -117,6 +118,7 @@ namespace VertigoDemo.Tests
         public void BeforeStartup_CompletionDoesNotUnlockSpin()
         {
             _session.CompleteZoneTransition();
+            _session.CompleteRevive();
 
             Assert.That(_session.CurrentState, Is.EqualTo(GameState.Resetting));
             Assert.That(_session.TrySpin(), Is.False);
@@ -270,8 +272,71 @@ namespace VertigoDemo.Tests
             Assert.That(_inventory.Inventory[_reward], Is.EqualTo(3));
             Assert.That(_economy.GetBalance(_reward), Is.Zero);
 
-            GameState expectedState = expectedSuccess ? GameState.Idle : GameState.BombExploded;
+            GameState expectedState = expectedSuccess ? GameState.Reviving : GameState.BombExploded;
             Assert.That(_session.CurrentState, Is.EqualTo(expectedState));
+            Assert.That(_session.TrySpin(), Is.False);
+
+            _session.CompleteRevive();
+
+            GameState completedState = expectedSuccess ? GameState.Idle : GameState.BombExploded;
+            Assert.That(_session.CurrentState, Is.EqualTo(completedState));
+            Assert.That(_inventory.Inventory[_reward], Is.EqualTo(3));
+            Assert.That(_economy.GetBalance(_reward), Is.Zero);
+
+            if (!expectedSuccess)
+            {
+                Assert.That(_session.TrySpin(), Is.False);
+            }
+        }
+
+        [Test]
+        public void TryRevive_ChargesOnceAndWaitsForPresentationBeforeUnlockingSpin()
+        {
+            SessionInventory seedInventory = new SessionInventory();
+            seedInventory.AddItem(_reward, 10);
+            _economy.ClaimRewards(seedInventory);
+
+            StartReadySession();
+            CompleteRewardSpin();
+            _session.CompleteZoneTransition();
+
+            _random.Index = 1;
+            Assert.That(_session.TrySpin(), Is.True);
+            _session.CompleteSpin();
+
+            Assert.That(_session.TryRevive(), Is.True);
+            Assert.That(_session.CurrentState, Is.EqualTo(GameState.Reviving));
+            Assert.That(_economy.GetBalance(_reward), Is.EqualTo(5));
+            Assert.That(_session.TrySpin(), Is.False);
+
+            _session.RequestLeave();
+            _session.GiveUp();
+            _session.ClaimRewards();
+            Assert.That(_session.TryRevive(), Is.False);
+
+            _session.CompleteZoneTransition();
+            _session.CompleteSpin();
+            _session.CompleteRewardPresentation();
+
+            Assert.That(_session.CurrentState, Is.EqualTo(GameState.Reviving));
+            Assert.That(_session.TrySpin(), Is.False);
+            Assert.That(_economy.GetBalance(_reward), Is.EqualTo(5));
+            Assert.That(_inventory.Inventory[_reward], Is.EqualTo(10));
+            Assert.That(_zones.CurrentZone, Is.EqualTo(2));
+            Assert.That(_transitionCount, Is.EqualTo(2));
+            Assert.That(_rewardCount, Is.EqualTo(1));
+
+            _session.CompleteRevive();
+            _session.CompleteRevive();
+
+            Assert.That(_session.CurrentState, Is.EqualTo(GameState.Idle));
+            Assert.That(_economy.GetBalance(_reward), Is.EqualTo(5));
+            Assert.That(_inventory.Inventory[_reward], Is.EqualTo(10));
+            Assert.That(_zones.CurrentZone, Is.EqualTo(2));
+            Assert.That(_transitionCount, Is.EqualTo(2));
+
+            _random.Index = 0;
+            Assert.That(_session.TrySpin(), Is.True);
         }
 
         #endregion

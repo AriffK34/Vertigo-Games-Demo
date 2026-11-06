@@ -16,6 +16,7 @@ namespace VertigoDemo.Presentation
         private IGameCommands _commands;
         private IGameStateReader _state;
         private IEconomyReader _economy;
+        private IGameFlowCallbacks _flowCallbacks;
         private IEventBus _eventBus;
 
         #endregion
@@ -44,6 +45,7 @@ namespace VertigoDemo.Presentation
             IGameCommands commands,
             IGameStateReader state,
             IEconomyReader economy,
+            IGameFlowCallbacks flowCallbacks,
             IEventBus eventBus)
         {
             if (_eventBus != null)
@@ -61,6 +63,7 @@ namespace VertigoDemo.Presentation
             _commands = commands ?? throw new ArgumentNullException(nameof(commands));
             _state = state ?? throw new ArgumentNullException(nameof(state));
             _economy = economy ?? throw new ArgumentNullException(nameof(economy));
+            _flowCallbacks = flowCallbacks ?? throw new ArgumentNullException(nameof(flowCallbacks));
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
 
             _bombPopupView.OnGiveUpClicked += HandleGiveUpClicked;
@@ -82,6 +85,10 @@ namespace VertigoDemo.Presentation
                     _economy.HasReviveFunds,
                     _economy.ReviveCost);
             }
+            else if (message.State == GameState.Reviving)
+            {
+                _bombPopupView.Hide(HandleReviveComplete);
+            }
         }
 
         private void HandleGiveUpClicked()
@@ -97,10 +104,12 @@ namespace VertigoDemo.Presentation
 
         private void HandleReviveClicked()
         {
-            if (_commands.TryRevive())
-            {
-                _bombPopupView.Hide();
-            }
+            _commands.TryRevive();
+        }
+
+        private void HandleReviveComplete()
+        {
+            _flowCallbacks.CompleteRevive();
         }
 
         #endregion

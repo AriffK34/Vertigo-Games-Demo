@@ -64,7 +64,7 @@ namespace VertigoDemo.Bootstrap
             _currencyBarController.Initialize(economy, events);
             _leaveController.Initialize(session, session, zones, events);
             _claimPopupController.Initialize(session, session, inventory, events);
-            _bombPopupController.Initialize(session, session, economy, events);
+            _bombPopupController.Initialize(session, session, economy, session, events);
 
             session.StartGame();
         }

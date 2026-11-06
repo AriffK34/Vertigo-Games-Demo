@@ -9,5 +9,6 @@ namespace VertigoDemo.Core
         BombExploded,
         RewardsClaiming,
         Resetting,
+        Reviving,
     }
 }

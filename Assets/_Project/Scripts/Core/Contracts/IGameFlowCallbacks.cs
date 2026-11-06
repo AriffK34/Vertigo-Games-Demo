@@ -10,6 +10,8 @@ namespace VertigoDemo.Core.Contracts
 
         void CompleteZoneTransition();
 
+        void CompleteRevive();
+
         #endregion
     }
 }

@@ -16,12 +16,7 @@ namespace VertigoDemo.Core.Contracts
         {
             get;
         }
-
-        ItemData ReviveCurrency
-        {
-            get;
-        }
-
+        
         int ReviveCost
         {
             get;

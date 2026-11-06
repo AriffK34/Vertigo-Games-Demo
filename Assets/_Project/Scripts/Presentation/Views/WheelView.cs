@@ -188,11 +188,6 @@ namespace VertigoDemo.UI
 
             CancelRotation();
 
-            foreach (WheelSliceView slice in _sliceViews)
-            {
-                slice.CancelFeedback();
-            }
-
             _targetSliceIndex = targetIndex;
             _lastTickSliceIndex = -1;
             _onRotationComplete = onComplete;
@@ -253,6 +248,17 @@ namespace VertigoDemo.UI
             _rotationTween = null;
             _onRotationComplete = null;
             previousTween?.Kill();
+
+            if (_sliceViews != null)
+            {
+                foreach (WheelSliceView slice in _sliceViews)
+                {
+                    if (slice)
+                    {
+                        slice.CancelFeedback();
+                    }
+                }
+            }
         }
 
         public void SetSpinInteractable(bool isInteractable)
@@ -284,9 +290,9 @@ namespace VertigoDemo.UI
 
         private void HandleSpinComplete()
         {
+            _rotationTween = null;
             _indicatorTween.Rewind();
-            _sliceViews[_targetSliceIndex].PlayPunchAnimation();
-            CompleteRotation();
+            _sliceViews[_targetSliceIndex].PlayPunchAnimation(CompleteRotation);
         }
 
         private void CompleteRotation()

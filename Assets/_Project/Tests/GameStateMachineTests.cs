@@ -55,7 +55,7 @@ namespace VertigoDemo.Tests
             Assert.That(_machine.CurrentState, Is.EqualTo(GameState.Idle));
         }
 
-        [TestCase(GameState.Idle)]
+        [TestCase(GameState.Reviving)]
         [TestCase(GameState.Resetting)]
         public void BombFlow_AllowReviveOrRestart(GameState nextState)
         {
@@ -67,6 +67,35 @@ namespace VertigoDemo.Tests
             bool isSuccessful = _machine.TryTransition(nextState);
             Assert.That(isSuccessful, Is.True);
             Assert.That(_machine.CurrentState, Is.EqualTo(nextState));
+        }
+
+        [Test]
+        public void BombFlow_RejectsDirectReturnToIdle()
+        {
+            MoveThrough(
+                GameState.Idle,
+                GameState.Spinning,
+                GameState.BombExploded);
+
+            Assert.That(_machine.TryTransition(GameState.Idle), Is.False);
+            Assert.That(_machine.CurrentState, Is.EqualTo(GameState.BombExploded));
+        }
+
+        [Test]
+        public void ReviveFlow_RequiresCompletionBeforeNextSpin()
+        {
+            MoveThrough(
+                GameState.Idle,
+                GameState.Spinning,
+                GameState.BombExploded,
+                GameState.Reviving);
+
+            Assert.That(_machine.TryTransition(GameState.Spinning), Is.False);
+            Assert.That(_machine.CurrentState, Is.EqualTo(GameState.Reviving));
+
+            MoveThrough(GameState.Idle, GameState.Spinning);
+
+            Assert.That(_machine.CurrentState, Is.EqualTo(GameState.Spinning));
         }
 
         [Test]

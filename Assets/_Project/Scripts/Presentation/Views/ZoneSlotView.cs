@@ -8,7 +8,7 @@ namespace VertigoDemo.UI
     {
         #region Fields
 
-        [SerializeField] private Image _zoneBgImage;
+        [SerializeField] private Image _zoneBackgroundImage;
         [SerializeField] private TextMeshProUGUI _zoneNumberText;
 
         #endregion
@@ -17,9 +17,9 @@ namespace VertigoDemo.UI
 
         public void Setup(Sprite backgroundSprite, string text)
         {
-            if (_zoneBgImage)
+            if (_zoneBackgroundImage)
             {
-                _zoneBgImage.sprite = backgroundSprite;
+                _zoneBackgroundImage.sprite = backgroundSprite;
             }
 
             if (_zoneNumberText)

@@ -58,7 +58,10 @@ namespace VertigoDemo.Core
                     return nextState == GameState.Resetting;
 
                 case GameState.BombExploded:
-                    return nextState == GameState.Resetting || nextState == GameState.Idle;
+                    return nextState == GameState.Resetting || nextState == GameState.Reviving;
+
+                case GameState.Reviving:
+                    return nextState == GameState.Idle;
 
                 default:
                     return false;
