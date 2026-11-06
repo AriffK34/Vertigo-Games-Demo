@@ -24,7 +24,7 @@ MonoBehaviour:
     _itemAmount: 8
     _isBomb: 0
   - _itemData: {fileID: 11400000, guid: 01952f4db5c2db94daa52a3ec8bc10dd, type: 2}
-    _itemAmount: 3
+    _itemAmount: 5
     _isBomb: 0
   - _itemData: {fileID: 11400000, guid: 86d05a856fe7ae9459564ab12701c980, type: 2}
     _itemAmount: 2
