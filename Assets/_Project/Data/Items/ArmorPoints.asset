@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 745760acde3f57140b5ed7228f602828, type: 3}
   m_Name: ArmorPoints
   m_EditorClassIdentifier: 
-  itemName: Armor Points
-  itemType: 2
-  itemIcon: {fileID: 21300000, guid: d938feed3bef456478f46e3567e0ebf1, type: 3}
+  _itemIcon: {fileID: 21300000, guid: d938feed3bef456478f46e3567e0ebf1, type: 3}
+  _growthProfile: {fileID: 11400000, guid: 4d70af4da7fe3bc4691f85da1b78c8d5, type: 2}

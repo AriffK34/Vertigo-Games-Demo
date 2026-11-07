@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839c86e9faf0eed46957f242e77df39c, type: 3}
+  m_Name: SilverWheelLate
+  m_EditorClassIdentifier: 
+  _wheelTheme: {fileID: 11400000, guid: 75120c0bc2f5c984b8910525478f90e9, type: 2}
+  _wheelSlices:
+  - _itemData: {fileID: 11400000, guid: de41aef03f804b043b07657b2524b85e, type: 2}
+    _itemAmount: 500
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: f16244c4138745841b1e0a831f62f91a, type: 2}
+    _itemAmount: 40
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: 7cbab3c3cff947846b04109f6d6ddf51, type: 2}
+    _itemAmount: 12
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: 0f257c801a05dc543b293c45029344e4, type: 2}
+    _itemAmount: 3
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: 6b698f4ce3f635c41acb6e87f1c97d19, type: 2}
+    _itemAmount: 3
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: 3a3ec777a9d608d4f90cd968fa0e01ba, type: 2}
+    _itemAmount: 2
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: a300fdfe49ade2148b9cc8436663f3c2, type: 2}
+    _itemAmount: 1
+    _isBomb: 0
+  - _itemData: {fileID: 11400000, guid: a758ec7bc3dd9db40ad44dae2291bdcc, type: 2}
+    _itemAmount: 1
+    _isBomb: 0

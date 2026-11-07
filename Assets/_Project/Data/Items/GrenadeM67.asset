@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 745760acde3f57140b5ed7228f602828, type: 3}
   m_Name: GrenadeM67
   m_EditorClassIdentifier: 
-  itemName: Grenade M67
-  itemType: 2
-  itemIcon: {fileID: 146592870, guid: 8bedb67295c3b7248aee9335d8684120, type: 3}
+  _itemIcon: {fileID: 146592870, guid: 8bedb67295c3b7248aee9335d8684120, type: 3}
+  _growthProfile: {fileID: 11400000, guid: 4d70af4da7fe3bc4691f85da1b78c8d5, type: 2}

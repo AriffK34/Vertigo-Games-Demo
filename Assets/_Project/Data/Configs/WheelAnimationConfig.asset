@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abbdf5058ac02b24aadc00a25d124df2, type: 3}
+  m_Name: WheelAnimationConfig
+  m_EditorClassIdentifier: 
+  _spinDuration: 3.5
+  _fullTurns: 5
+  _spinEase: 9
+  _resetDuration: 0.6
+  _resetEase: 6
+  _landingOffsetRatio: 0.4
+  _raysDuration: 30
+  _raysEase: 1
+  _indicatorAngle: 20
+  _indicatorDuration: 0.15
+  _indicatorVibrato: 1
+  _indicatorElasticity: 0.5
+  _indicatorEase: 6
+  _slicePunchStrength: 0.25
+  _slicePunchDuration: 0.4
+  _slicePunchVibrato: 2
+  _slicePunchElasticity: 0.5
+  _slicePunchEase: 6
+  _glowEndScale: 1.5
+  _glowDuration: 0.6
+  _glowColor: {r: 1, g: 0.95, b: 0.6, a: 1}
+  _glowScaleEase: 9
+  _glowFadeEase: 6

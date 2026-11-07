@@ -1,32 +1,41 @@
-using System;
 using System.Collections.Generic;
+using VertigoDemo.Core.Contracts;
 using VertigoDemo.Data;
 
 namespace VertigoDemo.Core
 {
-    public class SessionInventory
+    public class SessionInventory : IRunRewardsReader
     {
-        public event Action<ItemData, int> OnItemAdded;
-        public event Action OnInventoryCleared;
-        
-        private Dictionary<ItemData, int> _inventory = new();
-        public IReadOnlyDictionary<ItemData, int> Inventory => _inventory;
-        
+        #region Fields
+
+        private readonly ItemCollection _items = new ItemCollection();
+
+        #endregion
+
+        #region Properties
+
+        public IReadOnlyDictionary<ItemData, int> Inventory
+        {
+            get
+            {
+                return _items.Amounts;
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+
         public void AddItem(ItemData item, int amount)
         {
-            if (!_inventory.TryAdd(item, amount))
-            {
-                _inventory[item] += amount;
-            }
-            OnItemAdded?.Invoke(item, _inventory[item]);
+            _items.Add(item, amount);
         }
 
         public void Clear()
         {
-            _inventory.Clear();
-            OnInventoryCleared?.Invoke();
+            _items.Clear();
         }
+
+        #endregion
     }
-
 }
-

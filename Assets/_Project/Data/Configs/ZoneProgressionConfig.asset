@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a116662433cc14295837d0e355efb9, type: 3}
+  m_Name: ZoneProgressionConfig
+  m_EditorClassIdentifier: 
+  _rules:
+  - {fileID: 11400000, guid: ca53d8482612b7748a3a60d2d47b781a, type: 2}
+  - {fileID: 11400000, guid: 0cedb49fd533973459df4c706c61208d, type: 2}
+  - {fileID: 11400000, guid: bccc229ee8857a842bb9545f49167b56, type: 2}
+  - {fileID: 11400000, guid: 05851ee31284c544285b8a7ae160db71, type: 2}
+  - {fileID: 11400000, guid: eb0a338faf1273b4b80f1fe67994eed9, type: 2}
+  - {fileID: 11400000, guid: 62d0c614dc0d44a47a2236aef0528f54, type: 2}
+  - {fileID: 11400000, guid: 37f866a37f4d61f46a387d133dcd8abc, type: 2}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8013032449239353980}
   - component: {fileID: 2560457219581207422}
   m_Layer: 5
-  m_Name: ui_image_bg_slot
+  m_Name: ui_image_slot_background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 272238531076267578}
   - component: {fileID: 1311411276653745582}
   m_Layer: 5
-  m_Name: ui_image_item_icon
+  m_Name: ui_image_item_icon_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 6683594710293135043}
   - component: {fileID: 3172146899639592040}
   m_Layer: 5
-  m_Name: ui_image_slot_frame
+  m_Name: ui_image_slot_border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -474,6 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39222808c7dc560478a7abb2cb9e18da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotContent: {fileID: 3990767611840383169}
-  itemIconImage: {fileID: 1311411276653745582}
-  itemAmountText: {fileID: 2509036107543756855}
+  _slotContent: {fileID: 3990767611840383169}
+  _itemIconImage: {fileID: 1311411276653745582}
+  _itemAmountText: {fileID: 2509036107543756855}
+  _animationConfig: {fileID: 11400000, guid: 8da6380025c2e774fbd64a577cca5393, type: 2}

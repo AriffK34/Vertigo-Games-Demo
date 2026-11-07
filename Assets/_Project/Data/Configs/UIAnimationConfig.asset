@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 341b9c617fe6c0d49bd3b21201e22c7e, type: 3}
+  m_Name: UIAnimationConfig
+  m_EditorClassIdentifier: 
+  _zoneSlideDuration: 0.35
+  _zoneSlideEase: 9
+  _popupShowDuration: 0.35
+  _popupShowEase: 27
+  _popupHideDuration: 0.2
+  _popupHideEase: 26
+  _rewardFlightDuration: 0.75
+  _rewardFlightPeakScale: 1.5
+  _rewardFlightEase: 7
+  _burstDuration: 0.8
+  _burstPeakScale: 1.4
+  _burstBrightness: 0.4
+  _burstEase: 6
+  _bombSparkCount: 12
+  _bombSmokeCount: 5
+  _bombParticleDuration: 0.65
+  _bombParticleDistance: 280
+  _inventoryPunch:
+    _duration: 0.25
+    _strength: 0.2
+    _vibrato: 1
+    _elasticity: 0.5
+    _ease: 6
+  _currencyPunch:
+    _duration: 0.3
+    _strength: 0.35
+    _vibrato: 2
+    _elasticity: 0.5
+    _ease: 6

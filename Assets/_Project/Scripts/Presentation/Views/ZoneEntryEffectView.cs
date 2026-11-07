@@ -1,0 +1,97 @@
+using DG.Tweening;
+using UnityEngine;
+using UnityEngine.UI;
+using VertigoDemo.Data;
+
+namespace VertigoDemo.UI
+{
+    public class ZoneEntryEffectView : MonoBehaviour
+    {
+        #region Fields
+
+        [SerializeField] private Image _image;
+        [SerializeField] private UIAnimationConfig _animationConfig;
+        private Tween _effectTween;
+
+        #endregion
+
+        #region Unity Callbacks
+
+        private void OnValidate()
+        {
+            if (!_image)
+            {
+                _image = GetComponent<Image>();
+            }
+        }
+
+        private void Awake()
+        {
+            _image.enabled = false;
+        }
+
+        private void OnDestroy()
+        {
+            Cancel();
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public Tween Play(Color color)
+        {
+            Cancel();
+
+            _image.color = color;
+            _image.rectTransform.localScale = Vector3.one;
+            _image.enabled = true;
+
+            Sequence sequence = DOTween.Sequence();
+
+            sequence.Append(
+                _image.rectTransform
+                    .DOScale(
+                        Vector3.one * _animationConfig.BurstPeakScale,
+                        _animationConfig.BurstDuration)
+                    .SetEase(_animationConfig.BurstEase));
+
+            sequence.Join(
+                _image
+                    .DOFade(0f, _animationConfig.BurstDuration)
+                    .SetEase(_animationConfig.BurstEase));
+
+            _effectTween = sequence
+                .SetRecyclable(false)
+                .SetLink(gameObject)
+                .OnComplete(HandleEffectComplete);
+
+            return _effectTween;
+        }
+
+        public void Cancel()
+        {
+            _effectTween?.Kill();
+            _effectTween = null;
+
+            if (_image)
+            {
+                _image.enabled = false;
+                _image.rectTransform.localScale = Vector3.one;
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void HandleEffectComplete()
+        {
+            _effectTween = null;
+            _image.enabled = false;
+
+        }
+
+        #endregion
+    }
+}
